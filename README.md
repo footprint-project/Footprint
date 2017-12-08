@@ -36,58 +36,60 @@ Steps to get the development environment running.
 Create SQL database tables:
 ```sql
 CREATE TABLE "users" (
-    "id" serial PRIMARY key,
-    "username" varchar(50),
-    "organization" varchar(50)
+    "id" serial PRIMARY key NOT NULL,
+    "username" varchar(50) NOT NULL UNIQUE,
+    "password" varchar(240) NOT NULL,
+    "organization" varchar(50) NOT NULL UNIQUE
 );
 
+CREATE TABLE "countries" (
+    "id" serial PRIMARY key NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE
+);
+    
+CREATE TABLE "types" (
+    "id" serial PRIMARY key NOT NULL,
+    "name" varchar(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE "projects" (
+    "id" serial PRIMARY key NOT NULL,
+    "name" varchar(100) NOT NULL,
+    "user_id" INT REFERENCES "users" NOT NULL
+);  
+
+CREATE TABLE "footprints" (
+    "id" serial PRIMARY KEY NOT NULL,
+    "period" date NOT NULL,
+    "project_id" INT REFERENCES "projects" NOT NULL,
+    "country_id" INT REFERENCES "countries" NOT NULL,
+    "type_id" INT REFERENCES "types" NOT NULL
+); 
+
 CREATE TABLE "living" (
-    "id" serial PRIMARY key,
+    "id" serial PRIMARY key NOT NULL,
     "hotel" INT,
     "fuel" INT,
     "grid" INT,
     "propane" INT,
-    "footprint_id" INT REFERENCES "footprints"
+    "footprint_id" INT REFERENCES "footprints" NOT NULL
 );
 
 CREATE TABLE "travel" (
-    "id" serial PRIMARY key,
+    "id" serial PRIMARY key NOT NULL,
     "plane" INT,
     "car" INT,
     "train" INT,
-    "footprint_id" INT REFERENCES "footprints"
+    "footprint_id" INT REFERENCES "footprints" NOT NULL
 );
 
 CREATE TABLE "shipping" (
-    "id" serial PRIMARY key,
+    "id" serial PRIMARY key NOT NULL,
     "air" INT,
     "truck" INT,
     "sea" INT,
-    "footprint_id" INT REFERENCES "footprints"
-);
-
-CREATE TABLE "countries" (
-    "id" serial PRIMARY key,
-    "name" varchar(50)
-);
-    
-CREATE TABLE "types" (
-    "id" serial PRIMARY key,
-    "name" varchar(50)
-);
-
-CREATE TABLE "projects" (
-    "id" serial PRIMARY key,
-    "name" varchar(50),
-    "user_id" INT REFERENCES "users"
-);    
-
-CREATE TABLE "footprints" (
-    "id" serial PRIMARY KEY,
-    "month" date,
-    "project_id" INT REFERENCES "projects",
-    "country_id" INT REFERENCES "countries",
-    "type_id" INT REFERENCES "types"
+    "footprint_id" INT REFERENCES "footprints" NOT NULL
+); 
 
 INSERT INTO "types" ("name") VALUES ('Health');
 INSERT INTO "types" ("name") VALUES ('Food/Nutrition');
@@ -101,6 +103,8 @@ INSERT INTO "types" ("name") VALUES ('Research');
 INSERT INTO "types" ("name") VALUES ('Governance');
 INSERT INTO "types" ("name") VALUES ('Business/Entrepeneur');
 INSERT INTO "types" ("name") VALUES ('Donor');
+
+
 ```
 
 ## Screen Shot
