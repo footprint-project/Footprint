@@ -1,12 +1,18 @@
 
-NOTE: you need to have users with ids 2 and 3, and you need to have projects with ids 4, 5, 6, 7, and 8:
+NOTE: you need to have users with ids 2 and 3:
 
+INSERT INTO "projects" ("name", "user_id") VALUES ('test1', 3);
+INSERT INTO "projects" ("name", "user_id") VALUES ('test2', 3);
+INSERT INTO "projects" ("name", "user_id") VALUES ('test3', 3);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Protect the Lions', 3);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Safe Tiger', 3);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Bears, Bears, Bears!', 3);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Whale of a Project', 2);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Clean the Ocean', 2);
 
+INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 3, '2016-08-01');
+INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 1, '2016-11-01');
+INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (7, 4, 3, '2016-09-01');
 INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 3, '2016-08-01');
 INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 1, '2016-11-01');
 INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (7, 4, 3, '2016-09-01');
