@@ -39,7 +39,7 @@ CREATE TABLE "users" (
     "id" serial PRIMARY key NOT NULL,
     "username" varchar(50) NOT NULL UNIQUE,
     "password" varchar(240) NOT NULL,
-    "organization" varchar(50) NOT NULL UNIQUE
+    "organization" varchar(50) UNIQUE
 );
 
 CREATE TABLE "countries" (
