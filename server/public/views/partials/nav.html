@@ -1,8 +1,17 @@
-<div class="navbar">
+<!-- <div class="navbar">
   <div class="container">
     <ul>
       <li><a href="#/user">User Home</a></li>
       <li><a href="#/info">Info Page</a></li>
     </ul>
   </div>
-</div>
+</div> -->
+<md-nav-bar md-selected-nav-item="currentNavItem">
+
+
+   <span flex></span>
+  
+  <md-button class="md-raised md-primary" id="log" ng-click="uc.userService.logout()">Log Out</md-button>
+
+
+</md-nav-bar>

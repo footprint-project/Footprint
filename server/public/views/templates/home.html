@@ -1,5 +1,8 @@
-<div class="container">
-  <h1 class="lead">Login</h1>
+
+<div class="container" ng-include="'/views/partials/login.html'">
+
+
+  <!-- <h1 class="lead">Login</h1>
     <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
     <form ng-submit="lc.login()">
       <div>
@@ -11,8 +14,16 @@
           <input type="password" ng-model="lc.user.password" />
       </div>
       <div>
-          <input class="btn btn-default" type="submit" name="submit" value="Log In" />
+        <md-button class="md-raised md-primary" type="submit" name="submit" value="Log In">Log In</md-button>
           <a href="#register">Register</a>
       </div>
-    </form>
+    </form> -->
+    <div layout="row" layout-xs="column">
+        <div id="trialForm" flex>
+            TRY IT FOR YOURSELF
+            <a href="#register">Register</a>
+            </div>
+        <div id="demo" flex>
+            VIEW FOOTPRINT'S FOOTPRINT
+        </div>
 </div>
