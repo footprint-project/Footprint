@@ -1,10 +1,23 @@
 # Name of Project
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+The Footprint humanitarian responder environmental impact calculator is a full-stack application that will give organizations the opportunity to upload their data and view a timeline-based breakdown of the environmental impacts.
+The data is broken down into three categories: travel, living, and shipping. To upload their information into the application, users will enter the website on the home screen and have an option to download an Excel spreadsheet template. Once the Excel spreadsheet is filled out, the information will be uploaded to the application as a CSV.
+Once the data is uploaded, users will be directed to the user dashboard where they will see a breakdown of the organization’s carbon footprint. Initially, the environmental impact data is broken down organization-wide. Options will also exist to break down the data by project type, country or mission. Organizations will be compelled to create an account with the Footprint humanitarian responder environmental impact calculator to view a timeline-based breakdown of their data.
+The Footprint Project describes itself as a new startup that “combines sustainability consulting with clean energy deployment to help humanitarian responders truly fulfill their commitment to first do no harm.” Footprint has deployed a beta version of this calculator (footprintproject.io), but the organization is seeking an updated application that will give organization more information about their environmental impacts.
+
 
 ## Built With
 
-List technologies and frameworks here
+* Node.js
+* Express.js
+* Angular.js
+* Angular Material
+* PostgreSQL
+* Heroku
+* Chart.js
+* Moment.js
+* js-xls (Excel-uploading library)
+* Passport.js
 
 ## Getting Started
 
@@ -15,19 +28,79 @@ These instructions will get you a copy of the project up and running on your loc
 Link to software that is required to install the app (e.g. node).
 
 - [Node.js](https://nodejs.org/en/)
-- List other prerequisites here
-
 
 ### Installing
 
 Steps to get the development environment running.
 
+Create SQL database tables:
 ```sql
 CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null UNIQUE,
-  "password" varchar(240) not null
+    "id" serial PRIMARY key,
+    "username" varchar(50),
+    "organization" varchar(50)
 );
+
+CREATE TABLE "living" (
+    "id" serial PRIMARY key,
+    "hotel" INT,
+    "fuel" INT,
+    "grid" INT,
+    "propane" INT,
+    "footprint_id" INT REFERENCES "footprints"
+);
+
+CREATE TABLE "travel" (
+    "id" serial PRIMARY key,
+    "plane" INT,
+    "car" INT,
+    "train" INT,
+    "footprint_id" INT REFERENCES "footprints"
+);
+
+CREATE TABLE "shipping" (
+    "id" serial PRIMARY key,
+    "air" INT,
+    "truck" INT,
+    "sea" INT,
+    "footprint_id" INT REFERENCES "footprints"
+);
+
+CREATE TABLE "countries" (
+    "id" serial PRIMARY key,
+    "name" varchar(50)
+);
+    
+CREATE TABLE "types" (
+    "id" serial PRIMARY key,
+    "name" varchar(50)
+);
+
+CREATE TABLE "projects" (
+    "id" serial PRIMARY key,
+    "name" varchar(50),
+    "user_id" INT REFERENCES "users"
+);    
+
+CREATE TABLE "footprints" (
+    "id" serial PRIMARY KEY,
+    "month" date,
+    "project_id" INT REFERENCES "projects",
+    "country_id" INT REFERENCES "countries",
+    "type_id" INT REFERENCES "types"
+
+INSERT INTO "types" ("name") VALUES ('Health');
+INSERT INTO "types" ("name") VALUES ('Food/Nutrition');
+INSERT INTO "types" ("name") VALUES ('Education');
+INSERT INTO "types" ("name") VALUES ('Non-Food Items (NFI)');
+INSERT INTO "types" ("name") VALUES ('Shelter');
+INSERT INTO "types" ("name") VALUES ('Conflict');
+INSERT INTO "types" ("name") VALUES ('Migration/Camp Management');
+INSERT INTO "types" ("name") VALUES ('Faith-Based');
+INSERT INTO "types" ("name") VALUES ('Research');
+INSERT INTO "types" ("name") VALUES ('Governance');
+INSERT INTO "types" ("name") VALUES ('Business/Entrepeneur');
+INSERT INTO "types" ("name") VALUES ('Donor');
 ```
 
 ## Screen Shot
@@ -42,8 +115,8 @@ Link to a read-only version of your scope document or other relevant documentati
 
 High level list of items completed.
 
-- [x] Feature a
-- [x] Feature b
+- [ ] CSV Upload
+- [ ] Charts for user data
 
 ### Next Steps
 
@@ -57,7 +130,10 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* Name of author(s)
+* Zack Stout
+* Blaze Fugina
+* Jaffa Aharanov
+* Holly Tuhake
 
 
 ## Acknowledgments
