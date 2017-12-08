@@ -88,6 +88,19 @@ CREATE TABLE "footprints" (
     "project_id" INT REFERENCES "projects",
     "country_id" INT REFERENCES "countries",
     "type_id" INT REFERENCES "types"
+
+INSERT INTO "types" ("name") VALUES ('Health');
+INSERT INTO "types" ("name") VALUES ('Food/Nutrition');
+INSERT INTO "types" ("name") VALUES ('Education');
+INSERT INTO "types" ("name") VALUES ('Non-Food Items (NFI)');
+INSERT INTO "types" ("name") VALUES ('Shelter');
+INSERT INTO "types" ("name") VALUES ('Conflict');
+INSERT INTO "types" ("name") VALUES ('Migration/Camp Management');
+INSERT INTO "types" ("name") VALUES ('Faith-Based');
+INSERT INTO "types" ("name") VALUES ('Research');
+INSERT INTO "types" ("name") VALUES ('Governance');
+INSERT INTO "types" ("name") VALUES ('Business/Entrepeneur');
+INSERT INTO "types" ("name") VALUES ('Donor');
 ```
 
 ## Screen Shot
