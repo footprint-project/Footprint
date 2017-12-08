@@ -39,7 +39,7 @@ CREATE TABLE "users" (
     "id" serial PRIMARY key NOT NULL,
     "username" varchar(50) NOT NULL UNIQUE,
     "password" varchar(240) NOT NULL,
-    "organization" varchar(50) NOT NULL UNIQUE
+    "organization" varchar(50) UNIQUE
 );
 
 CREATE TABLE "countries" (
@@ -276,7 +276,6 @@ INSERT INTO "countries" ("name") VALUES ('Belgium');
 INSERT INTO "countries" ("name") VALUES ('Bosnia and Herzegovina');
 INSERT INTO "countries" ("name") VALUES ('Bulgaria');
 INSERT INTO "countries" ("name") VALUES ('Croatia');
-INSERT INTO "countries" ("name") VALUES ('Cyprus');
 INSERT INTO "countries" ("name") VALUES ('Czech Republic');
 INSERT INTO "countries" ("name") VALUES ('Denmark');
 INSERT INTO "countries" ("name") VALUES ('East Germany');
