@@ -14,7 +14,7 @@ myApp.config(function($routeProvider, $locationProvider) {
       controller: 'LoginController as lc'
     })
     .when('/user', {
-      templateUrl: '/views/templates/user.html',
+      templateUrl: '/views/templates/dashboard.html',
       controller: 'UserController as uc',
       resolve: {
         getuser : function(UserService){

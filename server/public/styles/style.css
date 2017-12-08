@@ -5,15 +5,20 @@ body, html {
   font-size: 14px;
 }
 
-.instructions .container h1 {
+/* .instructions .container h1 {
   font-size: 32px;
   font-weight: 600;
-}
+} */
 
-.instructions {
-  background-color: #333333;
+header {
+  font-size: 32px;
+  font-weight: 600;
+  height: 200px;
+  /* background-color: #333333; */
   color: #DDDDDD;
-  padding: 15px;
+  background-image: url("https://footprintproject.io/images/header/background.jpg");
+   
+  /* padding: 15px; */
 }
 
 #entryForm {
