@@ -276,7 +276,6 @@ INSERT INTO "countries" ("name") VALUES ('Belgium');
 INSERT INTO "countries" ("name") VALUES ('Bosnia and Herzegovina');
 INSERT INTO "countries" ("name") VALUES ('Bulgaria');
 INSERT INTO "countries" ("name") VALUES ('Croatia');
-INSERT INTO "countries" ("name") VALUES ('Cyprus');
 INSERT INTO "countries" ("name") VALUES ('Czech Republic');
 INSERT INTO "countries" ("name") VALUES ('Denmark');
 INSERT INTO "countries" ("name") VALUES ('East Germany');
