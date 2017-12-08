@@ -31,7 +31,7 @@ Link to software that is required to install the app (e.g. node).
 
 ### Installing
 
-Steps to get the development environment running.
+Create database called "project-footprint"
 
 Create SQL database tables:
 ```sql
