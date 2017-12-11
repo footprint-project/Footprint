@@ -73,18 +73,11 @@
                 <choose-file layout="row">
                     <input id="fileInput" type="file" class="ng-hide">
                     <md-input-container flex class="md-block">
-                        <input type="text" ng-model="fileName" disabled>
-                        <div class="hint">Select your file</div>
+            
                     </md-input-container>
                     <div>
-                        <!-- <button type="file" ng-click="lc.uploadFile($file, $invalidFiles)">
-                            Select File</button> -->
-                        <!-- <md-button type="file" id="uploadButton" ng-click="lc.uploadFile()" class="md-fab md-mini">
-                            <md-icon class="material-icons">attach_file</md-icon>
-                        </md-button> -->
-                        
                                 <input type="file" id="file" name="file">
-                            <md-button ng-click="lc.uploadFile()"><md-icon class="material-icons">attach_file</md-icon></md-button>
+                            
                     </div>
                 </choose-file>
             </md-content>
@@ -94,5 +87,6 @@
             </div>
         <div id="demo" flex>
             VIEW FOOTPRINT'S FOOTPRINT
+            <div><canvas id="myChart"></canvas></div>
         </div>
 </div>

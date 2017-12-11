@@ -19,33 +19,45 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
     console.log(r);
   };
 
-// });
-    
-  // app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
-    // vm.uploadFile = function (file, errFiles) {
-    //   console.log('clicked upload');
-    //   vm.f = file;
-    //   vm.errFile = errFiles && errFiles[0];
-    //   if (file) {
-    //     file.upload = Upload.upload({
-    //       url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-    //       data: { file: file }
-    //     });
-
-    //     file.upload.then(function (response) {
-    //       $timeout(function () {
-    //         file.result = response.data;
-    //       });
-    //     }, function (response) {
-    //       if (response.status > 0)
-    //         vm.errorMsg = response.status + ': ' + response.data;
-    //     }, function (evt) {
-    //       file.progress = Math.min(100, parseInt(100.0 *
-    //         evt.loaded / evt.total));
-    //     });
-    //   }
-    // }
-  // });
+  // start doughnut
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+  // end doughnut
     vm.login = function() {
       console.log('LoginController -- login');
       if(vm.user.username === '' || vm.user.password === '') {
