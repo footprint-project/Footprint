@@ -1,4 +1,4 @@
-myApp.controller('LoginController', function ($http, $location, $timeout, UserService) {
+myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
     console.log('LoginController created');
     var vm = this;
     vm.user = {
@@ -14,10 +14,12 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
     r.onloadend = function (e) {
       var data = e.target.result;
       console.log(data);
+      csvService.parseData(data);
     };
     r.readAsBinaryString(f);
     console.log(r);
   };
+
 
   // start doughnut
   new Chart(document.getElementById("doughnut-chart"), {
@@ -80,43 +82,7 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
     }
   });
 
-  
-  
-// var years = [1500];
 
-// var africa = [86,114,106];
-// var asia = [282,350,411];
-// var europe = [168,170,178];
-// var latinAmerica = [40,20,10];
-// var northAmerica = [6,3,2];
-//   var ctx = document.getElementById("myChart");
-//   var myChart = new Chart(ctx, {
-//     type: 'doughnut',
-//     data: {
-//       labels: years,
-//       datasets: [
-//         {
-//           data: africa,
-//           label: "Africa",
-//           backgroundColor: "#3e95cd",
-//           // fill: true
-//         },
-//         {
-//           data: asia,
-//           label: "Asia",
-//           backgroundColor: "#FF7E52",
-//           // fill: true
-//         },
-//         {
-//           data: europe,
-//           label: "Europe",
-//           backgroundColor: "#4DDBF2",
-//           // fill: true
-//         }
-        
-//       ]
-//     }
-//   });
   // end doughnut
     vm.login = function() {
       console.log('LoginController -- login');
