@@ -1,4 +1,4 @@
-myApp.controller('LoginController', function ($http, $location, $timeout, UserService) {
+myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
     console.log('LoginController created');
     var vm = this;
     vm.user = {
@@ -14,13 +14,14 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
     r.onloadend = function (e) {
       var data = e.target.result;
       console.log(data);
+      csvService.parseData(data);
     };
     r.readAsBinaryString(f);
     console.log(r);
   };
 
 // });
-    
+
   // app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
     // vm.uploadFile = function (file, errFiles) {
     //   console.log('clicked upload');
