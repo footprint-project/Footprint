@@ -13,7 +13,11 @@ SELECT "hotel", "fuel", "grid", "propane", "air", "truck", "sea", "plane", "car"
 SELECT "period", "project_id", "hotel" + "fuel" + "grid" + "propane" as living_total, "air"+ "truck"+ "sea" as shipping_total, "plane"+ "car"+ "train" as travel_total, "footprints"."id" as footprint_id FROM "footprints" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "project_id"=7;
 
 
+//get project type for drop down
+SELECT * from "types";
 
+//get countries for drop down
+SELECT * from "countries";
 
 //Get all a users projects (and footprints for them) ordered by period (for now testing with user_id=2) --- home page line graph:
 
