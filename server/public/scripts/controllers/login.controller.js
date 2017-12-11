@@ -6,6 +6,8 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
       password: ''
     };
     vm.message = '';
+    vm.countries = self.countries.data;
+    
 
   vm.uploadFile = function () {
     console.log('clicked upload');
