@@ -4,9 +4,12 @@ myApp.service('csvService', function($http, $location){
   var vm = this;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 8496e9f80f9a6f1c47cd7dcb8816846a83b54ba6
+=======
+>>>>>>> 9b929fd173adf194b8d16bb87420729e48db2144
   var csv = {
   plane: 0,
   car: 0,
