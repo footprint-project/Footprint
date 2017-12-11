@@ -3,7 +3,6 @@ myApp.service('csvService', function($http, $location){
 
   var vm = this;
 
-
   var csv = {
   plane: 0,
   car: 0,
