@@ -27,4 +27,12 @@ SELECT "period", "project_id", "hotel" + "fuel" + "grid" + "propane" as living_t
 
 SELECT SUM("hotel" + "fuel" + "grid" + "propane") as living_total, SUM("air"+ "truck"+ "sea") as shipping_total, SUM("plane"+ "car"+ "train") as travel_total FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2;
 
+//Gets totals for Living, Shipping and Travel across all a users projects, grouped by Month:
 
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane") OVER (PARTITION BY "period") as living_total, SUM("air"+ "truck"+ "sea") OVER (PARTITION BY "period") as shipping_total, SUM("plane"+ "car"+ "train") OVER (PARTITION BY "period") as travel_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 ORDER BY "period";
+
+NOTE: you *can* partition by multiple things, which is how I think we will be able to deal with the Dashboard chart on the left.
+
+//Here is a slightly condensed version of the above, with footprint total partitioned by period and country:
+
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane" + "air"+ "truck"+ "sea" + "plane"+ "car"+ "train") OVER (PARTITION BY "period", "country_id") as footprint_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 ORDER BY "period";
