@@ -1,4 +1,4 @@
-myApp.controller('LoginController', function($http, $location, UserService) {
+myApp.controller('LoginController', function ($http, $location, $timeout, UserService) {
     console.log('LoginController created');
     var vm = this;
     vm.user = {
@@ -7,6 +7,45 @@ myApp.controller('LoginController', function($http, $location, UserService) {
     };
     vm.message = '';
 
+  vm.uploadFile = function () {
+    console.log('clicked upload');
+    var f = document.getElementById('file').files[0];
+    var r = new FileReader();
+    r.onloadend = function (e) {
+      var data = e.target.result;
+      console.log(data);
+    };
+    r.readAsBinaryString(f);
+    console.log(r);
+  };
+
+// });
+    
+  // app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
+    // vm.uploadFile = function (file, errFiles) {
+    //   console.log('clicked upload');
+    //   vm.f = file;
+    //   vm.errFile = errFiles && errFiles[0];
+    //   if (file) {
+    //     file.upload = Upload.upload({
+    //       url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+    //       data: { file: file }
+    //     });
+
+    //     file.upload.then(function (response) {
+    //       $timeout(function () {
+    //         file.result = response.data;
+    //       });
+    //     }, function (response) {
+    //       if (response.status > 0)
+    //         vm.errorMsg = response.status + ': ' + response.data;
+    //     }, function (evt) {
+    //       file.progress = Math.min(100, parseInt(100.0 *
+    //         evt.loaded / evt.total));
+    //     });
+    //   }
+    // }
+  // });
     vm.login = function() {
       console.log('LoginController -- login');
       if(vm.user.username === '' || vm.user.password === '') {
