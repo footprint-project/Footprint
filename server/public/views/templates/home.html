@@ -1,23 +1,22 @@
-
 <div class="container">
-     <div ng-include="'/views/partials/login.html'"></div>
-    
+    <div ng-include="'/views/partials/login.html'"></div>
+
     <div layout="row" layout-xs="column">
         <div id="trialForm" flex>
             TRY IT FOR YOURSELF
             <a href="#register">Register</a>
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
-            
+
                 <md-content layout-padding class="inputs">
-            
-                    
+
+
                     <div layout-gt-sm="row">
-            
+
                         <md-input-container>
                             <label>Organization Name</label>
                             <input ng-model="">
                         </md-input-container>
-                        
+
                     </div>
                     <div layout-gt-sm="row">
                         <md-input-container>
@@ -43,51 +42,55 @@
                             </md-select>
                         </md-input-container>
                         <div>
-                        <md-input-container><label>Month</label>
-                        <md-select ng-model="">
-                            <md-option>
-                                <em>None</em>
-                            </md-option>
-                            <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
-                                {{project.abbrev}}
-                        </md-select>
-                        </md-input-container>
-                        <md-input-container>
-                        <label>Year</label>
-                        <md-select ng-model="">
-                            <md-option>
-                                <em>None</em>
-                            </md-option>
-                            <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
-                                {{project.abbrev}}
-                            </md-option>
-                        </md-select></md-input-container>
+                            <md-input-container>
+                                <label>Month</label>
+                                <md-select ng-model="">
+                                    <md-option>
+                                        <em>None</em>
+                                    </md-option>
+                                    <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
+                                        {{project.abbrev}}
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Year</label>
+                                <md-select ng-model="">
+                                    <md-option>
+                                        <em>None</em>
+                                    </md-option>
+                                    <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
+                                        {{project.abbrev}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
                         </div>
                     </div>
                     </md-input-container>
-                  
+
             </div>
-            
+
             </md-content>
             <md-content>
                 <choose-file layout="row">
                     <input id="fileInput" type="file" class="ng-hide">
                     <md-input-container flex class="md-block">
-            
+
                     </md-input-container>
                     <div>
-                                <input type="file" id="file" name="file">
-                            
+                        <input type="file" id="file" name="file">
+
                     </div>
                 </choose-file>
             </md-content>
             <div id="homeSubmit">
-            <md-button class="md-primary md-raised" ng-click="">Submit Data</md-button>
+                <md-button class="md-primary md-raised" ng-click="">Submit Data</md-button>
             </div>
-            </div>
+        </div>
         <div id="demo" flex>
             VIEW FOOTPRINT'S FOOTPRINT
-            <div><canvas id="doughnut-chart" width="400" height="225"></canvas>
+            
+                <canvas id="doughnut-chart" width="400" height="225"></canvas>
                 <canvas id="line-chart" width="400" height="225"></canvas>
+            
         </div>
 </div>
