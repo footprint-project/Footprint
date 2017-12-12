@@ -91,6 +91,12 @@ CREATE TABLE "shipping" (
     "footprint_id" INT REFERENCES "footprints" NOT NULL
 );
 
+CREATE TABLE "project_type" (
+    "id" serial PRIMARY KEY NOT NULL,
+    "project_id" INT REFERENCES "projects" NOT NULL,
+    "type_id" INT REFERENCES "types" NOT NULL
+);
+
 INSERT INTO "types" ("name") VALUES ('Health');
 INSERT INTO "types" ("name") VALUES ('Food/Nutrition');
 INSERT INTO "types" ("name") VALUES ('Education');
