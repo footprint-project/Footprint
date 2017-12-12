@@ -85,6 +85,13 @@ li a:hover {
 }
 
 #homeSubmit {
-float: right;
+float: center;
 
 }
+
+#doughnut-chart {
+  height: 400px;
+  width: auto;
+}
+
+
