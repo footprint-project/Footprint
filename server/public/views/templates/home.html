@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-cloak>
     <div ng-include="'/views/partials/login.html'"></div>
 
     <div layout="row" layout-xs="column">
@@ -65,7 +65,7 @@
             </div>
 
             </md-content>
-            <div>
+            <div id="projectcheckboxes">
                                  
                                 <h3>PROJECT TYPE</h3>
                                     <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
