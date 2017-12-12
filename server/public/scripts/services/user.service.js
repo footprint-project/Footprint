@@ -3,7 +3,8 @@ myApp.service('UserService', function($http, $location){
   var self = this;
   self.userObject = {};
   self.calc = {data: []};
-  self.countries = {data: []}
+  self.countries = {data: []};
+  self.userProjects = {};
 
   //Get user function
   self.getuser = function(){
@@ -24,7 +25,9 @@ myApp.service('UserService', function($http, $location){
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
       $location.path("/home");
-    });
+    }).then(function(){
+      self.getProjects(self.userObject.id);
+    })
   }, //End get user function
 
 //Function that logs out user
@@ -79,12 +82,11 @@ myApp.service('UserService', function($http, $location){
 
   self.getProjects = function (id) {
     console.log('Getting user projects', id);
-    $http.get('member/userprojects/' + userId).then(function (response) {
-      self.userprojects = response.data.rows;
-      console.log(self.userprojects);
+    $http.get('member/userprojects/' + id).then(function (response) {
+      self.userProjects = response.data;
+      console.log(self.userProjects);  
     })
   }
-  self.getProjects(self.userObject.id);
   
 
 }); //End of UserService
