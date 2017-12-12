@@ -83,6 +83,7 @@ myApp.service('UserService', function ($http, $location){
 
   self.getLineGraphData();
 
+  //gets the users projects for the projects view
   self.getProjects = function (id) {
     console.log('Getting user projects', id);
     $http.get('member/userprojects/' + id).then(function (response) {
