@@ -36,3 +36,30 @@ NOTE: you *can* partition by multiple things, which is how I think we will be ab
 //Here is a slightly condensed version of the above, with footprint total partitioned by period and country:
 
 SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane" + "air"+ "truck"+ "sea" + "plane"+ "car"+ "train") OVER (PARTITION BY "period", "country_id") as footprint_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 ORDER BY "period";
+
+
+__________________________________________________
+
+Examples of Donut graph:
+Ex: view 'Yemen', sortBy 'Categories' --
+
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane") OVER (PARTITION BY "user_id") as living_total, SUM("air"+ "truck"+ "sea") OVER (PARTITION BY "user_id") as shipping_total, SUM("plane"+ "car"+ "train") OVER (PARTITION BY "user_id") as travel_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 AND "country_id"=1 ORDER BY "period";
+
+
+
+Ex: view '2016/03/01', sortBy 'Types' --
+
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane" + "air"+ "truck"+ "sea" + "plane"+ "car"+ "train") OVER (PARTITION BY "type_id") as footprint_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 AND "period"='2016/03/01' ORDER BY "period";
+
+(Note: only had to change the WHERE clause, collapsed the SUM into footprint total, and PARTITION BY)
+
+
+Ex: view 'Safe Tiger', sortBy 'Country' --
+
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane" + "air"+ "truck"+ "sea" + "plane"+ "car"+ "train") OVER (PARTITION BY "country_id") as footprint_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 AND "project_id"=7 ORDER BY "period";
+
+
+Examples of Line Chart:
+Ex: view all my 'Countries' over time --
+
+SELECT "period", "type_id", "country_id", "project_id", SUM("hotel" + "fuel" + "grid" + "propane" + "air"+ "truck"+ "sea" + "plane"+ "car"+ "train") OVER (PARTITION BY "period", "country_id") as footprint_total, "footprints"."id" as footprint_id, "projects"."user_id" as user_id FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2 ORDER BY "period";
