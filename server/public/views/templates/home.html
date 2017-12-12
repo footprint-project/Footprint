@@ -6,6 +6,7 @@
         <div id="trialForm" flex>
             TRY IT FOR YOURSELF
             <a href="#register">Register</a>
+            {{lc.UserService.countries.data}}
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
                 
             
@@ -36,7 +37,7 @@
                             <label>Country of Operation</label>
                             <md-select ng-model="">
                                 <md-option>
-                                    <em>None</em>
+                                    <em>{{lc.UserService.countries.data}}</em>
                                 </md-option>
                                 <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
                                     {{country.abbrev}}

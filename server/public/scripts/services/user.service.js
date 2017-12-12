@@ -56,11 +56,14 @@ myApp.service('UserService', function($http, $location){
   self.getCountries = function() {
     console.log('Getting countries');
     $http.get('/member/countries').then(function(response) {
-    self.countries.data = response.data.rows;
-    console.log(self.countries.data);
+    var countries = response.data.rows;
+    console.log(countries);
+      self.countries.data = countries;
+      console.log(self.countries.data);
     })
   }
   self.getCountries();
+  console.log(self.countries.data);
   
 
 }); //End of UserService
