@@ -3,6 +3,7 @@ myApp.service('UserService', function ($http, $location){
   var self = this;
   self.userObject = {};
   self.calc = {data: []};
+  self.userProjects = {};
   self.countries = {data: []}
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
@@ -13,9 +14,11 @@ myApp.service('UserService', function ($http, $location){
     $http.get('/user').then(function(response) {
         if(response.data.username) {
             // user has a curret session on the server
+            console.log(response.data);            
             self.userObject.userName = response.data.username;
             self.userObject.organization = response.data.organization;
-            console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization);
+            self.userObject.id = response.data.id;
+          console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -24,7 +27,9 @@ myApp.service('UserService', function ($http, $location){
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
       $location.path("/home");
-    });
+    }).then(function(){
+      self.getProjects(self.userObject.id);
+    })
   }, //End get user function
 
 //Function that logs out user
@@ -79,6 +84,14 @@ myApp.service('UserService', function ($http, $location){
 
 
   self.getLineGraphData();
+
+  self.getProjects = function (id) {
+    console.log('Getting user projects', id);
+    $http.get('member/userprojects/' + id).then(function (response) {
+      self.userProjects = response.data;
+      console.log(self.userProjects);  
+    })
+  }
   
 
 }); //End of UserService
