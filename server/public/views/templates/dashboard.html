@@ -1,22 +1,43 @@
-<div class="container">
+
     <div ng-include="'views/partials/nav.html'"></div>
-    <div id="dashbody" layout="column" layout-align="center">
-    <div id="dashheader">
-    <h1>{{uc.userObject.organization}} DASHBOARD</h1>
-    </div>
-    </div>
-     <md-content>
-                <div id="uploaddash" layout="column" layout-align="center end">
-                <div class="upload-btn-wrapper">
-                    <md-button class="md-raised" cursor:pointer>Upload New Footprint<md-icon class="material-icons">attach_file</md-icon></md-button>
-                    <input type="file" name="myfile">
-                </div>
-               </div>
-            </md-content>
     
-    <div id="dashbody" layout="column" layout-align="center center">
-        <img id="globe" src="images/globe.png">
-            </div>
+    <md-content class="container">
+    <div id="dashheader" layout="row" layout-align="center center">
+    
+    <h1>{{uc.userObject.organization}} DASHBOARD</h1>
+    
+    
+    
+     
+                <!-- <div id="uploaddash" layout="column" layout-align="center end"> -->
+                
+               
             
-          </div>  
+    
+    
+        <!-- <img id="globe" src="images/globe.png"> -->
         </div>
+    <div layout="row">
+        <div  id="bar" flex="45">
+       <h2>TOTAL FOOTPRINT</h2>
+    
+        <canvas id="bar-chart" width="400" height="225"></canvas>
+        <!-- <canvas id="line-chart" width="400" height="225"></canvas> -->
+    
+    
+        </div>
+        
+        <div flex="45">
+        <h2>RECENT PROJECTS</h2>
+        <md-card id="recent"></md-card>
+
+
+        
+
+        </div>
+</div>
+    
+            
+           
+       
+    </md-content>
