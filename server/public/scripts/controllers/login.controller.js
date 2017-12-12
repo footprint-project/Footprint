@@ -12,6 +12,7 @@
     
 
   vm.uploadFile = function () {
+    
     console.log('clicked upload');
     var f = document.getElementById('file').files[0];
     var r = new FileReader();
