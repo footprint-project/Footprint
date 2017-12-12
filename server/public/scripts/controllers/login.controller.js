@@ -1,5 +1,5 @@
-// csv_Service
-myApp.controller('LoginController', function ($http, $location, $timeout, UserService) {
+// 
+myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
     console.log('LoginController created');
     var vm = this;
     vm.user = {
