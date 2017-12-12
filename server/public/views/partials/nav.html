@@ -10,7 +10,12 @@
 
 
    <span flex></span>
-  
+  <div class="upload-btn-wrapper" layout-align="center end">
+    <md-button class="md-raised" cursor:pointer>Upload New Footprint
+      <md-icon class="material-icons">attach_file</md-icon>
+    </md-button>
+    <input type="file" name="myfile">
+  </div>
   <md-button class="md-raised md-primary" id="log" ng-click="uc.userService.logout()">Log Out</md-button>
 
 
