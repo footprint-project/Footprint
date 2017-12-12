@@ -64,6 +64,15 @@ myApp.service('UserService', function($http, $location){
   }
   self.getCountries();
   console.log(self.countries.data);
+
+  self.getLineGraphData = function (){
+    console.log('Getting Line graph Data');
+    $http.get('member/linegraph').then(function(response){
+      var lineGraphData = response.data.rows;
+      console.log(lineGraphData);
+    })
+  }
+  self.getLineGraphData();
   
 
 }); //End of UserService
