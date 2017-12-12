@@ -1,4 +1,5 @@
-myApp.controller('LoginController', function ($http, $location, $timeout, UserService) {
+ myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
+
     console.log('LoginController created');
     var vm = this;
     vm.user = {
@@ -6,6 +7,9 @@ myApp.controller('LoginController', function ($http, $location, $timeout, UserSe
       password: ''
     };
     vm.message = '';
+    vm.UserService = UserService;
+    vm.countries = UserService.countries.data;
+    
 
   vm.uploadFile = function () {
     console.log('clicked upload');

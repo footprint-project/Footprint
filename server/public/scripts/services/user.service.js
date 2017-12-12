@@ -3,6 +3,7 @@ myApp.service('UserService', function($http, $location){
   var self = this;
   self.userObject = {};
   self.calc = {data: []};
+  self.countries = {data: []}
 
   //Get user function
   self.getuser = function(){
@@ -51,6 +52,19 @@ myApp.service('UserService', function($http, $location){
   //   }
   // }
   // self.calculations(footprint);
+
+  self.getCountries = function() {
+    console.log('Getting countries');
+    $http.get('/member/countries').then(function(response) {
+    var countries = response.data.rows;
+    console.log(countries);
+      self.countries.data = countries;
+      console.log(self.countries.data);
+    })
+  }
+  self.getCountries();
+  console.log(self.countries.data);
+  
 
 }); //End of UserService
 

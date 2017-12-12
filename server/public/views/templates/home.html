@@ -5,6 +5,7 @@
         <div id="trialForm" flex>
             TRY IT FOR YOURSELF
             <a href="#register">Register</a>
+           
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
 
                 <md-content layout-padding class="inputs">
@@ -33,8 +34,9 @@
                         <md-input-container>
                             <label>Country of Operation</label>
                             <md-select ng-model="">
-                                <md-option>
-                                    <em>None</em>
+                                <md-option ng-repeat="country in lc.UserService.countries.data">
+                                    <em>{{country.name}}</em>
+                                   
                                 </md-option>
                                 <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
                                     {{country.abbrev}}
