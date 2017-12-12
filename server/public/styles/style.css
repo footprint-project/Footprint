@@ -13,7 +13,7 @@ body, html {
 header {
   font-size: 32px;
   font-weight: 600;
-  height: 200px;
+  height: 150px;
   /* background-color: #333333; */
   color: #DDDDDD;
   background-image: url("https://footprintproject.io/images/header/background.jpg");
@@ -119,6 +119,29 @@ float: center;
   top: 0;
   opacity: 0;
   cursor: pointer;
+}
+
+#dashheader {
+  text-transform: uppercase;
+  color: slategray;
+  text-align: center;
+  
+
+}
+
+#globe {
+  height: 200px;
+  width: 200px;
+  padding-top: -100px;
+}
+
+.container {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+#uploaddash {
+  align-self: right;
 }
 
 
