@@ -77,7 +77,14 @@ myApp.service('UserService', function($http, $location){
   }
   self.getLineGraphData();
 
-  self.
+  self.getProjects = function (id) {
+    console.log('Getting user projects', id);
+    $http.get('member/userprojects/' + userId).then(function (response) {
+      self.userprojects = response.data.rows;
+      console.log(self.userprojects);
+    })
+  }
+  self.getProjects(self.userObject.id);
   
 
 }); //End of UserService
