@@ -73,6 +73,7 @@ router.get('/footprints_footprint', function(req, res) {
   });
 });
 
+// for the list of user projects on projects view
 router.get('/userprojects/:userId', function (req, res) {
     console.log('user id', req.user);
     userId = req.user.id;
