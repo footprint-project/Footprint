@@ -1,10 +1,12 @@
-myApp.service('UserService', function($http, $location){
+myApp.service('UserService', function ($http, $location){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
   self.calc = {data: []};
   self.countries = {data: []}
-
+  self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
+  'September', 'October', 'November', 'December'];
+  
   //Get user function
   self.getuser = function(){
     console.log('UserService -- getuser');
@@ -73,6 +75,9 @@ myApp.service('UserService', function($http, $location){
       console.log(lineGraphData);
     })
   }
+
+
+
   self.getLineGraphData();
   
 
