@@ -8,11 +8,15 @@
     };
     vm.message = '';
     vm.UserService = UserService;
+    vm.months = UserService.months;
     vm.countries = UserService.countries.data;
-   vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
-   vm.selected = [];
+    vm.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+     'September', 'October', 'November', 'December'];
+    vm.years = [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011];
+    vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
+    vm.selected = [];
 
-   vm.change = function (item, active) {
+    vm.change = function (item, active) {
      if (active) {
        vm.selected.push(item)
      } else {
