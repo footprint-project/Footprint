@@ -9,7 +9,17 @@
     vm.message = '';
     vm.UserService = UserService;
     vm.countries = UserService.countries.data;
-    
+   vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
+   vm.selected = [];
+
+   vm.change = function (item, active) {
+     if (active) {
+       vm.selected.push(item)
+     } else {
+       vm.selected.splice(vm.selected.indexOf(item), 1)
+
+     }
+   }
 
   vm.uploadFile = function () {
     
