@@ -11,9 +11,11 @@ myApp.service('UserService', function($http, $location){
     $http.get('/user').then(function(response) {
         if(response.data.username) {
             // user has a curret session on the server
+            console.log(response.data);            
             self.userObject.userName = response.data.username;
             self.userObject.organization = response.data.organization;
-            console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization);
+            self.userObject.id = response.data.id;
+          console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -74,6 +76,8 @@ myApp.service('UserService', function($http, $location){
     })
   }
   self.getLineGraphData();
+
+  self.
   
 
 }); //End of UserService
