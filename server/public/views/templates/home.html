@@ -18,19 +18,12 @@
                         </md-input-container>
 
                     </div>
+                    
                     <div layout-gt-sm="row">
+                       
+                        <div>
                         <md-input-container>
-                            <label>Project Type</label>
-                            <md-select ng-model="">
-                                <md-option>
-                                    <em>None</em>
-                                </md-option>
-                                <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
-                                    {{project.abbrev}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container>
+                            
                             <label>Country of Operation</label>
                             <md-select ng-model="">
                                 <md-option ng-repeat="country in lc.UserService.countries.data">
@@ -42,6 +35,7 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                    </div>
                         <div>
                             <md-input-container>
                                 <label>Month</label>
@@ -71,6 +65,15 @@
             </div>
 
             </md-content>
+            <div>
+                                 
+                                <h3>PROJECT TYPE</h3>
+                                    <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
+                                
+                                <pre ng-bind="lst | json">
+                               </pre>
+                                <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
+                                </div>
             <md-content>
                 
                 <div class="upload-btn-wrapper">
