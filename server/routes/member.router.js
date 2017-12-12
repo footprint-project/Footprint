@@ -73,4 +73,27 @@ router.get('/footprints_footprint', function(req, res) {
   });
 });
 
+router.get('/userprojects/:userId', function (req, res) {
+    console.log('user id', req.params.id);
+    userId = req.params.id;
+    pool.connect(function (err, db, done) {
+        if (err) {
+            console.log('Error connecting', err);
+            res.sendStatus(500);
+        } else {
+            var queryText = 'SELECT * from "projects" WHERE "username" = $1';
+            db.query(queryText, [userId], function (err, result) {
+                done();
+                if (err) {
+                    console.log('Error making query', err);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result.rows);
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;
