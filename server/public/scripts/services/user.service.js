@@ -27,8 +27,6 @@ myApp.service('UserService', function ($http, $location){
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
       $location.path("/home");
-    }).then(function(){
-      self.getProjects(self.userObject.id);
     })
   }, //End get user function
 
