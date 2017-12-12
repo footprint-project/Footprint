@@ -10,7 +10,8 @@ router.get('/', function(req, res) {
     console.log('logged in', req.user);
     var userInfo = {
       username : req.user.username,
-      organization: req.user.organization
+      organization: req.user.organization,
+      id: req.user.id
     };
     res.send(userInfo);
   } else {

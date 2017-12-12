@@ -4,6 +4,7 @@ myApp.controller('UserController', function(UserService) {
   vm.userService = UserService;
   vm.userObject = UserService.userObject;
 
+
 // Bar chart
   new Chart(document.getElementById("bar-chart"), {
     type: 'bar',
@@ -26,6 +27,7 @@ myApp.controller('UserController', function(UserService) {
     }
   });
 
+  vm.userService.getProjects(vm.userObject.id);
 
 });
 //end of user controller 
