@@ -13,10 +13,12 @@ myApp.service('UserService', function ($http, $location){
     console.log('UserService -- getuser');
     $http.get('/user').then(function(response) {
         if(response.data.username) {
-            // user has a curret session on the server
+            // user has a current session on the server
             console.log(response.data);            
             self.userObject.userName = response.data.username;
             self.userObject.organization = response.data.organization;
+            self.userObject.name = response.data.name;
+            self.userObject.position = response.data.position;
             self.userObject.id = response.data.id;
           console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
         } else {

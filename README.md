@@ -35,11 +35,12 @@ Create database called "project-footprint"
 
 Create SQL database tables:
 ```sql
+
 CREATE TABLE "users" (
     "id" serial PRIMARY key NOT NULL,
     "username" varchar(50) NOT NULL UNIQUE,
     "password" varchar(240) NOT NULL,
-    "organization" varchar(50) UNIQUE,
+    "organization" varchar(50) NOT NULL UNIQUE,
     "name" varchar (50),
     "position" varchar (50)
 );
@@ -58,7 +59,7 @@ CREATE TABLE "projects" (
     "id" serial PRIMARY key NOT NULL,
     "name" varchar(100) NOT NULL,
     "user_id" INT REFERENCES "users" NOT NULL,
-    "country_id" INT REFERENCES "countries" NOT NULL,
+    "country_id" INT REFERENCES "countries" NOT NULL
 );  
 
 CREATE TABLE "project_type" (
@@ -70,7 +71,7 @@ CREATE TABLE "project_type" (
 CREATE TABLE "footprints" (
     "id" serial PRIMARY KEY NOT NULL,
     "period" date NOT NULL,
-    "project_id" INT REFERENCES "projects" NOT NULL,
+    "project_id" INT REFERENCES "projects" NOT NULL
 );
 
 CREATE TABLE "living" (
