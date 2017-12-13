@@ -100,6 +100,22 @@ CREATE TABLE "shipping" (
     "footprint_id" INT REFERENCES "footprints" NOT NULL
 );
 
+CREATE TABLE "trial_footprints" (
+	"id" serial PRIMARY KEY,
+	"organization" varchar(50),
+	"plane" INT,
+	"car" INT,
+	"train" INT,
+	"hotel" INT,
+	"fuel" INT,
+	"grid" INT,
+	"propane" INT,
+	"air" INT,
+	"sea" INT,
+	"truck" INT,
+	"freight_train" INT
+	);
+
 INSERT INTO "types" ("name") VALUES ('Health');
 INSERT INTO "types" ("name") VALUES ('Food/Nutrition');
 INSERT INTO "types" ("name") VALUES ('Education');
