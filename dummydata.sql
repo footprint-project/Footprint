@@ -1,13 +1,15 @@
--- Before inserting the following, Create 4 users using the application.
 
-INSERT INTO "projects" ("name", "user_id") VALUES ('test1', 1);
-INSERT INTO "projects" ("name", "user_id") VALUES ('test2', 4);
-INSERT INTO "projects" ("name", "user_id") VALUES ('test3', 1);
-INSERT INTO "projects" ("name", "user_id") VALUES ('Protect the Lions', 3);
-INSERT INTO "projects" ("name", "user_id") VALUES ('Safe Tiger', 3);
-INSERT INTO "projects" ("name", "user_id") VALUES ('Bears, Bears, Bears!', 3);
-INSERT INTO "projects" ("name", "user_id") VALUES ('Whale of a Project', 2);
-INSERT INTO "projects" ("name", "user_id") VALUES ('Clean the Ocean', 2);
+
+-- *IMPORTANT* Before inserting the following, Create 4 users using the application.
+
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('test1', 2, 1);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('test2', 21,4);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('test3', 19, 1);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Protect the Lions', 15, 3);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Safe Tiger', 16, 3);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Bears, Bears, Bears!', 104, 3);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Whale of a Project', 92, 2);
+INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Clean the Ocean', 100, 2);
 
 INSERT INTO "project_type" ("project_id", "type_id") VALUES (1, 3);
 INSERT INTO "project_type" ("project_id", "type_id") VALUES (2, 7);
