@@ -1,4 +1,6 @@
--- Before inserting the following, Create 4 users using the application.
+
+
+-- *IMPORTANT* Before inserting the following, Create 4 users using the application.
 
 INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('test1', 2, 1);
 INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('test2', 21,4);
