@@ -1,4 +1,4 @@
-myApp.controller('UserController', function(UserService) {
+myApp.controller('UserController', function (UserService, $mdDialog) {
   console.log('UserController created');
   var vm = this;
   vm.userService = UserService;
@@ -31,7 +31,35 @@ myApp.controller('UserController', function(UserService) {
 
 //gets users projects
   vm.userService.getProjects(vm.userObject.id);
+  //dashboard dialog
+  vm.upload = function (ev, i) {
+    // userService.getProjects.selectedIndex = i;
+    console.log('Clicked showMore', i);
+    
 
+    $mdDialog.show({
+      controller: 'DashboardDialogController as dc',
+      templateUrl: 'views/templates/dashboarddialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+
+    })
+  }
+
+
+  vm.hide = function () {
+    $mdDialog.hide();
+  };
+
+  vm.cancel = function () {
+    $mdDialog.cancel();
+  };
+
+  vm.answer = function (answer) {
+    console.log(answer);
+    $mdDialog.hide(answer);
+  };
 });
 //end of user controller 
 
