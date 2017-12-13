@@ -2,6 +2,7 @@ myApp.service('csvService', function($http, $location){
   console.log('csvService Loaded');
 
   var vm = this;
+  vm.userFootprint = {userInfo: [], userType: [], data: [] };
 
   var csv = {
   plane: 0,
@@ -17,7 +18,10 @@ myApp.service('csvService', function($http, $location){
   propane: 0
 };
 
+//This data parses the data from uploaded CSVs.
   vm.parseData = function(data) {
+    console.log(data);
+
     var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
       //  console.log(dataNums);
 
@@ -52,7 +56,50 @@ myApp.service('csvService', function($http, $location){
           // console.log(newNum);
           csv.propane += Number(num);
         }
+        
       }
+      console.log(csv)
+      vm.valuesToArray(csv);
   };
 
-});
+  vm.valuesToArray = function(obj) {
+    var result = [];
+    for (var key in obj) {
+       if (obj.hasOwnProperty(key)) {
+           result.push(obj[key]);
+       }
+    }
+    vm.calculations(result);
+}
+
+  //  This function will calculate carbon footprint data
+  vm.calculations = function(result) {
+    // console.log('Test:', result[0]);
+    for (var i=0; i<result.length; i++) {
+      result.plane = (result[0] * .18026);
+      result.car= (result[1] * .18568);
+      result.train_travel = (result[2] * .01225);
+      result.air = (result[3] * 31.1);
+      result.train_shipping = (result[4] * 2.60016271124822);
+      result.truck = (result[5] * 0.35156);
+      result.sea = (result[6] * 0.186455554041745);
+      result.hotel = (result[7] * 1.45648);
+      result.fuel = (result[8] * 0.10559);
+      result.grid = (result[9] * 0.008979 );
+    }
+    vm.userFootprint.data = result;
+      console.log(vm.userFootprint.data);
+  }
+
+  vm.userData = function(user){
+   
+   vm.userFootprint.userInfo = user;
+   console.log(vm.userFootprint.userInfo);
+  }
+
+  vm.typeData = function(sendData){
+    vm.userFootprint.userType = sendData;
+    console.log(vm.userFootprint.userType);
+  }
+
+}); //End CSV service.
