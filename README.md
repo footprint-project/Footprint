@@ -35,11 +35,14 @@ Create database called "project-footprint"
 
 Create SQL database tables:
 ```sql
+
 CREATE TABLE "users" (
     "id" serial PRIMARY key NOT NULL,
     "username" varchar(50) NOT NULL UNIQUE,
     "password" varchar(240) NOT NULL,
-    "organization" varchar(50) UNIQUE
+    "organization" varchar(50) NOT NULL UNIQUE,
+    "name" varchar (50),
+    "position" varchar (50)
 );
 
 CREATE TABLE "countries" (
@@ -55,15 +58,20 @@ CREATE TABLE "types" (
 CREATE TABLE "projects" (
     "id" serial PRIMARY key NOT NULL,
     "name" varchar(100) NOT NULL,
-    "user_id" INT REFERENCES "users" NOT NULL
+    "user_id" INT REFERENCES "users" NOT NULL,
+    "country_id" INT REFERENCES "countries" NOT NULL
 );  
+
+CREATE TABLE "project_type" (
+    "id" serial PRIMARY KEY NOT NULL,
+    "project_id" INT REFERENCES "projects" NOT NULL,
+    "type_id" INT REFERENCES "types" NOT NULL
+);
 
 CREATE TABLE "footprints" (
     "id" serial PRIMARY KEY NOT NULL,
     "period" date NOT NULL,
-    "project_id" INT REFERENCES "projects" NOT NULL,
-    "country_id" INT REFERENCES "countries" NOT NULL,
-    "type_id" INT REFERENCES "types" NOT NULL
+    "project_id" INT REFERENCES "projects" NOT NULL
 );
 
 CREATE TABLE "living" (
@@ -89,12 +97,6 @@ CREATE TABLE "shipping" (
     "truck" INT,
     "sea" INT,
     "footprint_id" INT REFERENCES "footprints" NOT NULL
-);
-
-CREATE TABLE "project_type" (
-    "id" serial PRIMARY KEY NOT NULL,
-    "project_id" INT REFERENCES "projects" NOT NULL,
-    "type_id" INT REFERENCES "types" NOT NULL
 );
 
 INSERT INTO "types" ("name") VALUES ('Health');
