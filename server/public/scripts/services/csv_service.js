@@ -96,7 +96,7 @@ myApp.service('csvService', function($http, $location){
 
   vm.userData = function(user){
    console.log(user);
-   vm.userFootprint.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear})
+   vm.userFootprint.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear}, {selectedOrganization: user.selectedOrganization});
    console.log(vm.userFootprint.userInfo);
   }
 
