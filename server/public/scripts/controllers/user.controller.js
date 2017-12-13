@@ -3,6 +3,9 @@ myApp.controller('UserController', function(UserService) {
   var vm = this;
   vm.userService = UserService;
   vm.userObject = UserService.userObject;
+  vm.countries = UserService.countries.data;
+  //this is for the list of user projects
+
 
 // Bar chart
   new Chart(document.getElementById("bar-chart"), {
