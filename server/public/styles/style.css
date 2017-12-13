@@ -154,8 +154,8 @@ float: center;
 }
 
 #bar {
-  max-height: 675px;
-  max-width: auto;
+  max-height: auto;
+  max-width: 600;
 }
 
 #demo {
@@ -173,6 +173,8 @@ float: center;
   max-height: 600px;
   max-width: 600px;
   background-color: lightgray;
+  text-transform: uppercase;
+  padding-left: 20px
   
 }
 

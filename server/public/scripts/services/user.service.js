@@ -88,7 +88,7 @@ myApp.service('UserService', function ($http, $location){
     console.log('Getting user projects', id);
     $http.get('member/userprojects/' + id).then(function (response) {
       self.userProjects = response.data;
-      console.log(self.userProjects);  
+      console.log('user projects', self.userProjects);  
     })
   }
   

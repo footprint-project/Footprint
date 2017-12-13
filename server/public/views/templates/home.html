@@ -25,7 +25,7 @@
                         <md-input-container>
                             
                             <label>Country of Operation</label>
-                            <md-select ng-model="selectedCountry" md-selected-text="selectedCountry">
+                            <md-select class="select" ng-model="lc.UserService">
                                 <md-option ng-repeat="country in lc.UserService.countries.data">
                                     <em>{{country.name}}</em>
                                    
@@ -39,7 +39,7 @@
                         <div>
                             <md-input-container>
                                 <label>Month</label>
-                                <md-select md-selected-text="selectedMonth" ng-model="selectedMonth">
+                                <md-select class="select" ng-model="lc.UserProjects">
                                     <md-option>
                                         <!-- <em>None</em> -->
                                     </md-option>
@@ -49,6 +49,7 @@
                             </md-input-container>
                             <md-input-container>
                                 <label>Year</label>
+                                <input>
                                 <md-select ng-model="selectedYear" md-selected-text="selectedYear" ng-value="">
                                     <md-option>
                                         
