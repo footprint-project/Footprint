@@ -96,6 +96,7 @@ CREATE TABLE "shipping" (
     "air" INT,
     "truck" INT,
     "sea" INT,
+    "freight_train" INT,
     "footprint_id" INT REFERENCES "footprints" NOT NULL
 );
 
