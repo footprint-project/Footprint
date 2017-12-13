@@ -1,22 +1,63 @@
-<div class="container">
+
     <div ng-include="'views/partials/nav.html'"></div>
-    <div id="dashbody" layout="column" layout-align="center">
-    <div id="dashheader">
-    <h1>{{uc.userObject.organization}} DASHBOARD</h1>
-    </div>
-    </div>
-     <md-content>
-                <div id="uploaddash" layout="column" layout-align="center end">
-                <div class="upload-btn-wrapper">
-                    <md-button class="md-raised" cursor:pointer>Upload New Footprint<md-icon class="material-icons">attach_file</md-icon></md-button>
-                    <input type="file" name="myfile">
-                </div>
-               </div>
-            </md-content>
+     
+    <md-content class="container">
+    <div id="dashheader" layout="row" layout-align="center center">
     
-    <div id="dashbody" layout="column" layout-align="center center">
-        <img id="globe" src="images/globe.png">
-            </div>
-            
-          </div>  
+    <h1>{{uc.userObject.organization}} DASHBOARD</h1>
+    
+    
+        <!-- <img id="globe" src="images/globe.png"> -->
         </div>
+    <div layout="row">
+        <div  id="bar" flex="70">
+       <h2>TOTAL FOOTPRINT</h2>
+    
+        <canvas id="bar-chart" width="400" height="225"></canvas>
+        <!-- <canvas id="line-chart" width="400" height="225"></canvas> -->
+    
+    
+        </div>
+       
+        <div flex="30">
+        <h2>RECENT PROJECTS</h2>
+        <md-card id="recent">
+            <h3 ng-repeat="userProject in uc.userService.userProjects">
+             {{userProject.name}}
+            </h3>
+             
+        </md-card>
+
+
+        
+
+        </div>
+</div>
+<div layout="row" layout-align="left">
+    <md-input-container>
+        <label>Project</label>
+        
+        <md-select class="select" ng-model="uc.userProjects">
+            <md-option ng-repeat="userProject in uc.userService.userProjects">
+                 {{userProject.name}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container>
+    
+        <label>Country of Operation</label>
+        <md-select class="select" ng-model="uc.userService">
+            <md-option ng-repeat="country in uc.userService.countries.data">
+                <em>{{country.name}}</em>
+    
+            </md-option>
+            <!-- <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
+                                        {{country.abbrev}}
+                                    </md-option> -->
+        </md-select>
+    </md-input-container>
+     
+</div>
+           
+       
+    </md-content>

@@ -73,4 +73,29 @@ router.get('/footprints_footprint', function(req, res) {
   });
 });
 
+// for the list of user projects on projects view
+router.get('/userprojects/:userId', function (req, res) {
+    console.log('user id', req.user);
+    userId = req.user.id;
+    console.log(userId);
+    pool.connect(function (err, db, done) {
+        if (err) {
+            console.log('Error connecting', err);
+            res.sendStatus(500);
+        } else {
+            var queryText = 'SELECT * from "projects" WHERE "user_id" = $1;';
+            db.query(queryText, [userId], function (err, result) {
+                done();
+                if (err) {
+                    console.log('Error making query', err);
+                    res.sendStatus(500);
+                } else {
+                    console.log('result', result.rows);
+                    res.send(result.rows);
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;

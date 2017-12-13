@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-cloak>
     <div ng-include="'/views/partials/login.html'"></div>
 
     <div layout="row" layout-xs="column">
@@ -22,15 +22,15 @@
                     <div layout-gt-sm="row">
 
                         <div>
-                            <md-input-container>
-
-                                <label>Country of Operation</label>
-                                <md-select ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
-                                    <md-option ng-repeat="country in lc.UserService.countries.data">
-                                        <em>{{country.name}}</em>
-
-                                    </md-option>
-                                    <!-- <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
+                        <md-input-container>
+                            
+                            <label>Country of Operation</label>
+                            <md-select class="select" ng-model="lc.UserService">
+                                <md-option ng-repeat="country in lc.UserService.countries.data">
+                                    <em>{{country.name}}</em>
+                                   
+                                </md-option>
+                                <!-- <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
                                     {{country.abbrev}}
                                 </md-option> -->
                                 </md-select>
@@ -39,7 +39,7 @@
                         <div>
                             <md-input-container>
                                 <label>Month</label>
-                                <md-select md-selected-text="user.selectedMonth" ng-model="user.selectedMonth">
+                                <md-select class="select" ng-model="lc.UserProjects">
                                     <md-option>
                                         <!-- <em>None</em> -->
                                     </md-option>
@@ -49,7 +49,8 @@
                             </md-input-container>
                             <md-input-container>
                                 <label>Year</label>
-                                <md-select ng-model="user.selectedYear" md-selected-text="user.selectedYear" ng-value="">
+                                <input>
+                                <md-select ng-model="selectedYear" md-selected-text="selectedYear" ng-value="">
                                     <md-option>
 
                                     </md-option>
@@ -65,12 +66,12 @@
             </div>
 
             </md-content>
-            <div>
-
-                <h3>PROJECT TYPE</h3>
-                <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
-
-                <pre ng-bind="lst | json">
+            <div id="projectcheckboxes">
+                                 
+                                <h3>PROJECT TYPE</h3>
+                                    <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
+                                
+                                <pre ng-bind="lst | json">
                                </pre>
                 <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
             </div>

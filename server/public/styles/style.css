@@ -130,8 +130,8 @@ float: center;
 }
 
 #globe {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   padding-top: -100px;
 }
 
@@ -144,5 +144,37 @@ float: center;
   align-self: right;
 }
 
+#dashbody {
+  background: url("../images/globe.png");
+  background-repeat: no-repeat;
+  max-height: 100%;
+  
+  
 
+}
+
+#bar {
+  max-height: auto;
+  max-width: 600;
+}
+
+#demo {
+  max-height: auto;
+  max-width: 40%;
+}
+
+#projectcheckboxes {
+  max-width: 75%;
+  justify-content: center;
+}
+
+#recent {
+  min-height: 400px;
+  max-height: 600px;
+  max-width: 600px;
+  background-color: lightgray;
+  text-transform: uppercase;
+  padding-left: 20px
+  
+}
 
