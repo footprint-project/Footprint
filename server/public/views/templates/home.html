@@ -9,12 +9,12 @@
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
 
                 <md-content layout-padding class="inputs">
-
+                    
                     <div layout-gt-sm="row">
 
                         <md-input-container>
                             <label>Organization Name</label>
-                            <input ng-model="organizationName" md-selected-text="organizationName">
+                            <input ng-model="user.selectedOrganization">
                         </md-input-container>
 
                     </div>
@@ -58,11 +58,11 @@
                                         {{year}}
                                     </md-option>
                                 </md-select>
-                            </md-input-container>
+                            
                         </div>
                     </div>
                     </md-input-container>
-
+                
             </div>
 
             </md-content>
@@ -75,7 +75,7 @@
                                </pre>
                 <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
             </div>
-            <md-content>
+            
 
                 <div class="upload-btn-wrapper">
                     <md-button class="md-raised" cursor:pointer>Upload CSV

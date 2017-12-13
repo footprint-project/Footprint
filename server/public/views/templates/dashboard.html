@@ -36,26 +36,30 @@
 <div layout="row" layout-align="left">
     <md-input-container>
         <label>Project</label>
-        
-        <md-select class="select" ng-model="uc.userProjects">
+    
+        <md-select class="select" md-selected-text="selectedProject" ng-model="selectedProject">
             <md-option ng-repeat="userProject in uc.userService.userProjects">
-                 {{userProject.name}}
+                {{userProject.name}}
             </md-option>
         </md-select>
     </md-input-container>
     <md-input-container>
     
         <label>Country of Operation</label>
-        <md-select class="select" ng-model="uc.userService">
+        <md-select class="select" md-selected-text="selectedCountry" ng-model="selectedCountry">
             <md-option ng-repeat="country in uc.userService.countries.data">
-                <em>{{country.name}}</em>
-    
+                {{country.name}}
             </md-option>
-            <!-- <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
-                                        {{country.abbrev}}
-                                    </md-option> -->
         </md-select>
     </md-input-container>
+    <md-input-container>
+        <label>Project Type</label>
+        <md-select class="select" ng-model="uc.userService">
+            <md-option ng-repeat="country in uc.userService.countries.data">
+                {{country.name}}
+            </md-option>
+        </md-select>
+        </md-input-container>
      
 </div>
            
