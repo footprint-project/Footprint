@@ -5,7 +5,7 @@
         <div id="trialForm" flex>
             TRY IT FOR YOURSELF
             <a href="#register">Register</a>
-           
+            {{lc.userFootprint}}
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
 
                 <md-content layout-padding class="inputs">
@@ -18,14 +18,14 @@
                         </md-input-container>
 
                     </div>
-                    
+
                     <div layout-gt-sm="row">
-                       
+
                         <div>
                         <md-input-container>
                             
                             <label>Country of Operation</label>
-                            <md-select class="select" ng-model="lc.UserService">
+                            <md-select class="select" ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
                                 <md-option ng-repeat="country in lc.UserService.countries.data">
                                     <em>{{country.name}}</em>
                                    
@@ -33,13 +33,13 @@
                                 <!-- <md-option ng-repeat="" ng-value="" ng-disabled="$index === 1">
                                     {{country.abbrev}}
                                 </md-option> -->
-                            </md-select>
-                        </md-input-container>
-                    </div>
+                                </md-select>
+                            </md-input-container>
+                        </div>
                         <div>
                             <md-input-container>
                                 <label>Month</label>
-                                <md-select class="select" ng-model="lc.UserProjects">
+                                <md-select class="select" ng-model="user.selectedMonth" md-selected-text="user.selectedMonth">
                                     <md-option>
                                         <!-- <em>None</em> -->
                                     </md-option>
@@ -49,10 +49,10 @@
                             </md-input-container>
                             <md-input-container>
                                 <label>Year</label>
-                                <input>
-                                <md-select ng-model="selectedYear" md-selected-text="selectedYear" ng-value="">
+                                
+                                <md-select class="select" ng-model="user.selectedYear" md-selected-text="user.selectedYear" ng-value="">
                                     <md-option>
-                                        
+
                                     </md-option>
                                     <md-option ng-repeat="year in lc.years">
                                         {{year}}
@@ -73,25 +73,27 @@
                                 
                                 <pre ng-bind="lst | json">
                                </pre>
-                                <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
-                                </div>
+                <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
+            </div>
             <md-content>
-                
+
                 <div class="upload-btn-wrapper">
-                    <md-button class="md-raised" cursor:pointer>Upload CSV<md-icon class="material-icons">attach_file</md-icon></md-button>
-                    <input type="file" name="myfile">
+                    <md-button class="md-raised" cursor:pointer>Upload CSV
+                        <md-icon class="material-icons">attach_file</md-icon>
+                    </md-button>
+                    <input type="file" id="file" name="myfile">
                 </div>
-               
+
             </md-content>
             <div id="homeSubmit">
-                <md-button class="md-primary md-raised" ng-click="">Submit Data</md-button>
+                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.change(item, active)">Submit Data</md-button>
             </div>
         </div>
         <div id="demo" flex>
             VIEW FOOTPRINT'S FOOTPRINT
-            
-                <canvas id="doughnut-chart" width="400" height="225"></canvas>
-                <canvas id="line-chart" width="400" height="225"></canvas>
-            
+
+            <canvas id="doughnut-chart" width="400" height="225"></canvas>
+            <canvas id="line-chart" width="400" height="225"></canvas>
+
         </div>
-</div>
+    </div>

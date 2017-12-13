@@ -2,6 +2,7 @@ myApp.service('csvService', function($http, $location){
   console.log('csvService Loaded');
 
   var vm = this;
+  vm.userFootprint = {userInfo: [], userType: [], dataIn: [] };
 
   var csv = {
   plane: 0,
@@ -17,7 +18,10 @@ myApp.service('csvService', function($http, $location){
   propane: 0
 };
 
+//This data parses the data from uploaded CSVs.
   vm.parseData = function(data) {
+    console.log(data);
+
     var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
       //  console.log(dataNums);
 
@@ -52,7 +56,53 @@ myApp.service('csvService', function($http, $location){
           // console.log(newNum);
           csv.propane += Number(num);
         }
+        
       }
+      console.log(csv)
+      vm.valuesToArray(csv);
   };
 
-});
+  vm.valuesToArray = function(obj) {
+    var result = [];
+    for (var key in obj) {
+       if (obj.hasOwnProperty(key)) {
+           result.push(obj[key]);
+       }
+    }
+    vm.calculations(result);
+}
+
+  //  This function will calculate carbon footprint data
+  vm.calculations = function(result) {
+    // console.log('Test:', result[0]);
+    for (var i=0; i<result.length; i++) {
+      result.plane = (result[0] * .18026);
+      result.car= (result[1] * .18568);
+      result.train_travel = (result[2] * .01225);
+      result.air = (result[3] * 1.45648);
+      result.train_shipping = (result[4] * 2.60016271124822); //This needs to be updated
+      result.truck = (result[5] * 0.10559);
+      result.sea = (result[6] * 0.008979 );
+      result.hotel = (result[7] * 31.1);
+      result.fuel = (result[8] * 2.60016271124822);
+      result.grid = (result[9] * 0.35156 );
+      result.propane = (result[10] * 0.186455554041745)
+    }
+    var footprintIn = vm.userFootprint.dataIn;
+    footprintIn.push({plane: result.plane}, {car: result.car}, {train_travel: result.train_travel}, {air: result.air}, {train_shipping: result.train_shipping}, {truck: result.truck}, {sea: result.sea}, {hotel: result.hotel}, {fuel: result.fuel}, {grid: result.grid}, {propane: result.propane});
+    // vm.userFootprint.dataIn.push(result.plane);
+      console.log(result);
+  }
+
+  vm.userData = function(user){
+   console.log(user);
+   vm.userFootprint.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear})
+   console.log(vm.userFootprint.userInfo);
+  }
+
+  vm.typeData = function(sendData){
+    vm.userFootprint.userType = sendData;
+    console.log(vm.userFootprint.userType);
+  }
+
+}); //End CSV service.
