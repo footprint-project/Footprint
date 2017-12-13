@@ -29,15 +29,15 @@
        vm.selected.splice(vm.selected.indexOf(item), 1);
      }
    }
-//This function calls the CSV upload.
+//This function carries out the CSV upload.
   vm.uploadFile = function () {
-    
+
     console.log('clicked upload');
     var f = document.getElementById('file').files[0];
     var r = new FileReader();
     r.onloadend = function (e) {
       var data = e.target.result;
-      console.log(data);
+      // console.log(data);
       csvService.parseData(data);
     };
     r.readAsBinaryString(f);
@@ -106,7 +106,7 @@
   });
 
 
-  
+
 // var years = [1500];
 
 // var africa = [86,114,106];
@@ -138,7 +138,7 @@
 //           backgroundColor: "#4DDBF2",
 //           // fill: true
 //         }
-        
+
 //       ]
 //     }
 //   });
