@@ -12,6 +12,19 @@ INSERT INTO "projects" ("name", "user_id") VALUES ('Bears, Bears, Bears!', 3);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Whale of a Project', 2);
 INSERT INTO "projects" ("name", "user_id") VALUES ('Clean the Ocean', 2);
 
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (1, 3);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (2, 7);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (3, 5);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (4, 4);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (5, 2);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (6, 1);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (7, 6);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (8, 8);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (2, 9);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (6, 10);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (4, 11);
+INSERT INTO "project_type" ("project_id", "type_id") VALUES (1, 12);
+
 
 INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 3, '2016-08-01');
 INSERT INTO "footprints" ("project_id", "country_id", "type_id", "period") VALUES (4, 1, 1, '2016-11-01');
