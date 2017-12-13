@@ -2,7 +2,7 @@ myApp.service('csvService', function($http, $location){
   console.log('csvService Loaded');
 
   var vm = this;
-  vm.userFootprint = {userInfo: [], userType: [], data: [] };
+  vm.userFootprint = {userInfo: [], userType: [], dataIn: [] };
 
   var csv = {
   plane: 0,
@@ -79,21 +79,24 @@ myApp.service('csvService', function($http, $location){
       result.plane = (result[0] * .18026);
       result.car= (result[1] * .18568);
       result.train_travel = (result[2] * .01225);
-      result.air = (result[3] * 31.1);
-      result.train_shipping = (result[4] * 2.60016271124822);
-      result.truck = (result[5] * 0.35156);
-      result.sea = (result[6] * 0.186455554041745);
-      result.hotel = (result[7] * 1.45648);
-      result.fuel = (result[8] * 0.10559);
-      result.grid = (result[9] * 0.008979 );
+      result.air = (result[3] * 1.45648);
+      result.train_shipping = (result[4] * 2.60016271124822); //This needs to be updated
+      result.truck = (result[5] * 0.10559);
+      result.sea = (result[6] * 0.008979 );
+      result.hotel = (result[7] * 31.1);
+      result.fuel = (result[8] * 2.60016271124822);
+      result.grid = (result[9] * 0.35156 );
+      result.propane = (result[10] * 0.186455554041745)
     }
-    vm.userFootprint.data = result;
-      console.log(vm.userFootprint.data);
+    var footprintIn = vm.userFootprint.dataIn;
+    footprintIn.push({plane: result.plane}, {car: result.car}, {train_travel: result.train_travel}, {air: result.air}, {train_shipping: result.train_shipping}, {truck: result.truck}, {sea: result.sea}, {hotel: result.hotel}, {fuel: result.fuel}, {grid: result.grid}, {propane: result.propane});
+    // vm.userFootprint.dataIn.push(result.plane);
+      console.log(result);
   }
 
   vm.userData = function(user){
    
-   vm.userFootprint.userInfo = user;
+   vm.userFootprint.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear})
    console.log(vm.userFootprint.userInfo);
   }
 

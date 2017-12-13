@@ -15,7 +15,7 @@
     vm.years = [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011];
     vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
     vm.selected = [];
-    vm.userFootprint = csvService.userFootprint
+    vm.userFootprint = csvService.userFootprint;
 
     //This function monitors the checkboxes on the DOM.
     vm.change = function (item, active) {
