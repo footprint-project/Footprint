@@ -137,7 +137,7 @@ myApp.service('UserService', function ($http, $location){
       self.footprintsFootprint = response.data;
       var data = self.computeFootprint(self.footprintsFootprint);
       return self.groupByCategory(data);
-      
+
 
 
     }).catch(function(err) {
@@ -145,7 +145,53 @@ myApp.service('UserService', function ($http, $location){
     });
   };
 
-  
+
+  self.getFpDividedByProject = function() {
+    return $http.get('/member/footprint_by_project').then(function(response) {
+      console.log(response.data);
+      var allTheStuff = response.data;
+      var cleanedStuff = [];
+      cleanedStuff.push(allTheStuff[0]);
+
+      for (var i=1; i<allTheStuff.length; i++) {
+        var current = allTheStuff[i];
+        var prev = allTheStuff[i - 1];
+        if (current.name !== prev.name) {
+          cleanedStuff.push(current);
+        }
+      }
+      console.log(cleanedStuff);
+    }).catch(function(err) {
+      console.log('uh oh', err);
+    });
+  };
+
+  self.getFpDividedByProject();
+
+
+  self.getFpDividedByPeriod = function() {
+    return $http.get('/member/footprint_by_period').then(function(response) {
+      console.log(response.data);
+      var allTheStuff = response.data;
+      var cleanedStuff = [];
+      cleanedStuff.push(allTheStuff[0]);
+
+      for (var i=1; i<allTheStuff.length; i++) {
+        var current = allTheStuff[i];
+        var prev = allTheStuff[i - 1];
+        if (current.period !== prev.period) {
+          cleanedStuff.push(current);
+        }
+      }
+      console.log(cleanedStuff);
+    }).catch(function(err) {
+      console.log('uh oh', err);
+    });
+  };
+
+  self.getFpDividedByPeriod();
+
+
 
 
 
