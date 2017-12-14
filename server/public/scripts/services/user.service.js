@@ -72,17 +72,18 @@ myApp.service('UserService', function ($http, $location){
   self.getCountries();
   console.log(self.countries.data);
 
-  self.getLineGraphData = function (){
-    console.log('Getting Line graph Data');
-    $http.get('member/linegraph').then(function(response){
-      var lineGraphData = response.data.rows;
-      console.log(lineGraphData);
-    })
+  self.lineGraphSet = function(){
+    self.getLineGraphData = function (){
+      console.log('Getting Line graph Data');
+      $http.get('member/linegraph').then(function(response){
+        var lineGraphData = response.data.rows;
+        console.log(lineGraphData);
+        return lineGraphData
+      });
+    }
+    self.getLineGraphData();
   }
-
-
-
-  self.getLineGraphData();
+  self.lineGraphSet();
 
   //gets the users projects for the projects view
   self.getProjects = function (id) {
@@ -94,40 +95,38 @@ myApp.service('UserService', function ($http, $location){
   };
 
 
+  self.computeFootprint = function(footprint) {
+    console.log(footprint[0]);
+    var result = {};
+    result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+    result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+    result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+    result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+    result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+    result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+    result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+    result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+    result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+    result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+    result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+    console.log(result);
+    return result;
+  };
 
+  self.groupByCategory = function(footprint) {
+    var result = {};
+    console.log(footprint);
+    result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
+    result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
+    result.travel = footprint.plane + footprint.train + footprint.car;
+    self.result = result;
+    console.log(self.result);
+    return self.result;
+  };
 
-    self.computeFootprint = function(footprint) {
-      console.log(footprint[0]);
-      var result = {};
-      result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
-      result.car = CAR_CONVERSION * parseInt(footprint[0].car);
-      result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
-      result.air = AIR_CONVERSION * parseInt(footprint[0].air);
-      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
-      result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
-      result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
-      result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
-      result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
-      result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
-      result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
-      console.log(result);
-      return result;
-    };
-
-    self.groupByCategory = function(footprint) {
-      var result = {};
-      console.log(footprint);
-      result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
-      result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
-      result.travel = footprint.plane + footprint.train + footprint.car;
-      self.result = result;
-      console.log(self.result);
-      return self.result;
-    };
-
-    // var computeFpfp = function() {
-    //   self.computeFootprint(self.footprintsFootprint);
-    // };
+  // var computeFpfp = function() {
+  //   self.computeFootprint(self.footprintsFootprint);
+  // };
 
 
   // var fpfp = {};
@@ -137,9 +136,6 @@ myApp.service('UserService', function ($http, $location){
       self.footprintsFootprint = response.data;
       var data = self.computeFootprint(self.footprintsFootprint);
       return self.groupByCategory(data);
-
-
-
     }).catch(function(err) {
       console.log('oh noooooo', err);
     });
