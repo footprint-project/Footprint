@@ -28,7 +28,7 @@
      } else {
        vm.selected.splice(vm.selected.indexOf(item), 1);
      }
-   }
+   }; //End checkboxes function
 //This function carries out the CSV upload.
   vm.uploadFile = function () {
 
@@ -42,7 +42,7 @@
     };
     r.readAsBinaryString(f);
     console.log(r);
-  };
+  };  //End CSV upload
 
    // start doughnut
    new Chart(document.getElementById("doughnut-chart"), {

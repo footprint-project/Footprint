@@ -9,10 +9,10 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <md-input-container>
-                <label>Organization Name</label>
-                <input ng-model="user.selectedOrganization">
+                <label>Project Name</label>
+                <input ng-model="user.projectName">
             </md-input-container>
-{{ddc}}
+
         </div>
 
         <div layout-gt-sm="row">
@@ -22,7 +22,7 @@
 
                     <label>Country of Operation</label>
                     <md-select class="select" ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
-                        <md-option ng-repeat="country in lc.UserService.countries.data">
+                        <md-option ng-repeat="country in ddc.countries">
                             <em>{{country.name}}</em>
 
                         </md-option>
@@ -39,7 +39,7 @@
                         <md-option>
                             <!-- <em>None</em> -->
                         </md-option>
-                        <md-option ng-repeat="month in lc.months">
+                        <md-option ng-repeat="month in ddc.months">
                             {{month}}
                     </md-select>
                 </md-input-container>
@@ -50,7 +50,7 @@
                         <md-option>
 
                         </md-option>
-                        <md-option ng-repeat="year in lc.years">
+                        <md-option ng-repeat="year in ddc.years">
                             {{year}}
                         </md-option>
                     </md-select>
@@ -58,7 +58,7 @@
                 <div id="projectcheckboxes">
 
                     <h3>PROJECT TYPE</h3>
-                    <md-checkbox ng-model="active" ng-repeat="item in ddc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
+                    <md-checkbox ng-model="active" ng-repeat="item in ddc.items" ng-change="ddc.change(item, active)"> {{item}}</md-checkbox>
 
                     <pre ng-bind="lst | json">
                       </pre>
@@ -74,7 +74,7 @@
                     <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
                 </div>
                 <div id="homeSubmit">
-                    <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.change(item, active)">Submit Data</md-button>
+                    <md-button class="md-primary md-raised" ng-click="ddc.getUserData(user); ddc.uploadFile(); ddc.change(item, active)">Submit Data</md-button>
                 </div>
             </div>
 </md-dialog>
