@@ -1,4 +1,4 @@
-myApp.service('csvService', function($http, $location){
+myApp.service('csvService', function($http, $location, UserService){
   console.log('csvService Loaded');
 
   var vm = this;
@@ -58,25 +58,31 @@ myApp.service('csvService', function($http, $location){
       console.log(csv);
       vm.valuesToArray(csv);
 
-      $http.post('/admin', csv).then(function(response) {
+      vm.trialData = UserService.computeTrialFootprint(csv);
+
+      return $http.post('/admin', csv).then(function(response) {
         console.log('here you go!', csv);
+        csv = {
+          plane: 0,
+          car: 0,
+          train_travel: 0,
+          air: 0,
+          train_shipping: 0,
+          truck: 0,
+          sea: 0,
+          hotel: 0,
+          fuel: 0,
+          grid: 0,
+          propane: 0
+        };
+
+        return vm.trialData;
+        //how odd that it logs out all as 0s here but posts into the DB ok....asynchonicity man.
       }).catch(function (err) {
         console.log('whooooops');
       });
 
-    csv = {
-      plane: 0,
-      car: 0,
-      train_travel: 0,
-      air: 0,
-      train_shipping: 0,
-      truck: 0,
-      sea: 0,
-      hotel: 0,
-      fuel: 0,
-      grid: 0,
-      propane: 0
-    };
+
   };
 
   vm.valuesToArray = function(obj) {

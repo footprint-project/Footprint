@@ -1,4 +1,4 @@
- myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
+ myApp.controller('LoginController', function ($http, $location, $timeout, UserService, donutService, csvService) {
 
     console.log('LoginController created');
     var vm = this;
@@ -28,32 +28,73 @@
      } else {
        vm.selected.splice(vm.selected.indexOf(item), 1);
      }
+<<<<<<< HEAD
    }; //End checkboxes function
+=======
+   };
+
+//re-draws the donut graph with trial data:
+   vm.donutDataSetTrial = function(x){
+       vm.donutResult = x;
+       console.log(vm.donutResult);
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: ["Living", "Travel", "Shipping"],
+          datasets: [
+            {
+              label: "CO2",
+              backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+              data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Total Footprint'
+          }
+        }
+      });
+
+   };
+
+>>>>>>> 53d0c18b8995afb31bcf50f6b04a25ba21732ace
 //This function carries out the CSV upload.
   vm.uploadFile = function () {
-
     console.log('clicked upload');
     var f = document.getElementById('file').files[0];
     var r = new FileReader();
     r.onloadend = function (e) {
       var data = e.target.result;
       // console.log(data);
-      csvService.parseData(data);
+      csvService.parseData(data).then(function(response) {
+        console.log(response);
+        vm.donutDataSetTrial(response);
+      });
     };
     r.readAsBinaryString(f);
-    console.log(r);
-  };  //End CSV upload
+    // console.log(csvService.trialData);
+  };
+
+
+
+
 
    // start doughnut
+vm.donutDataSet = function(){
+  UserService.getFootprintsFootprint().then(function(response){
+    vm.donutResult = response;
+    console.log(vm.donutResult);
    new Chart(document.getElementById("doughnut-chart"), {
      type: 'doughnut',
      data: {
        labels: ["Living", "Travel", "Shipping"],
        datasets: [
          {
-           label: "Population (millions)",
+           label: "CO2",
            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-           data: [2478, 5267, 734]
+           data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
          }
        ]
      },
@@ -64,6 +105,12 @@
        }
      }
    });
+ });
+};
+
+
+   vm.donutDataSet();
+
 
   new Chart(document.getElementById("line-chart"), {
     type: 'line',
