@@ -28,7 +28,33 @@
      } else {
        vm.selected.splice(vm.selected.indexOf(item), 1);
      }
-   }
+   };
+
+   vm.donutDataSetTrial = function(x){
+       vm.donutResult = x;
+       console.log(vm.donutResult);
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: ["Living", "Travel", "Shipping"],
+          datasets: [
+            {
+              label: "CO2",
+              backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+              data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Total Footprint'
+          }
+        }
+      });
+
+   };
+
 //This function carries out the CSV upload.
   vm.uploadFile = function () {
     console.log('clicked upload');
@@ -37,11 +63,17 @@
     r.onloadend = function (e) {
       var data = e.target.result;
       // console.log(data);
-      csvService.parseData(data);
+      csvService.parseData(data).then(function(response) {
+        console.log(response);
+        vm.donutDataSetTrial(response);
+      });
     };
     r.readAsBinaryString(f);
-    console.log(r);
+    // console.log(csvService.trialData);
   };
+
+
+
 
 
    // start doughnut
@@ -68,8 +100,10 @@ vm.donutDataSet = function(){
        }
      }
    });
-  })
-  }
+ });
+};
+
+
    vm.donutDataSet();
 
 
