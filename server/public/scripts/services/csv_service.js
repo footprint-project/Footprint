@@ -104,10 +104,11 @@ myApp.service('csvService', function($http, $location){
       result.hotel = (result[7] * 31.1);
       result.fuel = (result[8] * 2.60016271124822);
       result.grid = (result[9] * 0.35156 );
-      result.propane = (result[10] * 0.186455554041745)
+      result.propane = (result[10] * 0.186455554041745);
+      result.totals = (result.plane + result.car + result.train_travel + result.air + result.train_shipping + result.truck + result.sea + result.hotel + result.fuel + result.grid + result.propane)
     }
     var footprintIn = vm.userFootprint.dataIn;
-    footprintIn.push({plane: result.plane}, {car: result.car}, {train_travel: result.train_travel}, {air: result.air}, {train_shipping: result.train_shipping}, {truck: result.truck}, {sea: result.sea}, {hotel: result.hotel}, {fuel: result.fuel}, {grid: result.grid}, {propane: result.propane});
+    footprintIn.push({plane: result.plane}, {car: result.car}, {train_travel: result.train_travel}, {air: result.air}, {train_shipping: result.train_shipping}, {truck: result.truck}, {sea: result.sea}, {hotel: result.hotel}, {fuel: result.fuel}, {grid: result.grid}, {propane: result.propane}, {total: result.totals});
     // vm.userFootprint.dataIn.push(result.plane);
       console.log(result);
   }
