@@ -1,4 +1,4 @@
- myApp.controller('LoginController', function ($http, $location, $timeout, UserService, csvService) {
+ myApp.controller('LoginController', function ($http, $location, $timeout, UserService, donutService, csvService) {
 
     console.log('LoginController created');
     var vm = this;
@@ -30,6 +30,7 @@
      }
    };
 
+//re-draws the donut graph with trial data:
    vm.donutDataSetTrial = function(x){
        vm.donutResult = x;
        console.log(vm.donutResult);
