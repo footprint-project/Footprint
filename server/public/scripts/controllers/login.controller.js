@@ -28,9 +28,6 @@
      } else {
        vm.selected.splice(vm.selected.indexOf(item), 1);
      }
-<<<<<<< HEAD
-   }; //End checkboxes function
-=======
    };
 
 //re-draws the donut graph with trial data:
@@ -59,7 +56,6 @@
 
    };
 
->>>>>>> 53d0c18b8995afb31bcf50f6b04a25ba21732ace
 //This function carries out the CSV upload.
   vm.uploadFile = function () {
     console.log('clicked upload');
