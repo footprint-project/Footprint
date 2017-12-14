@@ -124,9 +124,38 @@ myApp.service('UserService', function ($http, $location){
     return self.result;
   };
 
-  // var computeFpfp = function() {
-  //   self.computeFootprint(self.footprintsFootprint);
-  // };
+    self.computeFootprint = function(footprint) {
+      console.log(footprint);
+      var result = {};
+      result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
+      result.car = CAR_CONVERSION * parseInt(footprint.car);
+      result.train = TRAIN_CONVERSION * parseInt(footprint.train);
+      result.air = AIR_CONVERSION * parseInt(footprint.air);
+      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint.freight_train);
+      result.truck = TRUCK_CONVERSION * parseInt(footprint.truck);
+      result.sea = SEA_CONVERSION * parseInt(footprint.sea);
+      result.hotel = HOTEL_CONVERSION * parseInt(footprint.hotel);
+      result.fuel = FUEL_CONVERSION * parseInt(footprint.fuel);
+      result.grid = GRID_CONVERSION * parseInt(footprint.grid);
+      result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
+      console.log(result);
+      return result;
+    };
+
+    self.groupByCategory = function(footprint) {
+      var result = {};
+      console.log(footprint);
+      result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
+      result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
+      result.travel = footprint.plane + footprint.train + footprint.car;
+      self.result = result;
+      console.log(self.result);
+      return self.result;
+    };
+
+    // var computeFpfp = function() {
+    //   self.computeFootprint(self.footprintsFootprint);
+    // };
 
 
   // var fpfp = {};
@@ -134,12 +163,14 @@ myApp.service('UserService', function ($http, $location){
   self.getFootprintsFootprint = function() {
     return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
-      var data = self.computeFootprint(self.footprintsFootprint);
+      var data = self.computeFootprint(self.footprintsFootprint[0]);
       return self.groupByCategory(data);
     }).catch(function(err) {
       console.log('oh noooooo', err);
     });
   };
+
+
 
 
   self.getFpDividedByProject = function() {
@@ -187,7 +218,15 @@ myApp.service('UserService', function ($http, $location){
 
   self.getFpDividedByPeriod();
 
+  self.computeTrialFootprint = function(footprint) {
+    console.log(footprint);
+    footprint.train = footprint.train_travel;
+    footprint.freight_train = footprint.train_shipping;
+    console.log(self.computeFootprint(footprint));
+    var data = self.computeFootprint(footprint);
+    return self.groupByCategory(data);
 
+  };
 
 
 
