@@ -4,18 +4,35 @@ myApp.service('UserService', function ($http, $location){
   self.userObject = {};
   self.calc = {data: []};
   self.userProjects = {};
-  self.countries = {data: []}
+  self.countries = {data: []};
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
-  
-  
+
+  self.footprintsFootprint = {};
+
+
+  const PLANE_CONVERSION = 0.18026;
+  const CAR_CONVERSION = 0.18568;
+  const TRAIN_CONVERSION = 0.01225;
+  const AIR_CONVERSION = 1.45648;
+  const FREIGHT_CONVERSION = 2.60016;
+  const TRUCK_CONVERSION = 0.10559;
+  const SEA_CONVERSION = 0.008979;
+  const HOTEL_CONVERSION = 31.1;
+  const FUEL_CONVERSION = 2.60016;
+  const GRID_CONVERSION = 0.35156;
+  const PROPANE_CONVERSION = 0.1864;
+
+  var fpfp = {};
+
+
   //Get user function
   self.getuser = function(){
     console.log('UserService -- getuser');
     $http.get('/user').then(function(response) {
         if(response.data.username) {
             // user has a current session on the server
-            console.log(response.data);            
+            console.log(response.data);
             self.userObject.userName = response.data.username;
             self.userObject.organization = response.data.organization;
             self.userObject.name = response.data.name;
@@ -71,10 +88,65 @@ myApp.service('UserService', function ($http, $location){
     console.log('Getting user projects', id);
     $http.get('member/userprojects/' + id).then(function (response) {
       self.userProjects = response.data;
-      console.log('user projects', self.userProjects);  
-    })
-  }
-  
+      console.log('user projects', self.userProjects);
+    });
+  };
+
+
+
+    self.computeFootprint = function(footprint) {
+      console.log(footprint[0]);
+      var result = {};
+      result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+      result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+      result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+      result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+      result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+      result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+      result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+      result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+      result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+      result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+      console.log(result);
+      return result;
+    };
+
+    self.groupByCategory = function(footprint) {
+      var result = {};
+      console.log(footprint);
+      result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
+      result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
+      result.travel = footprint.plane + footprint.train + footprint.car;
+      console.log(result);
+    };
+
+    // var computeFpfp = function() {
+    //   self.computeFootprint(self.footprintsFootprint);
+    // };
+
+
+  // var fpfp = {};
+  self.getFootprintsFootprint = function() {
+    $http.get('/member/footprints_footprint').then(function(response) {
+      self.footprintsFootprint = response.data;
+      // fpfp = response.data;
+      console.log(self.footprintsFootprint);
+      var data = self.computeFootprint(self.footprintsFootprint);
+      self.groupByCategory(data);
+      
+
+
+    }).catch(function(err) {
+      console.log('oh noooooo', err);
+    });
+
+
+  };
+
+  self.getFootprintsFootprint();
+
+
+
 
 }); //End of UserService
-
