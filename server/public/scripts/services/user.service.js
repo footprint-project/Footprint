@@ -31,27 +31,27 @@ myApp.service('UserService', function ($http, $location){
   self.getuser = function(){
     console.log('UserService -- getuser');
     $http.get('/user').then(function(response) {
-        if(response.data.username) {
-            // user has a current session on the server
-            console.log(response.data);
-            self.userObject.userName = response.data.username;
-            self.userObject.organization = response.data.organization;
-            self.userObject.name = response.data.name;
-            self.userObject.position = response.data.position;
-            self.userObject.id = response.data.id;
-          console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
-        } else {
-            console.log('UserService -- getuser -- failure');
-            // user has no session, bounce them back to the login page
-            $location.path("/home");
-        }
+      if(response.data.username) {
+        // user has a current session on the server
+        console.log(response.data);
+        self.userObject.userName = response.data.username;
+        self.userObject.organization = response.data.organization;
+        self.userObject.name = response.data.name;
+        self.userObject.position = response.data.position;
+        self.userObject.id = response.data.id;
+        console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
+      } else {
+        console.log('UserService -- getuser -- failure');
+        // user has no session, bounce them back to the login page
+        $location.path("/home");
+      }
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
       $location.path("/home");
     })
   }, //End get user function
 
-//Function that logs out user
+  //Function that logs out user
   self.logout = function() {
     console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
@@ -63,8 +63,8 @@ myApp.service('UserService', function ($http, $location){
   self.getCountries = function() {
     console.log('Getting countries');
     $http.get('/member/countries').then(function(response) {
-    var countries = response.data.rows;
-    console.log(countries);
+      var countries = response.data.rows;
+      console.log(countries);
       self.countries.data = countries;
       console.log(self.countries.data);
     })
@@ -92,6 +92,7 @@ myApp.service('UserService', function ($http, $location){
       console.log('user projects', self.userProjects);
     });
   };
+
 
 
 
@@ -130,11 +131,10 @@ myApp.service('UserService', function ($http, $location){
 
 
   // var fpfp = {};
+
   self.getFootprintsFootprint = function() {
     return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
-      // fpfp = response.data;
-      console.log(self.footprintsFootprint);
       var data = self.computeFootprint(self.footprintsFootprint);
       return self.groupByCategory(data);
       
@@ -143,8 +143,6 @@ myApp.service('UserService', function ($http, $location){
     }).catch(function(err) {
       console.log('oh noooooo', err);
     });
-
-
   };
 
   
