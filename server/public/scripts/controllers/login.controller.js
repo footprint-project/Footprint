@@ -109,18 +109,64 @@
   vm.donutDataSet();
 
   vm.lineChart = function(){
-    UserService.getLineGraphData().then(function(response){
+    donutService.getFpDividedByPeriod().then(function(response){
       vm.lineData = response;
-      for (i=0; i<vm.lineData.length; i+=1){
-        
-      }
+      var month = '';
+      var sum = 0;
       console.log(vm.lineData);
+      var periodArray = [];
+      var sumsArray = [];
+      for (var i=0; i<vm.lineData.length; i+=1){
+        sum = vm.lineData[i].air + vm.lineData[i].car + vm.lineData[i].freight_train + vm.lineData[i].fuel + vm.lineData[i].grid + vm.lineData[i].hotel + vm.lineData[i].plane + vm.lineData[i].propane + vm.lineData[i].sea + vm.lineData[i].train + vm.lineData[i].truck;
+        sumsArray.push(sum);
+        console.log(sumsArray);
+        if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 01){
+          month = 'Jan'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 02) {
+          month = 'Feb'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 03) {
+          month = 'Mar'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 04) {
+          month = 'Apr'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 05) {
+          month = 'May'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 06) {
+          month = 'Jun'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 07) {
+          month = 'Jul'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 08) {
+          month = 'Aug'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 09) {
+          month = 'Sep'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 10) {
+          month = 'Oct'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 11) {
+          month = 'Nov'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 12) {
+          month = 'Dec'
+        }
+        console.log(month);
+        periodArray.push(month);
+        console.log(periodArray);
+      }
       new Chart(document.getElementById("line-chart"), {
         type: 'line',
         data: {
-          labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
+          labels: periodArray,
           datasets: [{
-            data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+            //make an array with the sum of all categories
+            data: sumsArray,
             label: "CO2",
             borderColor: "#3e95cd",
             fill: false

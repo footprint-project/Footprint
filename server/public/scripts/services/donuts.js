@@ -1,6 +1,7 @@
 
 myApp.service('donutService', function($http, $location, UserService) {
   console.log('donutService Loaded');
+  var self = this;
 
   self.getFpDividedByProject = function() {
     return $http.get('/member/footprint_by_project').then(function(response) {
@@ -32,7 +33,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
   self.getFpDividedByPeriod = function() {
     return $http.get('/member/footprint_by_period').then(function(response) {
-      // console.log(response.data);
+      console.log(response.data);
       var allTheStuff = response.data;
       var cleanedStuff = [];
       cleanedStuff.push(allTheStuff[0]);
@@ -49,8 +50,9 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         periods.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      // console.log(cleanedStuff);
+      console.log(cleanedStuff);
       console.log(periods);
+      return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
     });
