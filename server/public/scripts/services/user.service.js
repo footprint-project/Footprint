@@ -7,6 +7,7 @@ myApp.service('UserService', function ($http, $location){
   self.countries = {data: []};
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
+  self.result = {};
 
   self.footprintsFootprint = {};
 
@@ -118,7 +119,9 @@ myApp.service('UserService', function ($http, $location){
       result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
       result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
       result.travel = footprint.plane + footprint.train + footprint.car;
-      console.log(result);
+      self.result = result;
+      console.log(self.result);
+      return self.result;
     };
 
     // var computeFpfp = function() {
@@ -128,12 +131,12 @@ myApp.service('UserService', function ($http, $location){
 
   // var fpfp = {};
   self.getFootprintsFootprint = function() {
-    $http.get('/member/footprints_footprint').then(function(response) {
+    return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
       // fpfp = response.data;
       console.log(self.footprintsFootprint);
       var data = self.computeFootprint(self.footprintsFootprint);
-      self.groupByCategory(data);
+      return self.groupByCategory(data);
       
 
 
@@ -144,7 +147,7 @@ myApp.service('UserService', function ($http, $location){
 
   };
 
-  self.getFootprintsFootprint();
+  
 
 
 
