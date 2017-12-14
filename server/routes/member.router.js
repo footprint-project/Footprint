@@ -83,7 +83,7 @@ router.get('/userprojects/:userId', function (req, res) {
             console.log('Error connecting', err);
             res.sendStatus(500);
         } else {
-            var queryText = 'SELECT * from "projects" WHERE "user_id" = $1;';
+            var queryText = 'SELECT projects.*, array_agg(project_type.type_id) as projectTypes, array_agg(types.name) as names FROM projects JOIN project_type ON projects.id = project_type.project_id JOIN types ON project_type.type_id = types.id WHERE user_id = $1 GROUP BY projects.id;';
             db.query(queryText, [userId], function (err, result) {
                 done();
                 if (err) {
