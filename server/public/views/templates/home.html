@@ -1,6 +1,6 @@
 <div class="container" ng-cloak>
     <div ng-include="'/views/partials/login.html'"></div>
-
+    <div class="container" ng-cloak>
     <div layout="row" layout-xs="column">
         <div id="trialForm" flex>
             TRY IT FOR YOURSELF
@@ -8,7 +8,7 @@
             {{lc.userFootprint}}
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
 
-                <md-content layout-padding class="inputs">
+                <md-content layout-padding>
                     
                     <div layout-gt-sm="row">
 
@@ -58,14 +58,14 @@
                                         {{year}}
                                     </md-option>
                                 </md-select>
-                            
+                            </md-input-container>
                         </div>
                     </div>
-                    </md-input-container>
-                
+                    
+                </md-content>
             </div>
 
-            </md-content>
+            
             <div id="projectcheckboxes">
                                  
                                 <h3>PROJECT TYPE</h3>
@@ -73,7 +73,7 @@
                                 
                                 <pre ng-bind="lst | json">
                                </pre>
-                <!-- <h3>You've chosen: {{lc.selected}}</h3> -->
+                
             </div>
             
             <div>

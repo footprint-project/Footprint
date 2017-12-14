@@ -10,11 +10,11 @@
 
 
    <span flex></span>
-  <div class="upload-btn-wrapper">
-    <md-button class="md-raised" cursor:pointer>Upload New Footprint
-      <md-icon class="material-icons">attach_file</md-icon>
+  <div ng-controller="UserController as uc">
+    <md-button class="md-primary md-raised" ng-click="uc.upload($event, $index)" class="md-raised" aria-label="Open Dialog"
+      id="dashdialog">
+      Upload New Footprint
     </md-button>
-    <input type="file" name="myfile">
   </div>
   <md-button class="md-raised md-primary" id="log" ng-click="uc.userService.logout()">Log Out</md-button>
 
