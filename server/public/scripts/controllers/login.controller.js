@@ -31,7 +31,6 @@
    }
 //This function carries out the CSV upload.
   vm.uploadFile = function () {
-
     console.log('clicked upload');
     var f = document.getElementById('file').files[0];
     var r = new FileReader();
@@ -44,16 +43,21 @@
     console.log(r);
   };
 
+
    // start doughnut
+vm.donutDataSet = function(){
+  UserService.getFootprintsFootprint().then(function(response){
+    vm.donutResult = response;
+    console.log(vm.donutResult);
    new Chart(document.getElementById("doughnut-chart"), {
      type: 'doughnut',
      data: {
        labels: ["Living", "Travel", "Shipping"],
        datasets: [
          {
-           label: "Population (millions)",
+           label: "CO2",
            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-           data: [2478, 5267, 734]
+           data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
          }
        ]
      },
@@ -64,6 +68,10 @@
        }
      }
    });
+  })
+  }
+   vm.donutDataSet();
+
 
   new Chart(document.getElementById("line-chart"), {
     type: 'line',

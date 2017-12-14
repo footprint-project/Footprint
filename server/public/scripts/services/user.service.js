@@ -7,6 +7,7 @@ myApp.service('UserService', function ($http, $location){
   self.countries = {data: []};
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
+  self.result = {};
 
   self.footprintsFootprint = {};
 
@@ -94,45 +95,57 @@ myApp.service('UserService', function ($http, $location){
 
 
 
-  self.computeFootprint = function(footprint) {
-    // console.log(footprint[0]);
-    var result = {};
-    result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
-    result.car = CAR_CONVERSION * parseInt(footprint[0].car);
-    result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
-    result.air = AIR_CONVERSION * parseInt(footprint[0].air);
-    result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
-    result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
-    result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
-    result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
-    result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
-    result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
-    result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
-    console.log(result);
-    return result;
-  };
 
-  self.groupByCategory = function(footprint) {
-    var result = {};
-    // console.log(footprint);
-    result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
-    result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
-    result.travel = footprint.plane + footprint.train + footprint.car;
-    console.log(result);
-  };
+    self.computeFootprint = function(footprint) {
+      console.log(footprint[0]);
+      var result = {};
+      result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+      result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+      result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+      result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+      result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+      result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+      result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+      result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+      result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+      result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+      console.log(result);
+      return result;
+    };
+
+    self.groupByCategory = function(footprint) {
+      var result = {};
+      console.log(footprint);
+      result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
+      result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
+      result.travel = footprint.plane + footprint.train + footprint.car;
+      self.result = result;
+      console.log(self.result);
+      return self.result;
+    };
+
+    // var computeFpfp = function() {
+    //   self.computeFootprint(self.footprintsFootprint);
+    // };
+
+
+  // var fpfp = {};
 
   self.getFootprintsFootprint = function() {
-    $http.get('/member/footprints_footprint').then(function(response) {
+    return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
       var data = self.computeFootprint(self.footprintsFootprint);
-      self.groupByCategory(data);
+      return self.groupByCategory(data);
+      
+
 
     }).catch(function(err) {
       console.log('oh noooooo', err);
     });
   };
 
-  self.getFootprintsFootprint();
+  
 
 
 
