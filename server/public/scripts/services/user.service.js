@@ -8,7 +8,7 @@ myApp.service('UserService', function ($http, $location){
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
   self.result = {};
-
+  self.lineGraphData={};
   self.footprintsFootprint = {};
 
 
@@ -72,18 +72,13 @@ myApp.service('UserService', function ($http, $location){
   self.getCountries();
   console.log(self.countries.data);
 
-  self.lineGraphSet = function(){
-    self.getLineGraphData = function (){
-      console.log('Getting Line graph Data');
-      $http.get('member/linegraph').then(function(response){
-        var lineGraphData = response.data.rows;
-        console.log(lineGraphData);
-        return lineGraphData
-      });
-    }
-    self.getLineGraphData();
+ self.getLineGraphData = function (){
+    console.log('Getting Line graph Data');
+    return $http.get('member/linegraph').then(function(response){
+      return self.lineGraphData = response.data.rows;
+    });
   }
-  self.lineGraphSet();
+
 
   //gets the users projects for the projects view
   self.getProjects = function (id) {

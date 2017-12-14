@@ -16,6 +16,7 @@
     vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
     vm.selected = [];
     vm.userFootprint = csvService.userFootprint;
+    vm.lineData = [];
 
     //This function monitors the checkboxes on the DOM.
     vm.change = function (item, active) {
@@ -77,57 +78,64 @@
 
 
    // start doughnut
-vm.donutDataSet = function(){
-  UserService.getFootprintsFootprint().then(function(response){
-    vm.donutResult = response;
-    console.log(vm.donutResult);
-   new Chart(document.getElementById("doughnut-chart"), {
-     type: 'doughnut',
-     data: {
-       labels: ["Living", "Travel", "Shipping"],
-       datasets: [
-         {
-           label: "CO2",
-           backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-           data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
-         }
-       ]
-     },
-     options: {
-       title: {
-         display: true,
-         text: 'Total Footprint'
-       }
-     }
-   });
- });
-};
-
-
-   vm.donutDataSet();
-
-
-  new Chart(document.getElementById("line-chart"), {
-    type: 'line',
-    data: {
-      labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
-      datasets: [{
-        data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-        label: "CO2",
-        borderColor: "#3e95cd",
-        fill: false
+  vm.donutDataSet = function(){
+    UserService.getFootprintsFootprint().then(function(response){
+      vm.donutResult = response;
+      console.log(vm.donutResult);
+    new Chart(document.getElementById("doughnut-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: ["Living", "Travel", "Shipping"],
+        datasets: [
+          {
+            label: "CO2",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+            data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Total Footprint'
+        }
       }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Carbon Footprint'
-      }
-    }
+    });
   });
+  };
 
 
+  vm.donutDataSet();
+
+  vm.lineChart = function(){
+    UserService.getLineGraphData().then(function(response){
+      vm.lineData = response;
+      for (i=0; i<vm.lineData.length; i+=1){
+        
+      }
+      console.log(vm.lineData);
+      new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
+          datasets: [{
+            data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+            label: "CO2",
+            borderColor: "#3e95cd",
+            fill: false
+          }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Carbon Footprint'
+          }
+        }
+      });
+    });
+  }
+  vm.lineChart();
 
 // var years = [1500];
 
