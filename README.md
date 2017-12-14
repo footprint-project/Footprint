@@ -31,7 +31,9 @@ Link to software that is required to install the app (e.g. node).
 
 ### Installing
 
-Create database called "project-footprint"
+Create database called "project-footprint":
+
+![footprint_database](https://user-images.githubusercontent.com/29472568/33998428-0db2bf72-e0ad-11e7-850d-934cda2397df.png)
 
 Create SQL database tables:
 ```sql
@@ -101,19 +103,19 @@ CREATE TABLE "shipping" (
 );
 
 CREATE TABLE "trial_footprints" (
-	"id" serial PRIMARY KEY,
-	"organization" varchar(50),
-	"plane" INT,
-	"car" INT,
-	"train" INT,
-	"hotel" INT,
-	"fuel" INT,
-	"grid" INT,
-	"propane" INT,
-	"air" INT,
-	"sea" INT,
-	"truck" INT,
-	"freight_train" INT
+	  "id" serial PRIMARY KEY,
+	  "organization" varchar(50),
+    "plane" INT,
+    "car" INT,
+    "train" INT,
+    "hotel" INT,
+    "fuel" INT,
+    "grid" INT,
+    "propane" INT,
+    "air" INT,
+    "sea" INT,
+    "truck" INT,
+    "freight_train" INT
 	);
 
 INSERT INTO "types" ("name") VALUES ('Health');
