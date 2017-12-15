@@ -1,7 +1,6 @@
 
 myApp.service('donutService', function($http, $location, UserService) {
   console.log('donutService Loaded');
-  var self = this;
 
 //amateur hour over here, i forgot to assign the crucial variable:
   var self = this;
@@ -27,7 +26,8 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         projects.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      console.log(projects);
+      // console.log(projects);
+      return projects;
     }).catch(function(err) {
       console.log('uh oh', err);
     });
@@ -38,11 +38,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
   self.getFpDividedByPeriod = function() {
     return $http.get('/member/footprint_by_period').then(function(response) {
-
       //because the sql query gives us rows with repeated info, we have to sanitize it:
-
-      console.log(response.data);
-
       var allTheStuff = response.data;
       var cleanedStuff = [];
       //grab the first element of the array:
@@ -62,11 +58,7 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         periods.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-
-
-      console.log(cleanedStuff);
-
-      console.log(periods);
+      // console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
@@ -89,7 +81,7 @@ myApp.service('donutService', function($http, $location, UserService) {
     });
   };
 
-  self.getDonut('project', '03/2017', 'period');
+  self.getDonut('period', '2016-03-01', 'project');
 
 
 

@@ -121,7 +121,7 @@
       for (var i=0; i<vm.lineData.length; i+=1){
         sum = vm.lineData[i].air + vm.lineData[i].car + vm.lineData[i].freight_train + vm.lineData[i].fuel + vm.lineData[i].grid + vm.lineData[i].hotel + vm.lineData[i].plane + vm.lineData[i].propane + vm.lineData[i].sea + vm.lineData[i].train + vm.lineData[i].truck;
         sumsArray.push(sum);
-        console.log(sumsArray);
+        // console.log(sumsArray);
         if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 01){
           month = 'Jan'
         }
@@ -158,9 +158,9 @@
         else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 12) {
           month = 'Dec'
         }
-        console.log(month);
+        // console.log(month);
         periodArray.push(month);
-        console.log(periodArray);
+        // console.log(periodArray);
       }
       new Chart(document.getElementById("line-chart"), {
         type: 'line',
