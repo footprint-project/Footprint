@@ -22,6 +22,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/projects', {
+      templateUrl: '/views/templates/projects.html',
+      controller: 'ProjectController as pc',
+      resolve: {
+        getuser: function (UserService) {
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/info', {
       templateUrl: '/views/templates/info.html',
       controller: 'InfoController',

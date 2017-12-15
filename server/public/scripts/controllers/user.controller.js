@@ -4,6 +4,8 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
   vm.userService = UserService;
   vm.userObject = UserService.userObject;
   vm.countries = UserService.countries.data;
+  vm.userProjects = UserService.userProjects;
+  vm.selectedIndex = UserService.userProjects.selectedIndex;
   //this is for the list of user projects
 
 
@@ -60,6 +62,13 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
     console.log(answer);
     $mdDialog.hide(answer);
   };
+  vm.showProject = function (ev, i) {
+    selectedIndex = i;
+    console.log('clicked showProject', i);
+    window.location.href = '/#/projects.html';
+  };
+
+  
 });
 //end of user controller 
 
