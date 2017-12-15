@@ -51,7 +51,7 @@ router.get('/linegraph', function(req,res){
   })
 });
 
-//Sum all entries from Footprint's own projects; compute the carbon footprint on client side:
+//Sum all entries from Footprint's own projects; we will compute the carbon footprint on client side:
 router.get('/footprints_footprint', function(req, res) {
   pool.connect(function(err, db, done) {
     if(err) {
@@ -73,8 +73,7 @@ router.get('/footprints_footprint', function(req, res) {
 });
 
 //cheating -- this is not a post route, but i needed some data.
-//req.body.view, i.e. the variable x, will be TYPES, COUNTRIES, or PROJECTS (**can't** do PERIODS, CATEGORIES like this):
-//will be able to implement req.body.slice, i.e. variable y, like this as well!
+//we need to talk about which combinations are actually salient:
 router.post('/donut', function(req, res) {
   console.log("BODY: ", req.body);
   pool.connect(function(err, db, done) {
@@ -82,19 +81,19 @@ router.post('/donut', function(req, res) {
       console.log('Error connecting', err);
       res.sendStatus(500);
     } else {
-      var view, particular, slice;
+      var view, particular, slice, queryText;
 
       if (req.body.view == 'type') {
         //wait is this right?
-        view = '"project_type"."type"."id"';
+        view = '"types"';
       } else if (req.body.view == 'project') {
         view = "projects";
       } else if (req.body.view == 'period') {
-        view = "period";
+        return;
       } else if (req.body.view == 'country') {
         view = "countries";
       } else if (req.body.view == 'category') {
-        //what to do here?
+        return;
       }
 
       if (req.body.slice == 'type') {
@@ -102,17 +101,17 @@ router.post('/donut', function(req, res) {
       } else if (req.body.slice == 'project') {
         slice = '"projects"."name"';
       } else if (req.body.slice == 'period') {
-        slice = '"project_type"."type_id"';
+        slice = '"period"';
       } else if (req.body.slice == 'country') {
-        slice = '"countries"."id"';
+        slice = '"countries"';
       } else if (req.body.slice == 'category') {
-        //what to do?
+        queryText = 'SELECT SUM(hotel) as hotel, SUM(fuel) as fuel, SUM(grid) as grid, SUM(propane) as propane, SUM(air) as air, SUM(sea) as sea, SUM(truck) as truck, SUM(freight_train) as freight_train, SUM(car) as car, SUM(plane) as plane, SUM(train) as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = 3 AND ' + view + '."id" = 5;';
       }
-      var x = '"projects"';
-      var y = '"period"';
-      var queryText = 'SELECT "period", SUM("hotel") OVER (PARTITION BY ' + y + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + y + ') as fuel, SUM("propane") OVER (PARTITION BY ' + y +') as propane, SUM("grid") OVER (PARTITION BY ' + y + ') as grid, SUM("air") OVER (PARTITION BY ' + y + ') as air, SUM("sea") OVER (PARTITION BY ' + y + ') as sea, SUM("truck") OVER (PARTITION BY ' + y + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + y + ') as freight_train, SUM("car") OVER (PARTITION BY ' + y + ') as car, SUM("plane") OVER (PARTITION BY ' + y + ') as plane, SUM("train") OVER (PARTITION BY ' + y +
-      ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + x + '."id" = $2;';
-      db.query(queryText, [3, 5], function(err, result){
+      // var x = '"projects"';
+      // var y = '"period"';
+      queryText = 'SELECT "period", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
+      ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."id" = $2;';
+      db.query(queryText, [3, 6], function(err, result){
         done();
         if(err) {
           console.log('Error making query', err);
@@ -125,7 +124,7 @@ router.post('/donut', function(req, res) {
   });
 });
 
-
+//slices a user's total footprint by projects..which now that I think about it is not the most useful thing, but it is a skeleton for more useful things:
 router.get('/footprint_by_project', function(req, res) {
   pool.connect(function(err, db, done) {
     if(err) {
@@ -147,7 +146,7 @@ router.get('/footprint_by_project', function(req, res) {
   });
 });
 
-
+//slices total footprint of an organization by period, used for line graph:
 router.get('/footprint_by_period', function(req, res) {
   pool.connect(function(err, db, done) {
     if(err) {

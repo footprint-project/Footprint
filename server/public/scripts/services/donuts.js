@@ -2,15 +2,18 @@
 myApp.service('donutService', function($http, $location, UserService) {
   console.log('donutService Loaded');
 
+//amateur hour over here, i forgot to assign the crucial variable:
   var self = this;
 
   self.getFpDividedByProject = function() {
     return $http.get('/member/footprint_by_project').then(function(response) {
-      // console.log(response.data);
+      //because the sql query gives us rows with repeated info, we have to sanitize it, i.e. put it in a form that the compute-conversion function can eat:
       var allTheStuff = response.data;
       var cleanedStuff = [];
+      //grab the first element of the array:
       cleanedStuff.push(allTheStuff[0]);
 
+      //and then for each subsequent element, check whether its previous element has a different project name:
       for (var i=1; i<allTheStuff.length; i++) {
         var current = allTheStuff[i];
         var prev = allTheStuff[i - 1];
@@ -18,8 +21,8 @@ myApp.service('donutService', function($http, $location, UserService) {
           cleanedStuff.push(current);
         }
       }
-      // console.log(cleanedStuff);
       var projects = [];
+      //compute the conversion to find the footprint for each project in cleanedStuff:
       for (var j=0; j<cleanedStuff.length; j++) {
         projects.push(UserService.computeFootprint(cleanedStuff[j]));
       }
@@ -34,11 +37,13 @@ myApp.service('donutService', function($http, $location, UserService) {
 
   self.getFpDividedByPeriod = function() {
     return $http.get('/member/footprint_by_period').then(function(response) {
-      console.log(response.data);
+      //because the sql query gives us rows with repeated info, we have to sanitize it:
       var allTheStuff = response.data;
       var cleanedStuff = [];
+      //grab the first element of the array:
       cleanedStuff.push(allTheStuff[0]);
 
+      //and then for each subsequent element, check whether its previous element has a different period; if so, add it to the sanitized array:
       for (var i=1; i<allTheStuff.length; i++) {
         var current = allTheStuff[i];
         var prev = allTheStuff[i - 1];
@@ -48,10 +53,10 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
       var periods = [];
+      //compute the conversion to find the footprint for each period in cleanedStuff:
       for (var j=0; j<cleanedStuff.length; j++) {
         periods.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      console.log(cleanedStuff);
       console.log(periods);
     }).catch(function(err) {
       console.log('uh oh', err);
@@ -62,9 +67,11 @@ myApp.service('donutService', function($http, $location, UserService) {
 
 
 
+//testing the donut function:
+  self.getDonut = function(view, particular, slice) {
+    //i know with req.query there's a way to do this, but i'm just cheating:
+    var instructions = {view: view, particular: particular, slice: slice};
 
-  self.getDonut = function(view, thing, slice) {
-    var instructions = {view: view, thing: thing, slice: slice};
     $http.post('/member/donut/', instructions).then(function(response) {
       console.log(response);
     }).catch(function(err) {
@@ -72,7 +79,7 @@ myApp.service('donutService', function($http, $location, UserService) {
     });
   };
 
-  self.getDonut('period', '03/2017', 'type');
+  self.getDonut('project', '03/2017', 'period');
 
 
 

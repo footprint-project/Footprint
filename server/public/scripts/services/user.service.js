@@ -137,6 +137,7 @@ myApp.service('UserService', function ($http, $location){
   self.getFootprintsFootprint = function() {
     return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
+      //ahhhhh yes back to basics over here, chris reminds me that we need to pass this returned value into the next function:
       var data = self.computeFootprint(self.footprintsFootprint[0]);
       return self.groupByCategory(data);
 
