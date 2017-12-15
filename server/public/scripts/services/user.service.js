@@ -226,12 +226,6 @@ myApp.service('UserService', function ($http, $location){
   };
 
 
-  self.getFpDividedByPeriod();
-
- 
-
-
-
 
 
 }); //End of UserService
