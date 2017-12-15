@@ -6,5 +6,9 @@ myApp.controller('ProjectController', function (UserService) {
     vm.countries = UserService.countries.data;
     vm.userProjects = UserService.userProjects;
     vm.selectedIndex = UserService.userProjects.selectedIndex;
-
+    
+    vm.showSelected = function() {
+        console.log('show selected', vm.selectedIndex);
+    }
+    vm.showSelected();
 });

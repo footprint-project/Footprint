@@ -170,7 +170,6 @@ myApp.service('UserService', function ($http, $location){
 
 
 
-
   // self.getFpDividedByProject = function() {
   //   return $http.get('/member/footprint_by_project').then(function(response) {
   //     console.log(response.data);
