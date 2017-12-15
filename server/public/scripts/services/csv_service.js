@@ -28,6 +28,7 @@ myApp.service('csvService', function($http, $location, UserService){
       var arrayOfNums = dataNums.split(',');
       console.log(arrayOfNums);
 
+      //a switch statement would be cleaner here....if anyone is feeling motivated:
       for (var i=0; i<arrayOfNums.length; i++) {
         var num = arrayOfNums[i];
         if (i % 11 == 1 && num !== '') {

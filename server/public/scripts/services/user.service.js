@@ -120,7 +120,7 @@ myApp.service('UserService', function ($http, $location){
   };
 
     self.computeFootprint = function(footprint) {
-      console.log(footprint);
+      // console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -135,7 +135,7 @@ myApp.service('UserService', function ($http, $location){
       result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
       result.period = footprint.period;
       result.name = footprint.name;
-      console.log(result);
+      // console.log(result);
       return result;
     };
 
@@ -160,6 +160,7 @@ myApp.service('UserService', function ($http, $location){
   self.getFootprintsFootprint = function() {
     return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
+      //ahhhhh yes back to basics over here, chris reminds me that we need to pass this returned value into the next function:
       var data = self.computeFootprint(self.footprintsFootprint[0]);
       return self.groupByCategory(data);
     }).catch(function(err) {
