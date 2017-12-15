@@ -30,6 +30,8 @@
      }
    };
 
+   donutService.getFpDividedByPeriod();
+
 //re-draws the donut graph with trial data:
    vm.donutDataSetTrial = function(x){
        vm.donutResult = x;

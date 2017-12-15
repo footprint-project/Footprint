@@ -97,7 +97,7 @@ myApp.service('UserService', function ($http, $location){
 
 
     self.computeFootprint = function(footprint) {
-      console.log(footprint);
+      // console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -112,7 +112,7 @@ myApp.service('UserService', function ($http, $location){
       result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
       result.period = footprint.period;
       result.name = footprint.name;
-      console.log(result);
+      // console.log(result);
       return result;
     };
 
