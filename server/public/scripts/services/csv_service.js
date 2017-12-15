@@ -1,4 +1,4 @@
-myApp.service('csvService', function($http, $location){
+myApp.service('csvService', function($http, $location, UserService){
   console.log('csvService Loaded');
 
   var vm = this;
@@ -58,25 +58,31 @@ myApp.service('csvService', function($http, $location){
       console.log(csv);
       vm.valuesToArray(csv);
 
-      $http.post('/admin', csv).then(function(response) {
+      vm.trialData = UserService.computeTrialFootprint(csv);
+
+      return $http.post('/admin', csv).then(function(response) {
         console.log('here you go!', csv);
+        csv = {
+          plane: 0,
+          car: 0,
+          train_travel: 0,
+          air: 0,
+          train_shipping: 0,
+          truck: 0,
+          sea: 0,
+          hotel: 0,
+          fuel: 0,
+          grid: 0,
+          propane: 0
+        };
+
+        return vm.trialData;
+        //how odd that it logs out all as 0s here but posts into the DB ok....asynchonicity man.
       }).catch(function (err) {
         console.log('whooooops');
       });
 
-    csv = {
-      plane: 0,
-      car: 0,
-      train_travel: 0,
-      air: 0,
-      train_shipping: 0,
-      truck: 0,
-      sea: 0,
-      hotel: 0,
-      fuel: 0,
-      grid: 0,
-      propane: 0
-    };
+
   };
 
   vm.valuesToArray = function(obj) {
@@ -123,5 +129,102 @@ myApp.service('csvService', function($http, $location){
     vm.userFootprint.userType = sendData;
     console.log(vm.userFootprint.userType);
   }
+
+  //This is the start of sending logged in user's info to the database.
+  vm.projectOut = {userInfo: [], userType: [], dataIn: [] }
+
+  vm.parseFootprint = function(data){
+      console.log(data);
+  
+      var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
+        //  console.log(dataNums);
+  
+        var arrayOfNums = dataNums.split(',');
+        console.log(arrayOfNums);
+
+        var csvIn = {
+          plane: 0,
+          car: 0,
+          train_travel: 0,
+          air: 0,
+          train_shipping: 0,
+          truck: 0,
+          sea: 0,
+          hotel: 0,
+          fuel: 0,
+          grid: 0,
+          propane: 0
+        };
+  
+        for (var i=0; i<arrayOfNums.length; i++) {
+          var num = arrayOfNums[i];
+          if (i % 11 == 1 && num !== '') {
+            csvIn.plane += Number(num);
+          } else if (i % 11 == 2 && num !== '') {
+            csvIn.car += Number(num);
+          } else if (i % 11 == 3 && num !== '') {
+            csvIn.train_travel += Number(num);
+          } else if (i % 11 == 4 && num !== '') {
+            csvIn.air += Number(num);
+          } else if (i % 11 == 5 && num !== '') {
+            csvIn.train_shipping += Number(num);
+          } else if (i % 11 == 6 && num !== '') {
+            csvIn.truck += Number(num);
+          } else if (i % 11 == 7 && num !== '') {
+            csvIn.sea += Number(num);
+          } else if (i % 11 == 8 && num !== '') {
+            csvIn.hotel += Number(num);
+          } else if (i % 11 == 9 && num !== '') {
+            csvIn.fuel += Number(num);
+          } else if (i % 11 == 10 && num !== '') {
+            csvIn.grid += Number(num);
+          } else if (i % 11 == 0 && num !== '' && i>1) {
+            csvIn.propane += Number(num);
+          }
+  
+        }
+        // console.log(csv);
+        // vm.valuesToArray(csv);
+        var footprintIn = vm.projectOut.dataIn;
+        footprintIn.push(csvIn);
+        console.log(vm.projectOut.dataIn);
+        csvIn = {
+          plane: 0,
+          car: 0,
+          train_travel: 0,
+          air: 0,
+          train_shipping: 0,
+          truck: 0,
+          sea: 0,
+          hotel: 0,
+          fuel: 0,
+          grid: 0,
+          propane: 0
+        };
+        vm.postProjects();
+  }
+
+  vm.sendUser = function(user){
+    console.log(user);
+    vm.projectOut.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear}, {project: user.projectName});
+  }
+
+  vm.projectChecks = function(sendData){
+    vm.projectOut.userType = sendData;
+    console.log(vm.projectOut.userType);
+    } //End project function
+
+ vm.postProjects = function(){
+  console.log(vm.projectOut);
+  $http.post('/member/project_submit', vm.projectOut).then(function(response){
+  console.log('project sent', response)
+  }).catch(function(error){
+    console.log('error adding projects', error)
+  })
+ }
+     
+  
+
+
 
 }); //End CSV service.

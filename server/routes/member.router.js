@@ -29,6 +29,10 @@ router.get('/countries', function (req, res) {
     })
 });
 
+router.post('/project_submit', function(req, res){
+    console.log(req.body);
+});
+
 router.get('/linegraph', function(req,res){
     console.log('info for line graph');
     pool.connect(function (err, db, done) {
@@ -72,6 +76,27 @@ router.get('/footprints_footprint', function(req, res) {
   });
 });
 
+router.post('/donut', function(req, res) {
+  console.log("BODY: ", req.body);
+  // pool.connect(function(err, db, done) {
+  //   if(err) {
+  //     console.log('Error connecting', err);
+  //     res.sendStatus(500);
+  //   } else {
+  //     var queryText = 'SELECT SUM("hotel") as hotel, SUM("fuel") as fuel, SUM("grid") as grid, SUM("propane") as propane, SUM("air") as air, SUM("truck") as truck, SUM("sea") as sea, SUM("freight_train") as freight_train, SUM("plane") as plane, SUM("car") as car, SUM("train") as train FROM "projects" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "user_id"=2;';
+  //     db.query(queryText, [], function(err, result){
+  //       done();
+  //       if(err) {
+  //         console.log('Error making query', err);
+  //         res.sendStatus(500);
+  //       } else {
+  //         res.send(result.rows);
+  //       }
+  //     });
+  //   }
+  // });
+});
+
 
 router.get('/footprint_by_project', function(req, res) {
   pool.connect(function(err, db, done) {
@@ -113,6 +138,8 @@ router.get('/footprint_by_period', function(req, res) {
     }
   });
 });
+
+
 
 // for the list of user projects on projects view
 router.get('/userprojects/:userId', function (req, res) {
