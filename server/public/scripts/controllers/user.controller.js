@@ -4,6 +4,8 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
   vm.userService = UserService;
   vm.userObject = UserService.userObject;
   vm.countries = UserService.countries.data;
+  vm.userProjects = UserService.userProjects;
+  vm.selectedIndex = UserService.userProjects.selectedIndex;
   //this is for the list of user projects
 
 
@@ -30,20 +32,22 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
   });
 
 //gets users projects
+
   vm.userService.getProjects(vm.userObject.id);
   //dashboard dialog
-  vm.upload = function (ev, i) {
+
+  // ev, i
+  vm.upload = function (ev) {
     // userService.getProjects.selectedIndex = i;
-    console.log('Clicked showMore', i);
+    console.log('Clicked showMore');
     
 
     $mdDialog.show({
-      controller: 'DashboardDialogController as dc',
+      controller: 'DashboardDialogController as ddc',
       templateUrl: 'views/templates/dashboarddialog.html',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true
-
     })
   }
 
@@ -60,6 +64,13 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
     console.log(answer);
     $mdDialog.hide(answer);
   };
+  vm.showProject = function (ev, i) {
+    selectedIndex = i;
+    console.log('clicked showProject', i);
+    window.location.href = '/#/projects.html';
+  };
+
+  
 });
 //end of user controller 
 

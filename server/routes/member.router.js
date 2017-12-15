@@ -29,6 +29,10 @@ router.get('/countries', function (req, res) {
   })
 });
 
+router.post('/project_submit', function(req, res){
+    console.log(req.body);
+});
+
 router.get('/linegraph', function(req,res){
   console.log('info for line graph');
   pool.connect(function (err, db, done) {
