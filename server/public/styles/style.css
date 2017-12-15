@@ -89,10 +89,10 @@ float: center;
 
 }
 
-#doughnut-chart {
+/* #doughnut-chart {
   height: 400px;
   width: auto;
-}
+} */
 
 .upload-btn-wrapper {
   position: relative;
@@ -158,10 +158,20 @@ float: center;
   max-width: 600;
 }
 
-#demo {
+#donuthome {
   max-height: auto;
-  max-width: 40%;
+  max-width: 600;
 }
+
+#linehome {
+  max-height: auto;
+  max-width: 600;
+}
+
+/* #demo {
+  max-height: auto;
+  max-width: 95%;
+} */
 
 #projectcheckboxes {
   max-width: 75%;
@@ -176,5 +186,13 @@ float: center;
   text-transform: uppercase;
   padding-left: 20px
   
+}
+
+#homecharts {
+  padding-right: 150px;
+}
+
+#homeform {
+  padding-top: 25px;
 }
 
