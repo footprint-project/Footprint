@@ -8,7 +8,7 @@ myApp.service('UserService', function ($http, $location){
   self.months = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August',
   'September', 'October', 'November', 'December'];
   self.result = {};
-
+  self.lineGraphData={};
   self.footprintsFootprint = {};
   
 
@@ -72,17 +72,13 @@ myApp.service('UserService', function ($http, $location){
   self.getCountries();
   console.log(self.countries.data);
 
-  self.getLineGraphData = function (){
+ self.getLineGraphData = function (){
     console.log('Getting Line graph Data');
-    $http.get('member/linegraph').then(function(response){
-      var lineGraphData = response.data.rows;
-      console.log(lineGraphData);
-    })
+    return $http.get('member/linegraph').then(function(response){
+      return self.lineGraphData = response.data.rows;
+    });
   }
 
-
-
-  self.getLineGraphData();
 
   //gets the users projects for the projects view
   self.getProjects = function (id) {
@@ -94,22 +90,51 @@ myApp.service('UserService', function ($http, $location){
   };
 
 
+  self.computeFootprint = function(footprint) {
+    console.log(footprint[0]);
+    var result = {};
+    result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+    result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+    result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+    result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+    result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+    result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+    result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+    result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+    result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+    result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+    result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+    console.log(result);
+    return result;
+  };
 
+  self.groupByCategory = function(footprint) {
+    var result = {};
+    console.log(footprint);
+    result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
+    result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
+    result.travel = footprint.plane + footprint.train + footprint.car;
+    self.result = result;
+    console.log(self.result);
+    return self.result;
+  };
 
     self.computeFootprint = function(footprint) {
-      console.log(footprint[0]);
+      console.log(footprint);
       var result = {};
-      result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
-      result.car = CAR_CONVERSION * parseInt(footprint[0].car);
-      result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
-      result.air = AIR_CONVERSION * parseInt(footprint[0].air);
-      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
-      result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
-      result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
-      result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
-      result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
-      result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
-      result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+      result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
+      result.car = CAR_CONVERSION * parseInt(footprint.car);
+      result.train = TRAIN_CONVERSION * parseInt(footprint.train);
+      result.air = AIR_CONVERSION * parseInt(footprint.air);
+      result.freight_train = FREIGHT_CONVERSION * parseInt(footprint.freight_train);
+      result.truck = TRUCK_CONVERSION * parseInt(footprint.truck);
+      result.sea = SEA_CONVERSION * parseInt(footprint.sea);
+      result.hotel = HOTEL_CONVERSION * parseInt(footprint.hotel);
+      result.fuel = FUEL_CONVERSION * parseInt(footprint.fuel);
+      result.grid = GRID_CONVERSION * parseInt(footprint.grid);
+      result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
+      result.period = footprint.period;
+      result.name = footprint.name;
       console.log(result);
       return result;
     };
@@ -135,63 +160,76 @@ myApp.service('UserService', function ($http, $location){
   self.getFootprintsFootprint = function() {
     return $http.get('/member/footprints_footprint').then(function(response) {
       self.footprintsFootprint = response.data;
-      var data = self.computeFootprint(self.footprintsFootprint);
+      var data = self.computeFootprint(self.footprintsFootprint[0]);
       return self.groupByCategory(data);
-
-
-
     }).catch(function(err) {
       console.log('oh noooooo', err);
     });
   };
 
 
-  self.getFpDividedByProject = function() {
-    return $http.get('/member/footprint_by_project').then(function(response) {
-      console.log(response.data);
-      var allTheStuff = response.data;
-      var cleanedStuff = [];
-      cleanedStuff.push(allTheStuff[0]);
 
-      for (var i=1; i<allTheStuff.length; i++) {
-        var current = allTheStuff[i];
-        var prev = allTheStuff[i - 1];
-        if (current.name !== prev.name) {
-          cleanedStuff.push(current);
-        }
-      }
-      console.log(cleanedStuff);
-    }).catch(function(err) {
-      console.log('uh oh', err);
-    });
+
+  // self.getFpDividedByProject = function() {
+  //   return $http.get('/member/footprint_by_project').then(function(response) {
+  //     console.log(response.data);
+  //     var allTheStuff = response.data;
+  //     var cleanedStuff = [];
+  //     cleanedStuff.push(allTheStuff[0]);
+  //
+  //     for (var i=1; i<allTheStuff.length; i++) {
+  //       var current = allTheStuff[i];
+  //       var prev = allTheStuff[i - 1];
+  //       if (current.name !== prev.name) {
+  //         cleanedStuff.push(current);
+  //       }
+  //     }
+  //     console.log(cleanedStuff);
+  //   }).catch(function(err) {
+  //     console.log('uh oh', err);
+  //   });
+  // };
+  //
+  // self.getFpDividedByProject();
+  //
+  //
+  // self.getFpDividedByPeriod = function() {
+  //   return $http.get('/member/footprint_by_period').then(function(response) {
+  //     console.log(response.data);
+  //     var allTheStuff = response.data;
+  //     var cleanedStuff = [];
+  //     cleanedStuff.push(allTheStuff[0]);
+  //
+  //     for (var i=1; i<allTheStuff.length; i++) {
+  //       var current = allTheStuff[i];
+  //       var prev = allTheStuff[i - 1];
+  //       if (current.period !== prev.period) {
+  //         cleanedStuff.push(current);
+  //       }
+  //     }
+  //     console.log(cleanedStuff);
+  //   }).catch(function(err) {
+  //     console.log('uh oh', err);
+  //   });
+  // };
+  //
+  // self.getFpDividedByPeriod();
+
+  self.computeTrialFootprint = function(footprint) {
+    console.log(footprint);
+    footprint.train = footprint.train_travel;
+    footprint.freight_train = footprint.train_shipping;
+    console.log(self.computeFootprint(footprint));
+    var data = self.computeFootprint(footprint);
+    return self.groupByCategory(data);
+
   };
 
-  self.getFpDividedByProject();
 
-
-  self.getFpDividedByPeriod = function() {
-    return $http.get('/member/footprint_by_period').then(function(response) {
-      console.log(response.data);
-      var allTheStuff = response.data;
-      var cleanedStuff = [];
-      cleanedStuff.push(allTheStuff[0]);
-
-      for (var i=1; i<allTheStuff.length; i++) {
-        var current = allTheStuff[i];
-        var prev = allTheStuff[i - 1];
-        if (current.period !== prev.period) {
-          cleanedStuff.push(current);
-        }
-      }
-      console.log(cleanedStuff);
-    }).catch(function(err) {
-      console.log('uh oh', err);
-    });
-  };
-
-  self.getFpDividedByPeriod();
+  // self.getFpDividedByPeriod();
 
  
+
 
 
 

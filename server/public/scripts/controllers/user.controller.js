@@ -32,20 +32,22 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
   });
 
 //gets users projects
+
   vm.userService.getProjects(vm.userObject.id);
   //dashboard dialog
-  vm.upload = function (ev, i) {
+
+  // ev, i
+  vm.upload = function (ev) {
     // userService.getProjects.selectedIndex = i;
-    console.log('Clicked showMore', i);
+    console.log('Clicked showMore');
     
 
     $mdDialog.show({
-      controller: 'DashboardDialogController as dc',
+      controller: 'DashboardDialogController as ddc',
       templateUrl: 'views/templates/dashboarddialog.html',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true
-
     })
   }
 
