@@ -16,6 +16,7 @@
     vm.items = ['Health', 'Food/Nutrition', 'Education', 'Non-Food Items (NFI)', 'Shelter', 'Conflict', 'Migration/Camp Management', 'Faith-based', 'Research', 'Governance', 'Business/Entrepeneur', 'Donor'];
     vm.selected = [];
     vm.userFootprint = csvService.userFootprint;
+    vm.lineData = [];
 
     //This function monitors the checkboxes on the DOM.
     vm.change = function (item, active) {
@@ -78,77 +79,110 @@
 
 
    // start doughnut
-vm.donutDataSet = function(){
-  UserService.getFootprintsFootprint().then(function(response){
-    vm.donutResult = response;
-    console.log(vm.donutResult);
-   new Chart(document.getElementById("doughnut-chart"), {
-     type: 'doughnut',
-     data: {
-       labels: ["Living", "Travel", "Shipping"],
-       datasets: [
-         {
-           label: "CO2",
-           backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-           data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
-         }
-       ]
-     },
-     options: {
-       title: {
-         display: true,
-         text: 'Total Footprint'
-       }
-     }
-   });
- });
-};
-
-
-   vm.donutDataSet();
-
-
-  new Chart(document.getElementById("line-chart"), {
-    type: 'line',
-    data: {
-      labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
-      datasets: [{
-        data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-        label: "Africa",
-        borderColor: "#3e95cd",
-        fill: false
-      }, {
-        data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-        label: "Asia",
-        borderColor: "#8e5ea2",
-        fill: false
-      }, {
-        data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-        label: "Europe",
-        borderColor: "#3cba9f",
-        fill: false
-      }, {
-        data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
-        label: "Latin America",
-        borderColor: "#e8c3b9",
-        fill: false
-      }, {
-        data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-        label: "North America",
-        borderColor: "#c45850",
-        fill: false
+  vm.donutDataSet = function(){
+    UserService.getFootprintsFootprint().then(function(response){
+      vm.donutResult = response;
+      console.log(vm.donutResult);
+    new Chart(document.getElementById("doughnut-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: ["Living", "Travel", "Shipping"],
+        datasets: [
+          {
+            label: "CO2",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+            data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Total Footprint'
+        }
       }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'World population per region (in millions)'
-      }
-    }
+    });
   });
+  };
 
 
+  vm.donutDataSet();
+
+  vm.lineChart = function(){
+    donutService.getFpDividedByPeriod().then(function(response){
+      vm.lineData = response;
+      var month = '';
+      var sum = 0;
+      console.log(vm.lineData);
+      var periodArray = [];
+      var sumsArray = [];
+      for (var i=0; i<vm.lineData.length; i+=1){
+        sum = vm.lineData[i].air + vm.lineData[i].car + vm.lineData[i].freight_train + vm.lineData[i].fuel + vm.lineData[i].grid + vm.lineData[i].hotel + vm.lineData[i].plane + vm.lineData[i].propane + vm.lineData[i].sea + vm.lineData[i].train + vm.lineData[i].truck;
+        sumsArray.push(sum);
+        console.log(sumsArray);
+        if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 01){
+          month = 'Jan'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 02) {
+          month = 'Feb'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 03) {
+          month = 'Mar'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 04) {
+          month = 'Apr'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 05) {
+          month = 'May'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 06) {
+          month = 'Jun'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 07) {
+          month = 'Jul'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 08) {
+          month = 'Aug'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 09) {
+          month = 'Sep'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 10) {
+          month = 'Oct'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 11) {
+          month = 'Nov'
+        }
+        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 12) {
+          month = 'Dec'
+        }
+        console.log(month);
+        periodArray.push(month);
+        console.log(periodArray);
+      }
+      new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: periodArray,
+          datasets: [{
+            //make an array with the sum of all categories
+            data: sumsArray,
+            label: "CO2",
+            borderColor: "#3e95cd",
+            fill: false
+          }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Carbon Footprint'
+          }
+        }
+      });
+    });
+  }
+  vm.lineChart();
 
 // var years = [1500];
 
