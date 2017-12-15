@@ -10,7 +10,7 @@ myApp.service('UserService', function ($http, $location){
   self.result = {};
   self.lineGraphData={};
   self.footprintsFootprint = {};
-
+  
 
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
@@ -224,6 +224,12 @@ myApp.service('UserService', function ($http, $location){
     return self.groupByCategory(data);
 
   };
+
+
+  self.getFpDividedByPeriod();
+
+ 
+
 
 
 
