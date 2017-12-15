@@ -196,3 +196,7 @@ float: center;
   padding-top: 25px;
 }
 
+#projectheader {
+text-transform: uppercase;
+}
+

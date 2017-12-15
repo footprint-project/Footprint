@@ -40,7 +40,7 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
     
 
     $mdDialog.show({
-      controller: 'DashboardDialogController as dc',
+      controller: 'DashboardDialogController as ddc',
       templateUrl: 'views/templates/dashboarddialog.html',
       parent: angular.element(document.body),
       targetEvent: ev,
@@ -62,9 +62,9 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
     console.log(answer);
     $mdDialog.hide(answer);
   };
-  
+
   vm.showProject = function (ev, i) {
-    selectedIndex = i;
+    UserService.userProjects.selectedIndex = i;
     console.log('clicked showProject', i,);
     window.location.href = '/#/projects';
   };
