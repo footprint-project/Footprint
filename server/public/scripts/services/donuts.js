@@ -1,6 +1,7 @@
 
 myApp.service('donutService', function($http, $location, UserService) {
   console.log('donutService Loaded');
+  var self = this;
 
 //amateur hour over here, i forgot to assign the crucial variable:
   var self = this;
@@ -26,8 +27,7 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         projects.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      // console.log(projects);
-      return projects;
+      console.log(projects);
     }).catch(function(err) {
       console.log('uh oh', err);
     });
@@ -38,7 +38,11 @@ myApp.service('donutService', function($http, $location, UserService) {
 
   self.getFpDividedByPeriod = function() {
     return $http.get('/member/footprint_by_period').then(function(response) {
+
       //because the sql query gives us rows with repeated info, we have to sanitize it:
+
+      console.log(response.data);
+
       var allTheStuff = response.data;
       var cleanedStuff = [];
       //grab the first element of the array:
@@ -58,7 +62,11 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         periods.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      // console.log(periods);
+
+
+      console.log(cleanedStuff);
+
+      console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
@@ -70,9 +78,9 @@ myApp.service('donutService', function($http, $location, UserService) {
 
 
 //testing the donut function:
-  self.getDonut = function(view, particular, slice) {
+  self.getDonut = function(view, slice) {
     //i know with req.query there's a way to do this, but i'm just cheating:
-    var instructions = {view: view, particular: particular, slice: slice};
+    var instructions = {view: view, particular: 'hi', slice: slice};
 
     $http.post('/member/donut/', instructions).then(function(response) {
       console.log(response);
@@ -81,7 +89,7 @@ myApp.service('donutService', function($http, $location, UserService) {
     });
   };
 
-  self.getDonut('period', '2016-03-01', 'project');
+  // self.getDonut('project', '03/2017', 'type');
 
 
 

@@ -95,13 +95,13 @@ router.post('/donut', function(req, res) {
         view = "countries";
       }
 
-      if (req.body.slice == 'type') {
+      if (req.body.slice == 'Type') {
         slice = '"project_type"."type_id"';
-      } else if (req.body.slice == 'project') {
+      } else if (req.body.slice == 'Project') {
         slice = '"projects"."name"';
-      } else if (req.body.slice == 'period') {
+      } else if (req.body.slice == 'Period') {
         slice = '"period"';
-      } else if (req.body.slice == 'country') {
+      } else if (req.body.slice == 'Country') {
         slice = '"countries"';
       }
 

@@ -266,4 +266,50 @@
      csvService.userData(user);
     }
 
+
+
+
+
+
+
+    vm.viewBy = '';
+    vm.viewByObject = {};
+
+//aww jeez but we're also going to have to populate the Particulars select element ....with a GET route.
+    vm.changeView = function() {
+      console.log(vm.viewBy);
+      if (vm.viewBy == 'period') {
+        vm.viewByObject.one = 'Project';
+        vm.viewByObject.two = 'Type';
+        vm.viewByObject.three = 'Country';
+        vm.viewByObject.four = 'Category';
+      } else if (vm.viewBy == 'project') {
+        vm.viewByObject.one = 'Period';
+        vm.viewByObject.two = 'Type';
+        vm.viewByObject.three = 'Country';
+        vm.viewByObject.four = 'Category';
+      } else if (vm.viewBy == 'country') {
+        vm.viewByObject.one = 'Project';
+        vm.viewByObject.two = 'Type';
+        vm.viewByObject.three = 'Period';
+        vm.viewByObject.four = 'Category';
+      } else if (vm.viewBy == 'type') {
+        vm.viewByObject.one = 'Project';
+        vm.viewByObject.two = 'Period';
+        vm.viewByObject.three = 'Country';
+        vm.viewByObject.four = 'Category';
+      } else if (vm.viewBy == 'category') {
+        vm.viewByObject.one = 'Project';
+        vm.viewByObject.two = 'Type';
+        vm.viewByObject.three = 'Country';
+        vm.viewByObject.four = 'Period';
+      }
+    };
+
+
+    vm.submitQuery = function(view, slice) {
+      donutService.getDonut(view, slice);
+    };
+
+
 }); //End login controller
