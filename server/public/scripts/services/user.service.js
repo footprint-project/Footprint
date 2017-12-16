@@ -90,23 +90,23 @@ myApp.service('UserService', function ($http, $location){
   };
 
 
-  self.computeFootprint = function(footprint) {
-    // console.log(footprint[0]);
-    var result = {};
-    result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
-    result.car = CAR_CONVERSION * parseInt(footprint[0].car);
-    result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
-    result.air = AIR_CONVERSION * parseInt(footprint[0].air);
-    result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
-    result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
-    result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
-    result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
-    result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
-    result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
-    result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
-    // console.log(result);
-    return result;
-  };
+  // self.computeFootprint = function(footprint) {
+  //   console.log('hi', footprint);
+  //   var result = {};
+  //   result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+  //   result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+  //   result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+  //   result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+  //   result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+  //   result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+  //   result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+  //   result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+  //   result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+  //   result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+  //   result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+  //   console.log(result);
+  //   return result;
+  // };
 
   self.groupByCategory = function(footprint) {
     var result = {};

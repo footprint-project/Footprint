@@ -1,7 +1,7 @@
 
 myApp.service('donutService', function($http, $location, UserService) {
   console.log('donutService Loaded');
-  var self = this;
+  // var self = this;
 
 //amateur hour over here, i forgot to assign the crucial variable:
   var self = this;
@@ -80,10 +80,13 @@ myApp.service('donutService', function($http, $location, UserService) {
 //testing the donut function:
   self.getDonut = function(view, slice) {
     //i know with req.query there's a way to do this, but i'm just cheating:
-    var instructions = {view: view, particular: 'hi', slice: slice};
+    var instructions = {view: view, particular: '2016-03-01', slice: slice};
 
-    $http.post('/member/donut/', instructions).then(function(response) {
-      console.log(response);
+    return $http.post('/member/donut/', instructions).then(function(response) {
+      // console.log(response);
+
+      return response;
+
     }).catch(function(err) {
       console.log(err);
     });

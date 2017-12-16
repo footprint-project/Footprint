@@ -272,6 +272,11 @@
 
 
 
+
+
+
+
+
     vm.viewBy = '';
     vm.viewByObject = {};
 
@@ -285,8 +290,8 @@
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'project') {
         vm.viewByObject.one = 'Period';
-        vm.viewByObject.two = 'Type';
-        vm.viewByObject.three = 'Country';
+        // vm.viewByObject.two = 'Type';
+        // vm.viewByObject.three = 'Country';
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'country') {
         vm.viewByObject.one = 'Project';
@@ -307,9 +312,187 @@
     };
 
 
+
+
     vm.submitQuery = function(view, slice) {
-      donutService.getDonut(view, slice);
+      donutService.getDonut(view, slice).then(function(response) {
+        console.log("response: ", response, "vm.viewBy: ", vm.viewBy, "vm.sliceBy: ", vm.sliceBy);
+        if (vm.sliceBy == 'Period') {
+          sanitizeByPeriod(response.data);
+        } else if (vm.sliceBy == 'Type') {
+          sanitizeByType(response.data);
+        } else if (vm.sliceBy == 'Country') {
+          sanitizeByCountry(response.data);
+        } else if (vm.sliceBy == 'Project') {
+          sanitizeByProject(response.data);
+        } else if (vm.sliceBy == 'Category') {
+          sanitizeByCategory(response.data);
+        }
+      });
     };
+
+
+//THIS IS UGLY: all five functions should prob be consolidated into one, or at least four of them, excluding categories:
+//call if they slice by PERIOD:
+    function sanitizeByPeriod(resp) {
+      var allThings = resp;
+      var cleanedThings = [];
+
+      //sanitize array of data by collapsing all rows for each period into one row:
+      cleanedThings.push(allThings[0]);
+      for (var i=1; i<allThings.length; i++) {
+        var current = allThings[i];
+        var prev = allThings[i - 1];
+        if (current.period !== prev.period) {
+          cleanedThings.push(current);
+        }
+      }
+
+      //run the carbon impact calculator for each element of cleanedThings:
+      var periods = [];
+      for (var j=0; j<cleanedThings.length; j++) {
+        periods.push(UserService.computeFootprint(cleanedThings[j]));
+      }
+      console.log(periods);
+
+      //finally, sum up the columns to find total impact for each period:
+      var totals = [];
+      for (var k=0; k<periods.length; k++) {
+        var p = periods[k];
+        var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
+        totals.push({period: p.period, total: total});
+      }
+      console.log(totals);
+    }
+
+
+//call if they slice by PROJECT:
+    function sanitizeByProject(resp) {
+      var allThings = resp;
+      console.log(resp);
+
+      //sanitize the data, collapsing all rows corresponding to a project into one row:
+      var cleanedThings = [];
+      cleanedThings.push(allThings[0]);
+      for (var i=1; i<allThings.length; i++) {
+        var current = allThings[i];
+        var prev = allThings[i - 1];
+        if (current.name !== prev.name) {
+          cleanedThings.push(current);
+        }
+      }
+      console.log(cleanedThings);
+
+      //run the carbon impact calculator on each project's data:
+      var projects = [];
+      for (var j=0; j<cleanedThings.length; j++) {
+        projects.push(UserService.computeFootprint(cleanedThings[j]));
+      }
+      console.log(projects);
+
+      //finally, sum up all the columns to find total footprint of the project:
+      var totals = [];
+      for (var k=0; k<projects.length; k++) {
+        var p = projects[k];
+        var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
+        totals.push({name: p.name, total: total});
+      }
+      console.log(totals);
+
+      // new Chart(document.getElementById("donutChart"), {
+      //
+      //   type: 'doughnut',
+      //   data: {
+      //     labels: ["Living", "Travel", "Shipping"],
+      //     datasets: [
+      //       {
+      //         label: "CO2",
+      //         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+      //         data: [living, shipping, travel]
+      //       }
+      //     ]
+      //   },
+      //   options: {
+      //     title: {
+      //       display: true,
+      //       text: 'Total Footprint'
+      //     }
+      //   }
+      // });
+
+    }
+
+
+//call if they slice by TYPE:
+    function sanitizeByType(resp) {
+      var allThings = resp;
+      var cleanedThings = [];
+      //sanitize array of data by collapsing all rows for each type into one row:
+      cleanedThings.push(allThings[0]);
+      for (var i=1; i<allThings.length; i++) {
+        var current = allThings[i];
+        var prev = allThings[i - 1];
+        if (current.type_id !== prev.type_id) {
+          cleanedThings.push(current);
+        }
+      }
+      console.log(cleanedThings);
+      //calculate carbon impact for each element of cleaned array:
+      var types = [];
+      for (var j=0; j<cleanedThings.length; j++) {
+        types.push(UserService.computeFootprint(cleanedThings[j]));
+      }
+      console.log(types);
+
+      //finally, add up all columns to find total footprint for each type:
+      var totals = [];
+      for (var k=0; k<types.length; k++) {
+        var t = types[k];
+        var total = t.air + t.car + t.freight_train + t.fuel + t.grid + t.hotel + t.plane + t.propane + t.sea + t.train + t.truck;
+        totals.push({type: t.type_id, total: total});
+      }
+      console.log(totals);
+    }
+
+
+//call if they slice by COUNTRY:
+    function sanitizeByCountry(resp) {
+      var allThings = resp;
+      var cleanedThings = [];
+      cleanedThings.push(allThings[0]);
+      for (var i=1; i<allThings.length; i++) {
+        var current = allThings[i];
+        var prev = allThings[i - 1];
+        if (current.country !== prev.country) {
+          cleanedThings.push(current);
+        }
+      }
+      var periods = [];
+      for (var j=0; j<cleanedThings.length; j++) {
+        periods.push(UserService.computeFootprint(cleanedThings[j]));
+      }
+      console.log(periods);
+    }
+
+
+//call if they slice by CATEGORY:
+    function sanitizeByCategory(resp) {
+      console.log(resp);
+      var result = [];
+      var r = resp[0];
+      // var living = parseInt(r.hotel) + parseInt(r.grid) + parseInt(r.propane) + parseInt(r.fuel);
+      // var shipping = parseInt(r.air) + parseInt(r.truck) + parseInt(r.sea) + parseInt(r.freight_train);
+      // var travel = parseInt(r.plane) + parseInt(r.train) + parseInt(r.car);
+      // result.push(living);
+      // result.push(shipping);
+      // result.push(travel);
+      // console.log(result);
+      UserService.computeFootprint(resp);
+      // console.log(fp);
+
+
+    }
+
 
 
 }); //End login controller
