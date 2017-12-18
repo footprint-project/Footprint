@@ -37,12 +37,16 @@
                 </div>
                 
                 
-                
-                
-                
-            
+                <div>
+                        <md-radio-group ng-model="data.type">
+                            <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
+                            <md-radio-button value="English"> English </md-radio-button>
+                        </md-radio-group>
+                    </form>
+                </div>
+
             <div id="homeSubmit">
-                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.change(item, active)">Submit Data</md-button>
+                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.dataType(data)">Submit Data</md-button>
                 <a href="#register">Register</a>
             </div>
             </md-content>
