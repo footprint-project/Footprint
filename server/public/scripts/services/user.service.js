@@ -226,11 +226,16 @@ myApp.service('UserService', function ($http, $location){
 
   };
 
-
+    self.countryIn;
 
   // self.getFpDividedByPeriod();
 
- 
+ self.sendProject = function(user){
+   var project = user;
+   project.country = self.countryIn;
+   console.log(project);
+  //  $http.post
+ }
 
 
 
