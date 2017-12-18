@@ -18,6 +18,8 @@ myApp.service('csvService', function($http, $location, UserService){
   propane: 0
 };
 
+vm.dataType;
+
 //This function parses the data from uploaded CSVs.
   vm.parseData = function(data) {
     console.log(data);
@@ -56,7 +58,21 @@ myApp.service('csvService', function($http, $location, UserService){
         }
 
       }
+      
       console.log(csv);
+      //  console.log(vm.dataType.type);
+      // if (vm.dataType.type === 'English'){
+      //   for (var i=0; i<csv.length; i++){
+      //     csv.plane = (csv.plane * 1.609344);
+      //     csv.car = (csv.plane * 1.609344);
+      //     csv.train_travel = (csv.plane * 1.609344);
+      //     csv.air = (csv.air * 1.460);
+      //     csv.train_shipping = (csv.train_travel * 1.460);
+      //     csv.truck = (csv.truck * 1.460);
+      //     csv.sea = (csv.sea * 1.460);
+      //     console.log('Post English conversion,' + csv)
+      //   }
+      // }
       vm.valuesToArray(csv);
 
       vm.trialData = UserService.computeTrialFootprint(csv);
@@ -93,6 +109,19 @@ myApp.service('csvService', function($http, $location, UserService){
            result.push(obj[key]);
        }
     }
+    console.log(vm.dataType.type);
+    if (vm.dataType.type === 'English'){
+      for (var i=0; i<result.length; i++){
+        result.plane = (result.plane * 1.609344);
+        result.car = (result.plane * 1.609344);
+        result.train_travel = (result.plane * 1.609344);
+        result.air = (result.air * 1.460);
+        result.train_shipping = (result.train_travel * 1.460);
+        result.truck = (result.truck * 1.460);
+        result.sea = (result.sea * 1.460);
+      }
+      console.log('Post English conversion,' + result);
+    }
     console.log(result);
     vm.calculations(result);
 };
@@ -122,7 +151,7 @@ myApp.service('csvService', function($http, $location, UserService){
 
   vm.userData = function(user){
    console.log(user);
-   vm.userFootprint.userInfo.push({selectedCountry: user.selectedCountry}, {selectedMonth: user.selectedMonth}, {selectedYear: user.selectedYear}, {selectedOrganization: user.selectedOrganization});
+   vm.userFootprint.userInfo.push({selectedOrganization: user.selectedOrganization});
    console.log(vm.userFootprint.userInfo);
   }
 

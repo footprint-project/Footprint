@@ -19,17 +19,17 @@
     vm.lineData = [];
 
     //This function monitors the checkboxes on the DOM.
-    vm.change = function (item, active) {
-     if (active) {
-       vm.selected.push(item);
-       console.log(item);
-       var data = item;
-       var sendData = angular.copy(data);
-       csvService.typeData(sendData);
-     } else {
-       vm.selected.splice(vm.selected.indexOf(item), 1);
-     }
-   };
+  //   vm.change = function (item, active) {
+  //    if (active) {
+  //      vm.selected.push(item);
+  //      console.log(item);
+  //      var data = item;
+  //      var sendData = angular.copy(data);
+  //      csvService.typeData(sendData);
+  //    } else {
+  //      vm.selected.splice(vm.selected.indexOf(item), 1);
+  //    }
+  //  };
 
    donutService.getFpDividedByPeriod();
 
@@ -264,6 +264,11 @@
     vm.getUserData = function(user) {
      console.log(user);
      csvService.userData(user);
+    }
+
+    vm.dataType = function(data){
+      console.log(data);
+      csvService.dataType = data;
     }
 
 }); //End login controller
