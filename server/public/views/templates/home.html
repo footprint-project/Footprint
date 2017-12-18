@@ -141,6 +141,36 @@
 
     <div layout="row">
       <canvas id="donutChart" width="400" height="225"></canvas>
+    </div>
 
 
+    <div layout="row">
+
+      View a: <select ng-model="lc.barBy" ng-change="lc.changeBarView()">
+        <option value="project">Project</option>
+        <option value="period">Period</option>
+        <option value="type">Type</option>
+        <option value="country">Country</option>
+      </select>
+
+      <select ng-show="lc.activeSelector == 'project'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.project}}">{{x.project}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'period'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.period}}">{{x.period}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'type'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.type}}">{{x.type}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'country'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.country}}">{{x.country}}</option>
+      </select>
+
+      <button ng-click="lc.submitBarQuery(lc.barBy, lc.barParticular)">Bar me</button>
+    </div>
+
+
+
+    <div layout="row">
+      <canvas id="barChart" width="400" height="225"></canvas>
     </div>

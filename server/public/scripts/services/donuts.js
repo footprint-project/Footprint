@@ -81,6 +81,8 @@ myApp.service('donutService', function($http, $location, UserService) {
   self.getDonut = function(view, slice) {
     //i know with req.query there's a way to do this, but i'm just cheating:
     var instructions = {view: view, particular: '2016-03-01', slice: slice};
+    // var instructions = {view: view, particular: 'living', slice: slice};
+
 
     return $http.post('/member/donut/', instructions).then(function(response) {
       // console.log(response);

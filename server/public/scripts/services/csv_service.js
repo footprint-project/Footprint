@@ -19,6 +19,7 @@ myApp.service('csvService', function($http, $location, UserService){
 };
 
 //This function parses the data from uploaded CSVs.
+//why is it basically repeated below..?
   vm.parseData = function(data) {
     console.log(data);
 
@@ -136,10 +137,10 @@ myApp.service('csvService', function($http, $location, UserService){
 
   vm.parseFootprint = function(data){
       console.log(data);
-  
+
       var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
         //  console.log(dataNums);
-  
+
         var arrayOfNums = dataNums.split(',');
         console.log(arrayOfNums);
 
@@ -156,7 +157,7 @@ myApp.service('csvService', function($http, $location, UserService){
           grid: 0,
           propane: 0
         };
-  
+
         for (var i=0; i<arrayOfNums.length; i++) {
           var num = arrayOfNums[i];
           if (i % 11 == 1 && num !== '') {
@@ -182,7 +183,7 @@ myApp.service('csvService', function($http, $location, UserService){
           } else if (i % 11 == 0 && num !== '' && i>1) {
             csvIn.propane += Number(num);
           }
-  
+
         }
         // console.log(csv);
         // vm.valuesToArray(csv);
@@ -223,8 +224,8 @@ myApp.service('csvService', function($http, $location, UserService){
     console.log('error adding projects', error)
   })
  }
-     
-  
+
+
 
 
 
