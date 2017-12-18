@@ -10,6 +10,7 @@ myApp.service('UserService', function ($http, $location){
   self.result = {};
   self.lineGraphData={};
   self.footprintsFootprint = {};
+  self.clickedProject = {};
   
 
   const PLANE_CONVERSION = 0.18026;
