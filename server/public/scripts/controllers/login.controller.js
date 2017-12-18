@@ -1,4 +1,4 @@
- myApp.controller('LoginController', function ($http, $location, $timeout, UserService, donutService, csvService) {
+ myApp.controller('LoginController', function ($http, $location, $timeout, $filter, UserService, donutService, csvService) {
 
     console.log('LoginController created');
     var vm = this;
@@ -122,42 +122,7 @@
         sum = vm.lineData[i].air + vm.lineData[i].car + vm.lineData[i].freight_train + vm.lineData[i].fuel + vm.lineData[i].grid + vm.lineData[i].hotel + vm.lineData[i].plane + vm.lineData[i].propane + vm.lineData[i].sea + vm.lineData[i].train + vm.lineData[i].truck;
         sumsArray.push(sum);
         console.log(sumsArray);
-        if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 01){
-          month = 'Jan'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 02) {
-          month = 'Feb'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 03) {
-          month = 'Mar'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 04) {
-          month = 'Apr'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 05) {
-          month = 'May'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 06) {
-          month = 'Jun'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 07) {
-          month = 'Jul'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 08) {
-          month = 'Aug'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 09) {
-          month = 'Sep'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 10) {
-          month = 'Oct'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 11) {
-          month = 'Nov'
-        }
-        else if (vm.lineData[i].period[5] + vm.lineData[i].period[6] == 12) {
-          month = 'Dec'
-        }
+        month = $filter('date')(vm.lineData[i].period, 'MMM yy');
         console.log(month);
         periodArray.push(month);
         console.log(periodArray);
