@@ -60,19 +60,18 @@ vm.dataType;
       }
       
       console.log(csv);
-      //  console.log(vm.dataType.type);
-      // if (vm.dataType.type === 'English'){
-      //   for (var i=0; i<csv.length; i++){
-      //     csv.plane = (csv.plane * 1.609344);
-      //     csv.car = (csv.plane * 1.609344);
-      //     csv.train_travel = (csv.plane * 1.609344);
-      //     csv.air = (csv.air * 1.460);
-      //     csv.train_shipping = (csv.train_travel * 1.460);
-      //     csv.truck = (csv.truck * 1.460);
-      //     csv.sea = (csv.sea * 1.460);
-      //     console.log('Post English conversion,' + csv)
-      //   }
-      // }
+       console.log(vm.dataType.type);
+      if (vm.dataType.type === 'English'){
+        // for (var i=0; i<csv.length; i++){
+          csv.plane = (csv.plane * 1.609344);
+          csv.car = (csv.plane * 1.609344);
+          csv.train_travel = (csv.plane * 1.609344);
+          csv.air = (csv.air * 1.460);
+          csv.train_shipping = (csv.train_travel * 1.460);
+          csv.truck = (csv.truck * 1.460);
+          csv.sea = (csv.sea * 1.460);
+          console.log('Post English conversion,' + csv)
+      }
       vm.valuesToArray(csv);
 
       vm.trialData = UserService.computeTrialFootprint(csv);
@@ -108,19 +107,6 @@ vm.dataType;
        if (obj.hasOwnProperty(key)) {
            result.push(obj[key]);
        }
-    }
-    console.log(vm.dataType.type);
-    if (vm.dataType.type === 'English'){
-      for (var i=0; i<result.length; i++){
-        result.plane = (result.plane * 1.609344);
-        result.car = (result.plane * 1.609344);
-        result.train_travel = (result.plane * 1.609344);
-        result.air = (result.air * 1.460);
-        result.train_shipping = (result.train_travel * 1.460);
-        result.truck = (result.truck * 1.460);
-        result.sea = (result.sea * 1.460);
-      }
-      console.log('Post English conversion,' + result);
     }
     console.log(result);
     vm.calculations(result);
