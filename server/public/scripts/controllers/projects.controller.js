@@ -11,4 +11,16 @@ myApp.controller('ProjectController', function (UserService) {
         console.log('show selected', vm.selectedIndex);
     }
     vm.showSelected();
+
+    
+
+    vm.showAnotherProject = function (ev, i) {
+        UserService.userProjects.selectedIndex = i;
+        console.log('clicked showAnotherProject', i);
+        window.location.reload(i);
+    
+        
+    };
+
+    
 });

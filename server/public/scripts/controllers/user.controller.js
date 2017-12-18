@@ -65,7 +65,7 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
 
   vm.showProject = function (ev, i) {
     UserService.userProjects.selectedIndex = i;
-    console.log('clicked showProject', i,);
+    console.log('clicked showProject', i);
     window.location.href = '/#/projects';
   };
 
