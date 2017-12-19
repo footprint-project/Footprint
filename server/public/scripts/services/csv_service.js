@@ -19,7 +19,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
     organization: ''
   };
 
-  vm.dataType;
+  vm.dataType = '';
 
   //This function parses the data from uploaded CSVs.
   vm.parseData = function (data) {

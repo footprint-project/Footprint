@@ -1,8 +1,8 @@
 <div class="container" ng-cloak>
     <div ng-include="'/views/partials/login.html'"></div>
-    
-    
-        
+
+
+
             <div layout="row" layout-align="center center"><h1>VIEW FOOTPRINT'S CARBON IMPACT</h1></div>
             <div layout="row" layout-xs="column" id="homecharts" layout-align="space-around center">
             <div flex id="donuthome">
@@ -11,14 +11,14 @@
             <div flex id="linehome">
             <canvas id="line-chart" width="400" height="225"></canvas>
             </div>
-        
+
         </div>
         <div layout="row" layout-align="center center">
             <h1>TRY IT FOR YOURSELF</h1>
         </div>
         <div layout="row" layout-align="space-around center" id="homeform">
             <md-content>
-            
+
             <div>
             <md-input-container>
                 <label>Organization Name</label>
@@ -26,17 +26,17 @@
             </md-input-container>
             <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
             </div>
-            
-            
-            
+
+
+
                 <div class="upload-btn-wrapper">
                     <md-button class="md-raised" cursor:pointer>Upload CSV
                         <md-icon class="material-icons">attach_file</md-icon>
                     </md-button>
                     <input type="file" id="file" name="myfile">
                 </div>
-                
-                
+
+
                 <div>
                         <md-radio-group ng-model="data.type">
                             <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
@@ -51,8 +51,8 @@
             </div>
             </md-content>
             </div>
-        
-        
+
+
         <!-- <div id="trialForm" flex>
             TRY IT FOR YOURSELF
             <a href="#register">Register</a>
@@ -60,7 +60,7 @@
             <div layout="column" layout-align="center center" ng-cloak class="md-block">
 
                 <md-content layout-padding>
-                    
+
                     <div layout-gt-sm="row">
 
                         <md-input-container>
@@ -74,14 +74,14 @@
 
                         <div>
                         <md-input-container>
-                            
+
                             <label>Country of Operation</label>
                             <md-select class="select" ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
                                 <md-option ng-repeat="country in lc.UserService.countries.data">
                                     <em>{{country.name}}</em>
-                                   
+
                                 </md-option>
-                                
+
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -90,7 +90,7 @@
                                 <label>Month</label>
                                 <md-select class="select" ng-model="user.selectedMonth" md-selected-text="user.selectedMonth">
                                     <md-option>
-                                        
+
                                     </md-option>
                                     <md-option ng-repeat="month in lc.months">
                                         {{month}}
@@ -98,7 +98,7 @@
                             </md-input-container>
                             <md-input-container>
                                 <label>Year</label>
-                                
+
                                 <md-select class="select" ng-model="user.selectedYear" md-selected-text="user.selectedYear" ng-value="">
                                     <md-option>
 
@@ -110,38 +110,124 @@
                             </md-input-container>
                         </div>
                     </div>
-                    
+
                 </md-content>
             </div>
 
-            
+
             <div id="projectcheckboxes">
-                                 
+
                                 <h3>PROJECT TYPE</h3>
                                     <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
-                                
+
                                 <pre ng-bind="lst | json">
                                </pre>
-                
+
             </div>
-            
+
             <div>
                 <div class="upload-btn-wrapper">
                     <md-button class="md-raised" cursor:pointer>Upload CSV
                         <md-icon class="material-icons">attach_file</md-icon>
                     </md-button>
                     <input type="file" id="file" name="myfile">
-            
+
                 </div>
                 <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
             </div>
-                
+                <! <div class="download-csv"> -->
 
-            
+                <!-- </div> -->
+
+
             <div id="homeSubmit">
                 <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.change(item, active)">Submit Data</md-button>
             </div>
         </div>
-       
-           
+        <div id="demo" flex>
+            VIEW FOOTPRINT'S FOOTPRINT
+
+            <canvas id="doughnut-chart" width="400" height="225"></canvas>
+            <canvas id="line-chart" width="400" height="225"></canvas>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DONUTS: -->
+    <div layout="row">
+      View a: <select ng-model="lc.viewBy" ng-change="lc.changeView()">
+        <option value="project">Project</option>
+        <option value="period">Period</option>
+        <option value="category">Category</option>
+        <option value="type">Type</option>
+        <option value="country">Country</option>
+      </select>
+
+      <!-- TO DO: get route for the particulars dependening on selection
+      STRETCH: let there be an ALL option
+      Which one: <select ng-model="lc.particularDonut">
+
+      </select> -->
+
+      Sliced by: <select ng-model="lc.sliceBy">
+        <option value="{{lc.viewByObject.one}}">{{lc.viewByObject.one}}</option>
+        <option ng-hide="lc.choseProj" value="{{lc.viewByObject.two}}">{{lc.viewByObject.two}}</option>
+        <option ng-hide="lc.choseProj" value="{{lc.viewByObject.three}}">{{lc.viewByObject.three}}</option>
+        <option value="{{lc.viewByObject.four}}">{{lc.viewByObject.four}}</option>
+      </select>
+
+      <button ng-click="lc.submitQuery(lc.viewBy, lc.sliceBy)">Donut me</button>
+    </div>
+
+    <div layout="row">
+      <canvas id="donutChart" width="400" height="225"></canvas>
+    </div>
+
+
+
+
+
+
+
+<!-- BARS: -->
+    <div layout="row">
+
+      View a: <select ng-model="lc.barBy" ng-change="lc.changeBarView()">
+        <option value="project">Project</option>
+        <option value="period">Period</option>
+        <option value="type">Type</option>
+        <option value="country">Country</option>
+      </select>
+
+      <select ng-show="lc.activeSelector == 'project'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.project}}">{{x.project}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'period'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.period}}">{{x.period}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'type'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.type}}">{{x.type}}</option>
+      </select>
+      <select ng-show="lc.activeSelector == 'country'" ng-model="lc.barParticular">
+        <option ng-repeat="x in lc.barResults" value="{{x.country}}">{{x.country}}</option>
+      </select>
+
+      <button ng-click="lc.submitBarQuery(lc.barBy, lc.barParticular)">Bar me</button>
+    </div>
+
+
+
+    <div layout="row">
+      <canvas id="barChart" width="400" height="225"></canvas>
     </div>
