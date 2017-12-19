@@ -347,7 +347,11 @@ INSERT INTO "countries" ("name") VALUES ('U.S. Minor Outlying Islands');
 INSERT INTO "countries" ("name") VALUES ('Vanuatu');
 INSERT INTO "countries" ("name") VALUES ('Wallis and Futuna');
 
--- The following is dummy data, please use in order to demo the application.
+
+
+
+-- The following is dummy data, please use in order to demo the application. 
+-- All User passwords are what is in the following quotes, "1"
 
 INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('admin@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Footprint', 'Will Heegaard', 'CEO and Founder');
 INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('user2@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Caring People', 'Carla Carlson', 'Field Supervisor');
