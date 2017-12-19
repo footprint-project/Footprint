@@ -7,11 +7,25 @@ myApp.controller('ProjectController', function (UserService) {
     vm.userProjects = UserService.userProjects;
     vm.selectedIndex = UserService.userProjects.selectedIndex;
     vm.clickedProject = UserService.clickedProject;
-    
+    vm.projectFootprints = [];
+
+
+    vm.getProjectFootprints = function (id) {
+        console.log('in pc getProFoo', id);
+        UserService.getProjectFootprints(id)
+        vm.projectFootprints = UserService.selectedProjectFootprints;
+            console.log(vm.projectFootprints);
+    };
+    vm.getProjectFootprints(vm.clickedProject.id);
+
+    vm.changeSelected = function(){
+        vm.clickedProject = UserService.clickedProject;
+    }
+
     vm.showSelected = function() {
         console.log('show selected', vm.selectedIndex);
-        vm.clickedProject = UserService.clickedProject
-        console.log(vm.clickedProject);
+        vm.changeSelected();
+        vm.getProjectFootprints(vm.clickedProject.id);
     }
     vm.showSelected();
 
@@ -19,9 +33,10 @@ myApp.controller('ProjectController', function (UserService) {
         UserService.userProjects.selectedIndex = i;
         console.log('clicked showAnotherProject', i);
         vm.clickedProject = UserService.userProjects[i];
-        console.log(vm.clickedProject);
+        vm.getProjectFootprints(vm.clickedProject.id);
         //window.location.reload(i);
     };
+
 
     
 });

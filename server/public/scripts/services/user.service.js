@@ -84,12 +84,22 @@ myApp.service('UserService', function ($http, $location){
   //gets the users projects for the projects view
   self.getProjects = function (id) {
     console.log('Getting user projects', id);
-    $http.get('member/userprojects/' + id).then(function (response) {
-      self.userProjects = response.data;
+    return $http.get('member/userprojects/' + id).then(function (response) {
+      return self.userProjects = response.data;
       console.log('user projects', self.userProjects);
+    }).catch(function (err) {
+      console.log('problem getting projects', err);
     });
   };
 
+  self.getProjectFootprints = function (id){
+    return $http.get('/member/project_footprints/'+ id).then(function (response) {
+      console.log(response.data.rows);
+      return self.selectedProjectFootprints = response.data.rows;
+    }).catch(function (err) {
+      console.log('problem getting project footprints', err);
+    });
+  };
 
   self.computeFootprint = function(footprint) {
     console.log(footprint[0]);

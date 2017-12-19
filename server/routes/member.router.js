@@ -29,6 +29,32 @@ router.get('/countries', function (req, res) {
   })
 });
 
+
+router.get('/project_footprints/:projectId', function (req, res) {
+  console.log('Get Footprints');
+  console.log('project id', projectId);
+  var projectId = req.params.projectId;
+  pool.connect(function (err, db, done) {
+    if (err) {
+      console.log("Error connecting for project footprints: ", err);
+      res.sendStatus(500);
+    }
+    else {
+      var queryText = 'SELECT * FROM "footprints" WHERE project_id = $1';
+      db.query(queryText,[projectId], function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log('Error with project footprints GET', errorMakingQuery)
+          res.sendStatus(501);
+        } else {
+          res.send(result)
+        }
+      });
+    }
+  })
+});
+
+
 router.post('/project_submit', function(req, res){
     console.log(req.body);
 });
