@@ -5,7 +5,7 @@
 
         <h1>{{uc.userObject.organization}} DASHBOARD</h1>
 
-        
+
         <!-- <img id="globe" src="images/globe.png"> -->
     </div>
     <div layout="row">
@@ -32,7 +32,7 @@
     </div>
 
 
-    <div layout="row" layout-align="left">
+    <!-- <div layout="row" layout-align="left"> -->
         <!-- <md-input-container>
             <label>Project</label>
 
@@ -62,7 +62,73 @@
 
 
 
-    </div>
+    <!-- </div> -->
+
+
+<h1>VISUALIZE</h1>
+    <!-- DONUTS: -->
+        <div layout="row">
+          View a: <select ng-model="uc.viewBy" ng-change="uc.changeView()">
+            <option value="project">Project</option>
+            <option value="period">Period</option>
+            <option value="category">Category</option>
+            <option value="type">Type</option>
+            <option value="country">Country</option>
+          </select>
+
+          <!-- TO DO: get route for the particulars dependening on selection
+          STRETCH: let there be an ALL option
+          Which one: <select ng-model="lc.particularDonut">
+
+          </select> -->
+
+          Sliced by: <select ng-model="uc.sliceBy">
+            <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
+            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.two}}">{{uc.viewByObject.two}}</option>
+            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.three}}">{{uc.viewByObject.three}}</option>
+            <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
+          </select>
+
+          <button ng-click="uc.submitQuery(uc.viewBy, uc.sliceBy)">Donut me</button>
+        </div>
+
+        <div layout="row">
+          <canvas id="donutChart" width="400" height="225"></canvas>
+        </div>
+
+
+
+    <!-- BARS: -->
+        <div layout="row">
+
+          View a: <select ng-model="uc.barBy" ng-change="uc.changeBarView()">
+            <option value="project">Project</option>
+            <option value="period">Period</option>
+            <option value="type">Type</option>
+            <option value="country">Country</option>
+          </select>
+
+          <select ng-show="uc.activeSelector == 'project'" ng-model="uc.barParticular">
+            <option ng-repeat="x in uc.barResults" value="{{x.project}}">{{x.project}}</option>
+          </select>
+          <select ng-show="uc.activeSelector == 'period'" ng-model="uc.barParticular">
+            <option ng-repeat="x in uc.barResults" value="{{x.period}}">{{x.period}}</option>
+          </select>
+          <select ng-show="uc.activeSelector == 'type'" ng-model="uc.barParticular">
+            <option ng-repeat="x in uc.barResults" value="{{x.type}}">{{x.type}}</option>
+          </select>
+          <select ng-show="uc.activeSelector == 'country'" ng-model="uc.barParticular">
+            <option ng-repeat="x in uc.barResults" value="{{x.country}}">{{x.country}}</option>
+          </select>
+
+          <button ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">Bar me</button>
+        </div>
+
+
+
+        <div layout="row">
+          <canvas id="barChart" width="400" height="225"></canvas>
+        </div>
 
 
 </md-content>

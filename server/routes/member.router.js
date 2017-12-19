@@ -27,7 +27,7 @@ router.get('/countries', function (req, res) {
   })
 });
 
-var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-Based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
+var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
 
 router.post('/newproject', function(req, res) {
   console.log("BODY: ", req.body);
@@ -42,7 +42,7 @@ router.post('/newproject', function(req, res) {
         // done();
         if (errorMakingQuery) {
           console.log('Error with country GET', errorMakingQuery);
-          res.sendStatus(501);
+          // res.sendStatus(501);
         } else {
           console.log(result.rows[0]);
           queryText = 'INSERT INTO "projects" ("name", "user_id", "country_id") VALUES ($1, $2, $3) RETURNING id;';
@@ -50,17 +50,17 @@ router.post('/newproject', function(req, res) {
             done();
             if (err) {
               console.log(err);
-              res.sendStatus(501);
+              // res.sendStatus(501);
             } else {
               console.log("ID: ", result.rows[0].id);
               for (var i=0; i<req.body.project.length - 1; i++) {
                 var typeNow = types.indexOf(req.body.project[i]);
                 queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
-                db.query(queryText, [result.rows[0].id, typeNow], handlePost);
+                db.query(queryText, [result.rows[0].id, typeNow+1], handlePost);
               }
               var typeNow2 = types.indexOf(req.body.project[req.body.project.length - 1]);
               queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
-              db.query(queryText, [result.rows[0].id, typeNow2], function (err, result) {
+              db.query(queryText, [result.rows[0].id, typeNow2+1], function (err, result) {
                 done();
                 if (err) {
                   console.log(err);
@@ -87,6 +87,9 @@ function handlePost(err, result) {
     console.log('well done amigo');
   }
 }
+
+
+
 
 
 
