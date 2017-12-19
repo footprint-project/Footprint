@@ -11,6 +11,7 @@ myApp.service('UserService', function ($http, $location){
   self.lineGraphData={};
   self.footprintsFootprint = {};
   self.clickedProject = {};
+  self.users = {};
   
 
   const PLANE_CONVERSION = 0.18026;
@@ -90,9 +91,12 @@ myApp.service('UserService', function ($http, $location){
       console.log('user projects', self.userProjects);
     });
   };
-self.getUsers = function (id) {
+self.adminGetUsers = function (id) {
   console.log('Getting users for admin', id);
-  $http.get('members/users') 
+  $http.get('members/users' + id).then(function(response) {
+    self.users = response.data;
+    console.log('users for admin', self.users);
+  })
 }
 
   self.computeFootprint = function(footprint) {
