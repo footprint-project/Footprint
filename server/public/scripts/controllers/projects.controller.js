@@ -12,12 +12,15 @@ myApp.controller('ProjectController', function (UserService) {
 
     vm.getProjectFootprints = function (id) {
         console.log('in pc getProFoo', id);
-        UserService.getProjectFootprints(id)
-        vm.projectFootprints = UserService.selectedProjectFootprints;
+        UserService.getProjectFootprints(id).then(function(response){
+            vm.projectFootprints = UserService.selectedProjectFootprints;
             console.log(vm.projectFootprints);
+        });
     };
+
     vm.getProjectFootprints(vm.clickedProject.id);
 
+    
     vm.changeSelected = function(){
         vm.clickedProject = UserService.clickedProject;
     }
