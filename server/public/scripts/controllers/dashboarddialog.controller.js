@@ -46,4 +46,10 @@ myApp.controller('DashboardDialogController', function (UserService, csvService,
      csvService.sendUser(user);
     }
 
+    //This function gets either metric or english
+    vm.dataType = function (data) {
+      console.log(data);
+      csvService.dataType = data;
+    }
+
 }); //End Dialog controller

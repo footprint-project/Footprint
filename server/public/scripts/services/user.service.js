@@ -11,8 +11,10 @@ myApp.service('UserService', function ($http, $location){
   self.lineGraphData={};
   self.footprintsFootprint = {};
   self.clickedProject = {};
+
   self.users = {};
   
+
 
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
@@ -67,13 +69,13 @@ myApp.service('UserService', function ($http, $location){
     console.log('Getting countries');
     $http.get('/member/countries').then(function(response) {
       var countries = response.data.rows;
-      console.log(countries);
+      // console.log(countries);
       self.countries.data = countries;
-      console.log(self.countries.data);
+      // console.log(self.countries.data);
     })
   }
   self.getCountries();
-  console.log(self.countries.data);
+  // console.log(self.countries.data);
 
  self.getLineGraphData = function (){
     console.log('Getting Line graph Data');
@@ -91,6 +93,7 @@ myApp.service('UserService', function ($http, $location){
       console.log('user projects', self.userProjects);
     });
   };
+
 self.adminGetUsers = function (id) {
   console.log('Getting users for admin', id);
   $http.get('members/users' + id).then(function(response) {
@@ -117,19 +120,40 @@ self.adminGetUsers = function (id) {
     return result;
   };
 
+
+//this got accidentally duplicated somehow:
+  // self.computeFootprint = function(footprint) {
+  //   console.log('hi', footprint);
+  //   var result = {};
+  //   result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+  //   result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+  //   result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+  //   result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+  //   result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+  //   result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+  //   result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+  //   result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+  //   result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+  //   result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+  //   result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+  //   console.log(result);
+  //   return result;
+  // };
+
+
   self.groupByCategory = function(footprint) {
     var result = {};
-    console.log(footprint);
+    // console.log(footprint);
     result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
     result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
     result.travel = footprint.plane + footprint.train + footprint.car;
     self.result = result;
-    console.log(self.result);
+    // console.log(self.result);
     return self.result;
   };
 
     self.computeFootprint = function(footprint) {
-      // console.log(footprint);
+      console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -144,18 +168,20 @@ self.adminGetUsers = function (id) {
       result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
       result.period = footprint.period;
       result.name = footprint.name;
-      // console.log(result);
+      result.type_id = footprint.type_id;
+      result.country_id = footprint.country_id;
+      console.log(result);
       return result;
     };
 
     self.groupByCategory = function(footprint) {
       var result = {};
-      console.log(footprint);
+      // console.log(footprint);
       result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
       result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
       result.travel = footprint.plane + footprint.train + footprint.car;
       self.result = result;
-      console.log(self.result);
+      // console.log(self.result);
       return self.result;
     };
 
@@ -225,10 +251,10 @@ self.adminGetUsers = function (id) {
   // self.getFpDividedByPeriod();
 
   self.computeTrialFootprint = function(footprint) {
-    console.log(footprint);
+    // console.log(footprint);
     footprint.train = footprint.train_travel;
     footprint.freight_train = footprint.train_shipping;
-    console.log(self.computeFootprint(footprint));
+    // console.log(self.computeFootprint(footprint));
     var data = self.computeFootprint(footprint);
     return self.groupByCategory(data);
 
@@ -238,7 +264,7 @@ self.adminGetUsers = function (id) {
 
   // self.getFpDividedByPeriod();
 
- 
+
 
 
 
