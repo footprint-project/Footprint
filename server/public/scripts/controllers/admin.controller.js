@@ -7,17 +7,17 @@ myApp.controller('AdminController', function (UserService) {
     vm.userProjects = UserService.userProjects;
     vm.allUsers = UserService.users;
    
+    // this gets all the registered users
     gettingUsers = function(){
         UserService.adminGetUsers().then(function(response){
             vm.allUsers = response;
             console.log(response);
+        }).catch(function (error) {
+            console.log(error, 'error getting all users');
         });
     }
     
+    //for page load, is displayed on DOM
     gettingUsers();
     
-
-   
-
-
 });

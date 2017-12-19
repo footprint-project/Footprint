@@ -76,13 +76,13 @@ myApp.service('UserService', function ($http, $location){
   self.getCountries();
   // console.log(self.countries.data);
 
- self.getLineGraphData = function (){
-    console.log('Getting Line graph Data');
-    return $http.get('member/linegraph').then(function(response){
-      return self.lineGraphData = response.data.rows;
-    });
-  }
-
+//this will be for getting user data for a line graph...?
+//  self.getLineGraphData = function (){
+//     console.log('Getting Line graph Data');
+//     return $http.get('member/linegraph').then(function(response){
+//       return self.lineGraphData = response.data.rows;
+//     });
+//   }
 
   //gets the users projects for the projects view
   self.getProjects = function (id) {
@@ -95,7 +95,7 @@ myApp.service('UserService', function ($http, $location){
     });
   };
 
-
+  //gets the footprints for selected project
   self.getProjectFootprints = function (id){
     return $http.get('/member/project_footprints/'+ id).then(function (response) {
       console.log(response.data.rows);
@@ -105,6 +105,7 @@ myApp.service('UserService', function ($http, $location){
     });
   };
 
+  //gets all the users for admin page
 self.adminGetUsers = function () {
   console.log('Getting users for admin');
   return $http.get('admin/users').then(function(response) {

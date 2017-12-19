@@ -27,37 +27,66 @@ router.get('/countries', function (req, res) {
   })
 });
 
-
+var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-Based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
 
 router.post('/newproject', function(req, res) {
   console.log("BODY: ", req.body);
-  // pool.connect(function(err, db, done) {
-  //   if(err) {
-  //     console.log('Error connecting', err);
-  //     res.sendStatus(500);
-  //   } else {
-  //     var queryText;
-  //     if (req.body.view == 'period') {
-  //       queryText = 'SELECT "period" as period FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" WHERE "users"."id" = 3 GROUP BY "period";';
-  //     } else if (req.body.view == 'project') {
-  //       queryText = 'SELECT "projects"."name" as project FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" WHERE "users"."id" = 3;';
-  //     } else if (req.body.view == 'country') {
-  //       queryText = 'SELECT "countries"."name" as country FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "countries" ON "countries"."id" = "projects"."country_id" WHERE "users"."id" = 3;';
-  //     } else if (req.body.view == 'type') {
-  //       queryText = 'SELECT "types"."name" as type FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id"="type_id" WHERE "users"."id" = 3 GROUP BY "types"."name";';
-  //     }
-  //     db.query(queryText, function (errorMakingQuery, result) {
-  //       done();
-  //       if (errorMakingQuery) {
-  //         console.log('Error with country GET', errorMakingQuery);
-  //         res.sendStatus(501);
-  //       } else {
-  //         res.send(result.rows);
-  //       }
-  //     });
-  //   }
-  // });
+  pool.connect(function(err, db, done) {
+    if(err) {
+      console.log('Error connecting', err);
+      res.sendStatus(500);
+    } else {
+      var queryText = 'SELECT * FROM "countries" WHERE "countries"."name" = $1;';
+
+      db.query(queryText, [req.body.selectedCountry], function (errorMakingQuery, result) {
+        // done();
+        if (errorMakingQuery) {
+          console.log('Error with country GET', errorMakingQuery);
+          res.sendStatus(501);
+        } else {
+          console.log(result.rows[0]);
+          queryText = 'INSERT INTO "projects" ("name", "user_id", "country_id") VALUES ($1, $2, $3) RETURNING id;';
+          db.query(queryText, [req.body.projectName, req.user.id, result.rows[0].id], function (err, result) {
+            done();
+            if (err) {
+              console.log(err);
+              res.sendStatus(501);
+            } else {
+              console.log("ID: ", result.rows[0].id);
+              for (var i=0; i<req.body.project.length - 1; i++) {
+                var typeNow = types.indexOf(req.body.project[i]);
+                queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
+                db.query(queryText, [result.rows[0].id, typeNow], handlePost);
+              }
+              var typeNow2 = types.indexOf(req.body.project[req.body.project.length - 1]);
+              queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
+              db.query(queryText, [result.rows[0].id, typeNow2], function (err, result) {
+                done();
+                if (err) {
+                  console.log(err);
+                  res.sendStatus(500);
+                } else {
+                  res.sendStatus(201);
+
+                }
+              });
+              // queryText = 'INSERT INTO "project_type" ("project_id", "type_id")'
+            }
+          });
+          // res.send(result.rows);
+        }
+      });
+    }
+  });
 });
+
+function handlePost(err, result) {
+  if (err) {
+    console.log('whoops dog');
+  } else {
+    console.log('well done amigo');
+  }
+}
 
 
 

@@ -110,6 +110,7 @@
 
   vm.donutDataSet();
 
+  // gets the data for the landing page lineChart displaying footprints carbon impact
   vm.lineChart = function(){
     donutService.getFpDividedByPeriod().then(function(response){
       vm.lineData = response;
@@ -119,7 +120,8 @@
       var periodArray = [];
       var sumsArray = [];
       for (var i=0; i<vm.lineData.length; i+=1){
-        sum = vm.lineData[i].air + vm.lineData[i].car + vm.lineData[i].freight_train + vm.lineData[i].fuel + vm.lineData[i].grid + vm.lineData[i].hotel + vm.lineData[i].plane + vm.lineData[i].propane + vm.lineData[i].sea + vm.lineData[i].train + vm.lineData[i].truck;
+        lineData = vm.lineData[i];
+        sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(sum);
         console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
@@ -147,8 +149,10 @@
           }
         }
       });
+    }).catch(function (error) {
+      console.log(error, 'error with line graph data footprints by period');
     });
-  }
+  };
   vm.lineChart();
 
 // var years = [1500];
