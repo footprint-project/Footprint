@@ -78,6 +78,8 @@ myApp.service('csvService', function ($http, $location, UserService) {
       console.log('metric', csv.organization)
     }
 
+    // csv.project = csvService.projectName.name;
+
     vm.valuesToArray(csv);
 
     vm.trialData = UserService.computeTrialFootprint(csv);
@@ -232,7 +234,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
 
   vm.sendUser = function (user) {
     console.log(user);
-    vm.projectOut.userInfo.push({ selectedCountry: user.selectedCountry }, { selectedMonth: user.selectedMonth }, { selectedYear: user.selectedYear }, { project: user.projectName });
+    vm.projectOut.userInfo.push({ selectedMonth: user.selectedMonth }, { selectedYear: user.selectedYear }, { project: user.project });
   }
 
   vm.projectChecks = function (sendData) {

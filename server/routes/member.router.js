@@ -90,6 +90,29 @@ function handlePost(err, result) {
 
 
 
+router.get('/allprojects', function (req, res) {
+  pool.connect(function (err, db, done) {
+    if (err) {
+      console.log("Error connecting for project footprints: ", err);
+      res.sendStatus(500);
+    }
+    else {
+      var queryText = 'SELECT * FROM "projects" WHERE user_id = $1';
+      db.query(queryText, [req.user.id], function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log('Error with project footprints GET', errorMakingQuery);
+          res.sendStatus(501);
+        } else {
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});
+
+
+
 
 
 
