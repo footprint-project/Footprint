@@ -11,8 +11,7 @@ myApp.service('UserService', function ($http, $location){
   self.lineGraphData={};
   self.footprintsFootprint = {};
   self.clickedProject = {};
-
-  self.users = {};
+  self.users = [];
   
 
 
@@ -71,7 +70,7 @@ myApp.service('UserService', function ($http, $location){
       var countries = response.data.rows;
       // console.log(countries);
       self.countries.data = countries;
-      // console.log(self.countries.data);
+      console.log(self.countries.data);
     })
   }
   self.getCountries();
@@ -110,7 +109,8 @@ self.adminGetUsers = function () {
   console.log('Getting users for admin');
   return $http.get('admin/users').then(function(response) {
     console.log(response.data);
-    return self.users = response.data.rows;
+    self.users = response.data;
+    return self.users;
     console.log('users for admin', self.users);
   }).catch(function (err) {
     console.log('problem getting all users for admin', err);
@@ -200,51 +200,6 @@ self.adminGetUsers = function () {
 
 
 
-  // self.getFpDividedByProject = function() {
-  //   return $http.get('/member/footprint_by_project').then(function(response) {
-  //     console.log(response.data);
-  //     var allTheStuff = response.data;
-  //     var cleanedStuff = [];
-  //     cleanedStuff.push(allTheStuff[0]);
-  //
-  //     for (var i=1; i<allTheStuff.length; i++) {
-  //       var current = allTheStuff[i];
-  //       var prev = allTheStuff[i - 1];
-  //       if (current.name !== prev.name) {
-  //         cleanedStuff.push(current);
-  //       }
-  //     }
-  //     console.log(cleanedStuff);
-  //   }).catch(function(err) {
-  //     console.log('uh oh', err);
-  //   });
-  // };
-  //
-  // self.getFpDividedByProject();
-  //
-  //
-  // self.getFpDividedByPeriod = function() {
-  //   return $http.get('/member/footprint_by_period').then(function(response) {
-  //     console.log(response.data);
-  //     var allTheStuff = response.data;
-  //     var cleanedStuff = [];
-  //     cleanedStuff.push(allTheStuff[0]);
-  //
-  //     for (var i=1; i<allTheStuff.length; i++) {
-  //       var current = allTheStuff[i];
-  //       var prev = allTheStuff[i - 1];
-  //       if (current.period !== prev.period) {
-  //         cleanedStuff.push(current);
-  //       }
-  //     }
-  //     console.log(cleanedStuff);
-  //   }).catch(function(err) {
-  //     console.log('uh oh', err);
-  //   });
-  // };
-  //
-  // self.getFpDividedByPeriod();
-
   self.computeTrialFootprint = function(footprint) {
     // console.log(footprint);
     footprint.train = footprint.train_travel;
@@ -255,16 +210,21 @@ self.adminGetUsers = function () {
 
   };
 
-    self.countryIn;
+    // self.countryIn;
 
   // self.getFpDividedByPeriod();
 
+//This uploads the data for a new project:
  self.sendProject = function(user){
    var project = user;
    project.project = self.countryIn;
    console.log(project);
-  //  $http.post
- }
+   $http.post('/member/newproject', project).then(function(response) {
+     console.log(response);
+   }).catch(function(error) {
+     console.log(error);
+   });
+};
 
 
 

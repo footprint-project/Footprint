@@ -26,8 +26,8 @@
             <h3>PROJECT TYPE</h3>
             <md-checkbox ng-model="active" ng-repeat="item in pdc.items" ng-change="pdc.change(item, active)"> {{item}}</md-checkbox>
 
-            <pre ng-bind="lst | json">
-                                      </pre>
+            <!-- <pre ng-bind="lst | json">
+                                      </pre> -->
         </div>
         <div id="homeSubmit">
             <md-button class="md-primary md-raised" ng-click="pdc.postCheckboxes(); pdc.getUserData(user)">Submit Data</md-button>

@@ -29,6 +29,42 @@ router.get('/countries', function (req, res) {
 
 
 
+router.post('/newproject', function(req, res) {
+  console.log("BODY: ", req.body);
+  pool.connect(function(err, db, done) {
+    if(err) {
+      console.log('Error connecting', err);
+      res.sendStatus(500);
+    } else {
+      var queryText = 'SELECT * FROM "countries" WHERE "countries"."name" = $1;';
+
+      db.query(queryText, [req.body.selectedCountry], function (errorMakingQuery, result) {
+        // done();
+        if (errorMakingQuery) {
+          console.log('Error with country GET', errorMakingQuery);
+          res.sendStatus(501);
+        } else {
+          console.log(result.rows[0]);
+          queryText = 'INSERT INTO "projects" ("name", "user_id", "country_id") VALUES ($1, $2, $3);';
+          db.query(queryText, [req.body.projectName, req.user.id, result.rows[0].id], function (err, result) {
+            done();
+            if (err) {
+              console.log(err);
+              res.sendStatus(501);
+            } else {
+              res.sendStatus(201);
+            }
+          });
+          // res.send(result.rows);
+        }
+      });
+    }
+  });
+});
+
+
+
+
 
 router.post('/bars', function(req, res) {
   console.log("BODY: ", req.body);
