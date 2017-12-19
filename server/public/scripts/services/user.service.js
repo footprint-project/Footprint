@@ -12,6 +12,9 @@ myApp.service('UserService', function ($http, $location){
   self.footprintsFootprint = {};
   self.clickedProject = {};
 
+  self.users = {};
+  
+
 
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
@@ -57,7 +60,8 @@ myApp.service('UserService', function ($http, $location){
     console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
-      $location.path("/home");
+      window.location.href = '/#/home';
+      // $location.path("/home");
     });
   } //End of Logout Function
 
@@ -92,6 +96,7 @@ myApp.service('UserService', function ($http, $location){
     });
   };
 
+
   self.getProjectFootprints = function (id){
     return $http.get('/member/project_footprints/'+ id).then(function (response) {
       console.log(response.data.rows);
@@ -100,6 +105,14 @@ myApp.service('UserService', function ($http, $location){
       console.log('problem getting project footprints', err);
     });
   };
+
+self.adminGetUsers = function (id) {
+  console.log('Getting users for admin', id);
+  $http.get('members/users' + id).then(function(response) {
+    self.users = response.data;
+    console.log('users for admin', self.users);
+  })
+}
 
   self.computeFootprint = function(footprint) {
     console.log(footprint[0]);
@@ -118,6 +131,7 @@ myApp.service('UserService', function ($http, $location){
     console.log(result);
     return result;
   };
+
 
   self.groupByCategory = function(footprint) {
     var result = {};
