@@ -261,7 +261,7 @@ self.adminGetUsers = function () {
 
  self.sendProject = function(user){
    var project = user;
-   project.country = self.countryIn;
+   project.project = self.countryIn;
    console.log(project);
   //  $http.post
  }
