@@ -115,10 +115,8 @@
 
 
 
-
+<!-- DONUTS: -->
     <div layout="row">
-      testing 1 2 3
-
       View a: <select ng-model="lc.viewBy" ng-change="lc.changeView()">
         <option value="project">Project</option>
         <option value="period">Period</option>
@@ -127,23 +125,33 @@
         <option value="country">Country</option>
       </select>
 
-      <select ng-model="lc.sliceBy">
+      <!-- TO DO: get route for the particulars dependening on selection
+      STRETCH: let there be an ALL option
+      Which one: <select ng-model="lc.particularDonut">
+
+      </select> -->
+
+      Sliced by: <select ng-model="lc.sliceBy">
         <option value="{{lc.viewByObject.one}}">{{lc.viewByObject.one}}</option>
-        <option value="{{lc.viewByObject.two}}">{{lc.viewByObject.two}}</option>
-        <option value="{{lc.viewByObject.three}}">{{lc.viewByObject.three}}</option>
+        <option ng-hide="lc.choseProj" value="{{lc.viewByObject.two}}">{{lc.viewByObject.two}}</option>
+        <option ng-hide="lc.choseProj" value="{{lc.viewByObject.three}}">{{lc.viewByObject.three}}</option>
         <option value="{{lc.viewByObject.four}}">{{lc.viewByObject.four}}</option>
       </select>
 
       <button ng-click="lc.submitQuery(lc.viewBy, lc.sliceBy)">Donut me</button>
     </div>
 
-
-
     <div layout="row">
       <canvas id="donutChart" width="400" height="225"></canvas>
     </div>
 
 
+
+
+
+
+
+<!-- BARS: -->
     <div layout="row">
 
       View a: <select ng-model="lc.barBy" ng-change="lc.changeBarView()">

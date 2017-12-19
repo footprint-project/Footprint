@@ -367,31 +367,37 @@
 
     vm.viewBy = '';
     vm.viewByObject = {};
+    vm.choseProj = false;
 
 //aww jeez but we're also going to have to populate the Particulars select element ....with a GET route.
     vm.changeView = function() {
       console.log(vm.viewBy);
       if (vm.viewBy == 'period') {
+        vm.choseProj = false;
         vm.viewByObject.one = 'Project';
         vm.viewByObject.two = 'Type';
         vm.viewByObject.three = 'Country';
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'project') {
+        vm.choseProj = true;
         vm.viewByObject.one = 'Period';
         // vm.viewByObject.two = 'Type';
         // vm.viewByObject.three = 'Country';
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'country') {
+        vm.choseProj = false;
         vm.viewByObject.one = 'Project';
         vm.viewByObject.two = 'Type';
         vm.viewByObject.three = 'Period';
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'type') {
+        vm.choseProj = false;
         vm.viewByObject.one = 'Project';
         vm.viewByObject.two = 'Period';
         vm.viewByObject.three = 'Country';
         vm.viewByObject.four = 'Category';
       } else if (vm.viewBy == 'category') {
+        vm.choseProj = false;
         vm.viewByObject.one = 'Project';
         vm.viewByObject.two = 'Type';
         vm.viewByObject.three = 'Country';
