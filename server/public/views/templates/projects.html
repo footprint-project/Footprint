@@ -1,9 +1,28 @@
-<!-- <div ng-include="'views/partials/nav.html'"></div> -->
-<div>
-PROJECTS
-{{pc.userObject.organization}}
+<div ng-include="'views/partials/nav.html'"></div>
 
-{{pc.userProjects}}
 
+<div layout="row" layout-align="start start">
+<md-button href="/#/user">BACK TO DASHBOARD</md-button><span flex></span>
+
+  
+
+</div>
+
+<div layout="row" layout-align="center center">
+<h1 id="projectheader">{{pc.clickedProject.name}}</h1>
+</div>
+
+<div flex="30">
+    <h2>RECENT PROJECTS</h2>
+    
+    <md-card id="recent">
+         
+        <h3 ng-repeat="userProject in pc.userProjects">
+            {{userProject.name}}
+            <md-button class="md-raised md-primary" ng-click="pc.showAnotherProject($event, $index)" layout-align="left">More Info</md-button>
+            
+        </h3>
+
+    </md-card>
 </div>
 
