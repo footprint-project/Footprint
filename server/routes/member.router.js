@@ -29,6 +29,39 @@ router.get('/countries', function (req, res) {
 
 
 
+router.post('/newproject', function(req, res) {
+  console.log("BODY: ", req.body);
+  // pool.connect(function(err, db, done) {
+  //   if(err) {
+  //     console.log('Error connecting', err);
+  //     res.sendStatus(500);
+  //   } else {
+  //     var queryText;
+  //     if (req.body.view == 'period') {
+  //       queryText = 'SELECT "period" as period FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" WHERE "users"."id" = 3 GROUP BY "period";';
+  //     } else if (req.body.view == 'project') {
+  //       queryText = 'SELECT "projects"."name" as project FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" WHERE "users"."id" = 3;';
+  //     } else if (req.body.view == 'country') {
+  //       queryText = 'SELECT "countries"."name" as country FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "countries" ON "countries"."id" = "projects"."country_id" WHERE "users"."id" = 3;';
+  //     } else if (req.body.view == 'type') {
+  //       queryText = 'SELECT "types"."name" as type FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id"="type_id" WHERE "users"."id" = 3 GROUP BY "types"."name";';
+  //     }
+  //     db.query(queryText, function (errorMakingQuery, result) {
+  //       done();
+  //       if (errorMakingQuery) {
+  //         console.log('Error with country GET', errorMakingQuery);
+  //         res.sendStatus(501);
+  //       } else {
+  //         res.send(result.rows);
+  //       }
+  //     });
+  //   }
+  // });
+});
+
+
+
+
 
 router.post('/bars', function(req, res) {
   console.log("BODY: ", req.body);

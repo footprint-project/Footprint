@@ -2,28 +2,17 @@
 <div layout="row" layout-align="center center">
 <table>
     <tr>
+        <!-- will add footprint in a moment -->
         <th>ORGANIZATION</th>
         <th>EMAIL</th>
+        <th>NAME</th>
         <th>POSITION</th>
-        <th>TOTAL FOOTPRINT</th>
     </tr>
-    <tr>
-        <td>???</td>
-        <td>???</td>
-        <td>???</td>
-        <td>???</td>
-    </tr>
-    <tr>
-        <td>???</td>
-        <td>???</td>
-        <td>???</td>
-        <td>???</td>
-    </tr>
-    <tr>
-    <td>???</td>
-    <td>???</td>
-    <td>???</td>
-    <td>???</td>
+    <tr ng-repeat="user in ac.allUsers">
+        <td>{{user.organization}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.position}}</td>
     </tr>
 </table>
 </div>

@@ -1,0 +1,35 @@
+<md-dialog aria-label="Upload CSV">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Add your new projects below</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <md-input-container>
+                <label>Project Name</label>
+                <input ng-model="user.projectName">
+            </md-input-container>
+        </div>
+        <div>
+            <md-input-container>
+                <label>Country of Operation</label>
+                <md-select class="select" ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
+                    <md-option ng-repeat="country in pdc.countries" value="{{country}}">
+                        <em>{{country.name}}</em>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div id="projectcheckboxes">
+            <h3>PROJECT TYPE</h3>
+            <md-checkbox ng-model="active" ng-repeat="item in pdc.items" ng-change="pdc.change(item, active)"> {{item}}</md-checkbox>
+
+            <!-- <pre ng-bind="lst | json">
+                                      </pre> -->
+        </div>
+        <div id="homeSubmit">
+            <md-button class="md-primary md-raised" ng-click="pdc.change(item, active); pdc.getUserData(user)">Submit Data</md-button>
+        </div>
+</md-dialog>
