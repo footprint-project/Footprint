@@ -12,6 +12,9 @@ myApp.service('UserService', function ($http, $location){
   self.footprintsFootprint = {};
   self.clickedProject = {};
 
+  self.users = {};
+  
+
 
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
@@ -57,7 +60,8 @@ myApp.service('UserService', function ($http, $location){
     console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
-      $location.path("/home");
+      window.location.href = '/#/home';
+      // $location.path("/home");
     });
   } //End of Logout Function
 
@@ -90,6 +94,33 @@ myApp.service('UserService', function ($http, $location){
     });
   };
 
+self.adminGetUsers = function (id) {
+  console.log('Getting users for admin', id);
+  $http.get('members/users' + id).then(function(response) {
+    self.users = response.data;
+    console.log('users for admin', self.users);
+  })
+}
+
+  self.computeFootprint = function(footprint) {
+    console.log(footprint[0]);
+    var result = {};
+    result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
+    result.car = CAR_CONVERSION * parseInt(footprint[0].car);
+    result.train = TRAIN_CONVERSION * parseInt(footprint[0].train);
+    result.air = AIR_CONVERSION * parseInt(footprint[0].air);
+    result.freight_train = FREIGHT_CONVERSION * parseInt(footprint[0].freight_train);
+    result.truck = TRUCK_CONVERSION * parseInt(footprint[0].truck);
+    result.sea = SEA_CONVERSION * parseInt(footprint[0].sea);
+    result.hotel = HOTEL_CONVERSION * parseInt(footprint[0].hotel);
+    result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
+    result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
+    result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
+    console.log(result);
+    return result;
+  };
+
+
 //this got accidentally duplicated somehow:
   // self.computeFootprint = function(footprint) {
   //   console.log('hi', footprint);
@@ -108,6 +139,7 @@ myApp.service('UserService', function ($http, $location){
   //   console.log(result);
   //   return result;
   // };
+
 
   self.groupByCategory = function(footprint) {
     var result = {};
