@@ -1,4 +1,4 @@
-myApp.controller('UserController', function (UserService, $mdDialog, $http) {
+myApp.controller('UserController', function (UserService, $mdDialog) {
   console.log('UserController created');
   var vm = this;
   vm.userService = UserService;
@@ -33,7 +33,6 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http) {
 
 //gets users projects
   vm.userService.getProjects(vm.userObject.id);
-
   //dashboard dialog
   vm.upload = function (ev, i) {
     // userService.getProjects.selectedIndex = i;
@@ -48,21 +47,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http) {
       clickOutsideToClose: true
 
     })
-  } //End modal function
-
-  //Add new project modal.
-  vm.newProject = function(ev, i){
-    console.log('clicked create project modal');
-    $mdDialog.show({
-      controller: 'ProjectDialogController as pdc',
-      templateUrl: 'views/templates/projectdialog.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true
-
-    })
-
-  }//End add new project modal.
+  }
 
 
   vm.hide = function () {
@@ -85,7 +70,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http) {
     window.location.href = '/#/projects';
   };
 
-  
+ 
 
   
 });

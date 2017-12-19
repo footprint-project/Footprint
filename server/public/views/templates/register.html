@@ -1,29 +1,46 @@
-<div class="container">
-  <h1 class="lead">Register User</h1>
+<div id="registerForm"class="container">
+  <h1 class="lead">REGISTER FOR AN ACCOUNT</h1>
   <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
-  <form ng-submit="lc.registerUser()">
+  <md-content layout-padding>
+    <form>
+    <div layout="row" layout-align="center center">
     <div>
-        <label for="email">Email:</label>
+      <md-input-container>
+        <label for="email">Email</label>
         <input type="text" ng-model="lc.user.username" />
+      </md-input-container>
     </div>
     <div>
-        <label for="password">Password:</label>
+      <md-input-container>
+        <label for="password">Password</label>
         <input type="password" ng-model="lc.user.password" />
+      </md-input-container>
     </div>
     <div>
-      <label for="organization">Organization Name:</label>
+    <md-input-container>
+      <label for="organization">Organization Name</label>
       <input type="organization" ng-model="lc.user.organization" />
+    </md-input-container>
     </div>
     <div>
-      <label for="Name">Name:</label>
+    <md-input-container>
+      <label for="Name">Name</label>
       <input type="name" ng-model="lc.user.name" />
+    </md-input-container>
     </div>
     <div>
-      <label for="Position">Position:</label>
+    <md-input-container>
+      <label for="Position">Position</label>
       <input type="position" ng-model="lc.user.position" />
+    </md-input-container>
     </div>
-    <input class="btn btn-default" type="submit" name="submit" value="Register" />
-    <a href="#home">Cancel</a>
-  </form>
-
+    </form>
+    <div>
+      
+    <md-button class="md-raised md-primary" type="submit" name="submit" value="submit" ng-click="lc.registerUser()">Register</md-button>
+    
+    </div>
+  
+</md-content>
+</div>
 </div>
