@@ -57,7 +57,8 @@ myApp.service('UserService', function ($http, $location){
     console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
-      $location.path("/home");
+      window.location.href = '/#/home';
+      // $location.path("/home");
     });
   } //End of Logout Function
 
@@ -89,7 +90,10 @@ myApp.service('UserService', function ($http, $location){
       console.log('user projects', self.userProjects);
     });
   };
-
+self.getUsers = function (id) {
+  console.log('Getting users for admin', id);
+  $http.get('members/users') 
+}
 
   self.computeFootprint = function(footprint) {
     console.log(footprint[0]);
