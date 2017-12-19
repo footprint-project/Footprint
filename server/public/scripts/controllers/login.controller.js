@@ -45,7 +45,7 @@
             {
               label: "CO2",
               backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-              // data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+              data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
             }
           ]
         },
