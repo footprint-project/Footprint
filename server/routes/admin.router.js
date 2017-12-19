@@ -30,7 +30,27 @@ router.post('/', function(req, res) {
   });
 });
 
-
+router.get('/users', function (req, res) {
+  console.log('Get users');
+  pool.connect(function (err, db, done) {
+    if (err) {
+      console.log("Error connecting: ", err);
+      res.sendStatus(500);
+    }
+    else {
+      var queryText = 'SELECT * FROM "users";';
+      db.query(queryText, function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log('Error with users GET', errorMakingQuery)
+          res.sendStatus(501);
+        } else {
+          res.send(result.rows);
+        }
+      });
+    }
+  })
+});
 
 
 

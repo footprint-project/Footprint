@@ -5,8 +5,15 @@ myApp.controller('AdminController', function (UserService) {
     vm.userObject = UserService.userObject;
     vm.countries = UserService.countries.data;
     vm.userProjects = UserService.userProjects;
+    vm.allUsers = UserService.users;
    
-
+    gettingUsers = function(){
+        UserService.adminGetUsers().then(function(response){
+            vm.allUsers = UserService.users;
+        })
+    }
+    
+    gettingUsers();
     
 
    
