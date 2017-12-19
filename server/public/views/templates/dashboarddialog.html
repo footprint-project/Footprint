@@ -67,7 +67,7 @@
                 <div>
                     <md-radio-group ng-model="data.type">
                         <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
-                        <md-radio-button value="English"> English </md-radio-button>
+                        <md-radio-button value="English"> Non-Metric </md-radio-button>
                     </md-radio-group>
                     </form>
                 </div>
@@ -79,7 +79,8 @@
                         <input type="file" id="file" name="myfile">
 
                     </div>
-                    <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
+                    <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
+                    <a href="./assets/footprint_template_real_nonmetric.csv" download>Download Non-Metric CSV</a>
                 </div>
                 <div id="homeSubmit">
                     <md-button class="md-primary md-raised" ng-click="ddc.getUserData(user); ddc.uploadFile(); ddc.dataType(data)">Submit Data</md-button>

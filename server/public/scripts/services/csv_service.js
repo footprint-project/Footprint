@@ -107,7 +107,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
 
 
   };
-
+//Change the CSV values to an array.
   vm.valuesToArray = function (obj) {
     var result = [];
     for (var key in obj) {
@@ -141,13 +141,13 @@ myApp.service('csvService', function ($http, $location, UserService) {
     // vm.userFootprint.dataIn.push(result.plane);
     console.log(result);
   }
-
+//Pushes user data to an array.
   vm.userData = function (user) {
     console.log(user);
     vm.userFootprint.userInfo.push({ selectedOrganization: user.selectedOrganization });
     console.log(vm.userFootprint.userInfo);
   }
-
+//Send data to the userfootprint object.
   vm.typeData = function (sendData) {
     vm.userFootprint.userType = sendData;
     console.log(vm.userFootprint.userType);
@@ -207,7 +207,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
       }
 
     }
-
+//If in non-metric, change to metric.
     if (vm.dataType.type === 'English') {
       // for (var i=0; i<csv.length; i++){
       csvIn.plane = Math.round((csvIn.plane * 1.609344));
@@ -229,16 +229,17 @@ myApp.service('csvService', function ($http, $location, UserService) {
     vm.postProjects();
 
   }
-
+//Push info to object.
   vm.sendUser = function (user) {
     console.log(user);
     vm.projectOut.userInfo.push({ selectedCountry: user.selectedCountry }, { selectedMonth: user.selectedMonth }, { selectedYear: user.selectedYear }, { project: user.projectName });
   }
-
+//Project function.
   vm.projectChecks = function (sendData) {
     vm.projectOut.userType = sendData;
     console.log(vm.projectOut.userType);
   } //End project function
+//Post route to send projects to the router.
 
   vm.postProjects = function () {
     console.log(vm.projectOut);
@@ -262,7 +263,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
       vm.projectOut.dataIn = [];
       console.log(vm.projectOut)
     }).catch(function (error) {
-      console.log('error adding projects', error)
+      console.log('error adding projects', error);
     })
   }
 
