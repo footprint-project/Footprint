@@ -1,4 +1,4 @@
-myApp.controller('UserController', function (UserService, $mdDialog) {
+myApp.controller('UserController', function (UserService, $mdDialog, $http) {
   console.log('UserController created');
   var vm = this;
   vm.userService = UserService;
@@ -84,6 +84,8 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
     UserService.clickedProject = UserService.userProjects[i];
     window.location.href = '/#/projects';
   };
+
+  
 
   
 });

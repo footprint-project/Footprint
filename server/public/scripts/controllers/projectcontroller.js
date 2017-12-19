@@ -8,21 +8,25 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
 
     //This function sends checkboxes
     vm.change = function (item, active) {
+        
         if (active) {
             vm.selected.push(item);
-            console.log(item);
             var data = item;
-            var sendData = angular.copy(data);
-            vm.userService.countryIn = data;
+            console.log(item);
         } else {
             vm.selected.splice(vm.selected.indexOf(item), 1);
         }
+
     }; //End checkboxes function
 
+    vm.postCheckboxes = function(){
+        var sendData = vm.selected;
+        vm.userService.countryIn = sendData;
+    }
+
     vm.getUserData = function(user){
+        
         vm.userService.sendProject(user);
+        
     };
-
-
-
 });//End Project Dialog Controller
