@@ -47,8 +47,20 @@ myApp.controller('UserController', function (UserService, $mdDialog) {
       clickOutsideToClose: true
 
     })
-  }
+  } //End modal function
 
+  //Add new project modal.
+  vm.newProject = function (ev, i) {
+    console.log('clicked create project modal');
+    $mdDialog.show({
+      controller: 'ProjectDialogController as pdc',
+      templateUrl: 'views/templates/projectdialog.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+
+    })
+  }
 
   vm.hide = function () {
     $mdDialog.hide();
