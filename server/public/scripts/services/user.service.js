@@ -11,7 +11,10 @@ myApp.service('UserService', function ($http, $location){
   self.lineGraphData={};
   self.footprintsFootprint = {};
   self.clickedProject = {};
+
+  self.users = {};
   
+
 
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
@@ -57,7 +60,8 @@ myApp.service('UserService', function ($http, $location){
     console.log('UserService -- logout');
     $http.get('/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
-      $location.path("/home");
+      window.location.href = '/#/home';
+      // $location.path("/home");
     });
   } //End of Logout Function
 
@@ -65,13 +69,13 @@ myApp.service('UserService', function ($http, $location){
     console.log('Getting countries');
     $http.get('/member/countries').then(function(response) {
       var countries = response.data.rows;
-      console.log(countries);
+      // console.log(countries);
       self.countries.data = countries;
-      console.log(self.countries.data);
+      // console.log(self.countries.data);
     })
   }
   self.getCountries();
-  console.log(self.countries.data);
+  // console.log(self.countries.data);
 
  self.getLineGraphData = function (){
     console.log('Getting Line graph Data');
@@ -84,12 +88,31 @@ myApp.service('UserService', function ($http, $location){
   //gets the users projects for the projects view
   self.getProjects = function (id) {
     console.log('Getting user projects', id);
-    $http.get('member/userprojects/' + id).then(function (response) {
-      self.userProjects = response.data;
+    return $http.get('member/userprojects/' + id).then(function (response) {
+      return self.userProjects = response.data;
       console.log('user projects', self.userProjects);
+    }).catch(function (err) {
+      console.log('problem getting projects', err);
     });
   };
 
+
+  self.getProjectFootprints = function (id){
+    return $http.get('/member/project_footprints/'+ id).then(function (response) {
+      console.log(response.data.rows);
+      return self.selectedProjectFootprints = response.data.rows;
+    }).catch(function (err) {
+      console.log('problem getting project footprints', err);
+    });
+  };
+
+self.adminGetUsers = function (id) {
+  console.log('Getting users for admin', id);
+  $http.get('members/users' + id).then(function(response) {
+    self.users = response.data;
+    console.log('users for admin', self.users);
+  })
+}
 
   self.computeFootprint = function(footprint) {
     console.log(footprint[0]);
@@ -109,19 +132,20 @@ myApp.service('UserService', function ($http, $location){
     return result;
   };
 
+
   self.groupByCategory = function(footprint) {
     var result = {};
-    console.log(footprint);
+    // console.log(footprint);
     result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
     result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
     result.travel = footprint.plane + footprint.train + footprint.car;
     self.result = result;
-    console.log(self.result);
+    // console.log(self.result);
     return self.result;
   };
 
     self.computeFootprint = function(footprint) {
-      // console.log(footprint);
+      console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -136,18 +160,20 @@ myApp.service('UserService', function ($http, $location){
       result.propane = PROPANE_CONVERSION * parseInt(footprint.propane);
       result.period = footprint.period;
       result.name = footprint.name;
-      // console.log(result);
+      result.type_id = footprint.type_id;
+      result.country_id = footprint.country_id;
+      console.log(result);
       return result;
     };
 
     self.groupByCategory = function(footprint) {
       var result = {};
-      console.log(footprint);
+      // console.log(footprint);
       result.living = footprint.hotel + footprint.fuel + footprint.grid + footprint.propane;
       result.shipping = footprint.sea + footprint.air + footprint.truck + footprint.freight_train;
       result.travel = footprint.plane + footprint.train + footprint.car;
       self.result = result;
-      console.log(self.result);
+      // console.log(self.result);
       return self.result;
     };
 
@@ -217,10 +243,10 @@ myApp.service('UserService', function ($http, $location){
   // self.getFpDividedByPeriod();
 
   self.computeTrialFootprint = function(footprint) {
-    console.log(footprint);
+    // console.log(footprint);
     footprint.train = footprint.train_travel;
     footprint.freight_train = footprint.train_shipping;
-    console.log(self.computeFootprint(footprint));
+    // console.log(self.computeFootprint(footprint));
     var data = self.computeFootprint(footprint);
     return self.groupByCategory(data);
 
