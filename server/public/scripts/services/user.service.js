@@ -11,9 +11,8 @@ myApp.service('UserService', function ($http, $location){
   self.lineGraphData={};
   self.footprintsFootprint = {};
   self.clickedProject = {};
-
-  self.users = {};
-
+  self.users = [];
+  
 
 
   const PLANE_CONVERSION = 0.18026;
@@ -110,7 +109,8 @@ self.adminGetUsers = function () {
   console.log('Getting users for admin');
   return $http.get('admin/users').then(function(response) {
     console.log(response.data);
-    return self.users = response.data.rows;
+    self.users = response.data;
+    return self.users;
     console.log('users for admin', self.users);
   }).catch(function (err) {
     console.log('problem getting all users for admin', err);

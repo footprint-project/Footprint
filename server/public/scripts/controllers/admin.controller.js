@@ -9,8 +9,9 @@ myApp.controller('AdminController', function (UserService) {
    
     gettingUsers = function(){
         UserService.adminGetUsers().then(function(response){
-            vm.allUsers = UserService.users;
-        })
+            vm.allUsers = response;
+            console.log(response);
+        });
     }
     
     gettingUsers();
