@@ -251,6 +251,6 @@ tr td:hover { background: #666; color: #FFF; }
 
 }
 
-#registerForm {
-  
+md-dialog {
+  padding: 15px;
 }
