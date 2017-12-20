@@ -17,6 +17,7 @@
     "angular-material": "^1.1.5",
     "angular-messages": "^1.6.7",
     "angular-route": "^1.6.6",
+    "apidoc": "^0.17.6",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",
