@@ -445,8 +445,8 @@ router.get('/footprint_by_project', function(req, res) {
 });
 
 //Slices total footprint of an organization by period, used for line graph on home page (FP's fp):
-router.get('/footprint_by_period/:userId', function(req, res) {
-  var userId = req.params.userId;
+router.get('/footprints_footprint_by_period', function(req, res) {
+  var userId = 1;
   pool.connect(function(err, db, done) {
     if(err) {
       console.log('Error connecting', err);
@@ -467,7 +467,34 @@ router.get('/footprint_by_period/:userId', function(req, res) {
   });
 });
 
+//Slices total footprint of an organization by period, used for line graph on home page (FP's fp):
+router.get('/footprint_by_period', function (req, res) {
 
+  if(req.isAuthenticated()) {
+    var userId = req.user.id;
+    pool.connect(function (err, db, done) {
+      if (err) {
+        console.log('Error connecting', err);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "period", SUM("hotel") OVER (PARTITION BY "period") as hotel, SUM("fuel") OVER (PARTITION BY "period") as fuel, SUM("propane") OVER (PARTITION BY "period") as propane, SUM("grid") OVER (PARTITION BY "period") as grid, SUM("air") OVER (PARTITION BY "period") as air, SUM("sea") OVER (PARTITION BY "period") as sea, SUM("truck") OVER (PARTITION BY "period") as truck, SUM("freight_train") OVER (PARTITION BY "period") as freight_train, SUM("car") OVER (PARTITION BY "period") as car, SUM("plane") OVER (PARTITION BY "period") as plane, SUM("train") OVER (PARTITION BY "period") as train ' +
+          'FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1;';
+        db.query(queryText, [userId], function (err, result) {
+          done();
+          if (err) {
+            console.log('Error making query', err);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+
+});
 
 // for the list of user projects on projects view
 router.get('/userprojects/:userId', function (req, res) {

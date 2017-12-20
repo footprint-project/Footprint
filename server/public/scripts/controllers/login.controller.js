@@ -124,9 +124,9 @@
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(sum);
-        console.log(sumsArray);
+        //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
-        console.log(month);
+       // console.log(month);
         periodArray.push(month);
         // console.log(periodArray);
       }
