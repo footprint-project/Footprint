@@ -203,7 +203,7 @@
             // location works with SPA (ng-route)
             if (response.data.id != 1){
             $location.path('/user'); // http://localhost:5000/#/user
-            } else{
+            } else {
               $location.path('/admin');
             }
           } else {
