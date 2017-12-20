@@ -45,5 +45,21 @@ myApp.controller('ProjectController', function (UserService) {
         vm.getProjectFootprints(vm.clickedProject.id);
         //window.location.reload(i);
     };
+
+    vm.editModal = function(event, index) {
+        vm.userService.userObj.selectedIndex = index;
+        console.log('open dialog', index);
+
+        $mdDialog.show({
+            controller: 'projecteditdcontroller as pec',
+            templateUrl: '/views/templates/projecteditdialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
+    }
+
+
+
     
 });
