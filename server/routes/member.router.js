@@ -4,18 +4,12 @@ var router = express.Router();
 var passport = require('passport');
 var path = require('path');
 var pool = require('../modules/pool.js');
+//oh, i'm surprised it logs this:
 console.log('member router');
 
 var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
 
 var months = ['January', "February", 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
-//OH wait -- important -- we have to save english/metric in the DB!
-//bugs:
-// hover (.destroy()?);
-// get period and slice by category;
-// aren't yet getting particulars to populate third (second) dropdown;
 
 
 router.get('/countries', function (req, res) {
@@ -30,14 +24,14 @@ router.get('/countries', function (req, res) {
       db.query(queryText, function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
-          console.log('Error with country GET', errorMakingQuery)
+          console.log('Error with country GET', errorMakingQuery);
           res.sendStatus(501);
         } else {
-          res.send(result)
+          res.send(result);
         }
       });
     }
-  })
+  });
 });
 
 

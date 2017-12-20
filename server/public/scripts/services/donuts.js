@@ -41,7 +41,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
-      console.log(response.data);
+      // console.log(response.data);
 
       var allTheStuff = response.data;
       var cleanedStuff = [];
@@ -64,9 +64,9 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
 
-      console.log(cleanedStuff);
+      // console.log(cleanedStuff);
 
-      console.log(periods);
+      // console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
