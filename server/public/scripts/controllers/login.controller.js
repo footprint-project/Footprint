@@ -30,8 +30,10 @@
   //      vm.selected.splice(vm.selected.indexOf(item), 1);
   //    }
   //  };
+  
 
-   donutService.getFpDividedByPeriod();
+    //this is called in the lineChart function, not sure why it's called here...
+   //donutService.getFpDividedByPeriod(1);
 
 //re-draws the donut graph with trial data:
    vm.donutDataSetTrial = function(x){
@@ -112,7 +114,7 @@
 
   // gets the data for the landing page lineChart displaying footprints carbon impact
   vm.lineChart = function(){
-    donutService.getFpDividedByPeriod().then(function(response){
+    donutService.getFpDividedByPeriod(1).then(function(response){
       vm.lineData = response;
       var month = '';
       var sum = 0;
@@ -123,9 +125,9 @@
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(sum);
-        console.log(sumsArray);
+        //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
-        console.log(month);
+       // console.log(month);
         periodArray.push(month);
         // console.log(periodArray);
       }
@@ -201,7 +203,11 @@
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
             // location works with SPA (ng-route)
+            if (response.data.id != 1){
             $location.path('/user'); // http://localhost:5000/#/user
+            } else {
+              $location.path('/admin');
+            }
           } else {
             console.log('LoginController -- login -- failure: ', response);
             vm.message = "Please try again!";
@@ -233,7 +239,7 @@
     vm.getUserData = function(user) {
      console.log(user);
      csvService.userData(user);
-      
+
     }
 
 

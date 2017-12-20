@@ -36,12 +36,12 @@ myApp.service('donutService', function($http, $location, UserService) {
   self.getFpDividedByProject();
 
 
-  self.getFpDividedByPeriod = function() {
-    return $http.get('/member/footprint_by_period').then(function(response) {
+  self.getFpDividedByPeriod = function(userId) {
+    return $http.get('/member/footprints_footprint_by_period').then(function(response) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
-      console.log(response.data);
+      // console.log(response.data);
 
       var allTheStuff = response.data;
       var cleanedStuff = [];
@@ -64,23 +64,60 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
 
-      console.log(cleanedStuff);
+      // console.log(cleanedStuff);
 
-      console.log(periods);
+      // console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
     });
   };
 
-  self.getFpDividedByPeriod();
+  self.getUserFpDividedByPeriod = function () {
+    return $http.get('/member/footprint_by_period').then(function (response) {
+
+      //because the sql query gives us rows with repeated info, we have to sanitize it:
+
+      console.log(response.data);
+
+      var allTheStuff = response.data;
+      var cleanedStuff = [];
+      //grab the first element of the array:
+      cleanedStuff.push(allTheStuff[0]);
+
+      //and then for each subsequent element, check whether its previous element has a different period; if so, add it to the sanitized array:
+      for (var i = 1; i < allTheStuff.length; i++) {
+        var current = allTheStuff[i];
+        var prev = allTheStuff[i - 1];
+        if (current.period !== prev.period) {
+          cleanedStuff.push(current);
+        }
+      }
+
+      var periods = [];
+      //compute the conversion to find the footprint for each period in cleanedStuff:
+      for (var j = 0; j < cleanedStuff.length; j++) {
+        periods.push(UserService.computeFootprint(cleanedStuff[j]));
+      }
 
 
+      console.log(cleanedStuff);
+
+      console.log(periods);
+      return periods;
+    }).catch(function (err) {
+      console.log('uh oh', err);
+    });
+  };
 
 //testing the donut function:
-  self.getDonut = function(view, slice) {
+  self.getDonut = function(view, particular, slice) {
     //i know with req.query there's a way to do this, but i'm just cheating:
-    var instructions = {view: view, particular: '2016-03-01', slice: slice};
+
+    if (view == 'period') {
+      particular = particular.slice(0, 10);
+    }
+    var instructions = {view: view, particular: particular, slice: slice};
     // var instructions = {view: view, particular: 'living', slice: slice};
 
 

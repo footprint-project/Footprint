@@ -2,7 +2,7 @@
     <div ng-include="'/views/partials/login.html'"></div>
     <div class="container" ng-cloak>
     <div layout="row" layout-align="center center">
-        <h1>VIEW FOOTPRINT'S CARBON IMPACT</h1>
+        <h1>CHECK OUT FOOTPRINT'S OWN CARBON IMPACT</h1>
     </div>
     <div layout="row" layout-xs="column" id="homecharts" layout-align="space-around center">
         <div flex id="donuthome">
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div layout="row" layout-align="center center">
-        <h1>TRY IT FOR YOURSELF</h1>
+        <h1>NOW TRY IT FOR YOUR OWN ORGANIZATION</h1>
     </div>
     <div layout="row" layout-align="space-around center" id="homeform">
         <md-content>
@@ -51,101 +51,3 @@
             </md-content>
             </div>
 
-
-        <!-- <div id="trialForm" flex>
-            TRY IT FOR YOURSELF
-            <a href="#register">Register</a>
-            {{lc.userFootprint}}
-            <div layout="column" layout-align="center center" ng-cloak class="md-block">
-
-                <md-content layout-padding>
-
-                    <div layout-gt-sm="row">
-
-                        <md-input-container>
-                            <label>Organization Name</label>
-                            <input ng-model="user.selectedOrganization">
-                        </md-input-container>
-
-                    </div>
-
-                    <div layout-gt-sm="row">
-
-                        <div>
-                        <md-input-container>
-
-                            <label>Country of Operation</label>
-                            <md-select class="select" ng-model="user.selectedCountry" md-selected-text="user.selectedCountry">
-                                <md-option ng-repeat="country in lc.UserService.countries.data">
-                                    <em>{{country.name}}</em>
-
-                                </md-option>
-
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                        <div>
-                            <md-input-container>
-                                <label>Month</label>
-                                <md-select class="select" ng-model="user.selectedMonth" md-selected-text="user.selectedMonth">
-                                    <md-option>
-
-                                    </md-option>
-                                    <md-option ng-repeat="month in lc.months">
-                                        {{month}}
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container>
-                                <label>Year</label>
-
-                                <md-select class="select" ng-model="user.selectedYear" md-selected-text="user.selectedYear" ng-value="">
-                                    <md-option>
-
-                                    </md-option>
-                                    <md-option ng-repeat="year in lc.years">
-                                        {{year}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                    </div>
-
-                </md-content>
-            </div>
-            <div class="upload-btn-wrapper">
-                <md-button class="md-raised" cursor:pointer>Upload CSV
-                    <md-icon class="material-icons">attach_file</md-icon>
-                </md-button>
-                <input type="file" id="file" name="myfile">
-            </div>
-            <div>
-                <md-radio-group ng-model="data.type">
-                    <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
-                    <md-radio-button value="English"> English </md-radio-button>
-                </md-radio-group>
-                </form>
-                <div class="upload-btn-wrapper">
-                    <md-button class="md-raised" cursor:pointer>Upload CSV
-                        <md-icon class="material-icons">attach_file</md-icon>
-                    </md-button>
-                    <input type="file" id="file" name="myfile">
-
-                </div>
-                <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
-            </div>
-
-            <div id="homeSubmit">
-                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.dataType(data)">Submit Data</md-button>
-                <a href="#register">Register</a>
-            </div>
-        </md-content>
-    </div>
-</div>
-<div id="demo" flex>
-    VIEW FOOTPRINT'S FOOTPRINT
-
-    <canvas id="doughnut-chart" width="400" height="225"></canvas>
-    <canvas id="line-chart" width="400" height="225"></canvas>
-
-        </div>
-    </div>

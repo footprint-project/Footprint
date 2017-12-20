@@ -16,6 +16,7 @@ myApp.service('UserService', function ($http, $location){
   
 
 
+
   const PLANE_CONVERSION = 0.18026;
   const CAR_CONVERSION = 0.18568;
   const TRAIN_CONVERSION = 0.01225;
@@ -43,6 +44,7 @@ myApp.service('UserService', function ($http, $location){
         self.userObject.name = response.data.name;
         self.userObject.position = response.data.position;
         self.userObject.id = response.data.id;
+        return self.userObject;
         console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
       } else {
         console.log('UserService -- getuser -- failure');
@@ -150,7 +152,7 @@ self.adminGetUsers = function () {
   };
 
     self.computeFootprint = function(footprint) {
-      console.log(footprint);
+      // console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -167,7 +169,8 @@ self.adminGetUsers = function () {
       result.name = footprint.name;
       result.type_id = footprint.type_id;
       result.country_id = footprint.country_id;
-      console.log(result);
+      result.organization = footprint.organization
+      // console.log(result);
       return result;
     };
 

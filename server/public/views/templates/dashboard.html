@@ -9,16 +9,16 @@
         <!-- <img id="globe" src="images/globe.png"> -->
     </div>
     <div layout="row">
-        <div id="bar" flex="70">
-            <h2>TOTAL FOOTPRINT</h2>
+        <div id="dashline" flex="70">
+            <h2>TOTAL CARBON FOOTPRINT</h2>
 
-            <canvas id="bar-chart" width="400" height="225"></canvas>
+            <canvas id="linechart" width="400" height="225"></canvas>
             <!-- <canvas id="line-chart" width="400" height="225"></canvas> -->
 
         </div>
 
         <div flex="30">
-            <h2>RECENT PROJECTS</h2>
+            <h2>YOUR PROJECTS</h2>
             <md-card id="recent">
                 <h3 ng-repeat="userProject in uc.userService.userProjects">
                     {{userProject.name}}
@@ -65,7 +65,7 @@
     <!-- </div> -->
 
 
-<h1>VISUALIZE</h1>
+<h1>VISUALIZE YOUR IMPACT</h1>
     <!-- DONUTS: -->
         <div layout="row">
           View a: <select ng-model="uc.viewBy" ng-change="uc.changeView()">
@@ -79,8 +79,25 @@
           <!-- TO DO: get route for the particulars dependening on selection
           STRETCH: let there be an ALL option
           Which one: <select ng-model="lc.particularDonut">
-
           </select> -->
+          Which one: <select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.project}}">{{x.project}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.period}}">{{x.period}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.type}}">{{x.type}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'country'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.country}}">{{x.country}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'category'" ng-model="uc.donutParticular">
+            <option value="living">Living</option>
+            <option value="shipping">Shipping</option>
+            <option value="travel">Travel</option>
+          </select>
+
 
           Sliced by: <select ng-model="uc.sliceBy">
             <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
@@ -89,7 +106,7 @@
             <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
           </select>
 
-          <button ng-click="uc.submitQuery(uc.viewBy, uc.sliceBy)">Donut me</button>
+          <button ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">Donut me</button>
         </div>
 
         <div layout="row">

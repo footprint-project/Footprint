@@ -4,18 +4,12 @@ var router = express.Router();
 var passport = require('passport');
 var path = require('path');
 var pool = require('../modules/pool.js');
+//oh, i'm surprised it logs this:
 console.log('member router');
 
 var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
 
 var months = ['January', "February", 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
-//OH wait -- important -- we have to save english/metric in the DB!
-//bugs:
-// hover (.destroy()?);
-// get period and slice by category;
-// aren't yet getting particulars to populate third (second) dropdown;
 
 
 router.get('/countries', function (req, res) {
@@ -30,14 +24,14 @@ router.get('/countries', function (req, res) {
       db.query(queryText, function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
-          console.log('Error with country GET', errorMakingQuery)
+          console.log('Error with country GET', errorMakingQuery);
           res.sendStatus(501);
         } else {
-          res.send(result)
+          res.send(result);
         }
       });
     }
-  })
+  });
 });
 
 
@@ -141,7 +135,7 @@ router.get('/allprojects', function (req, res) {
   });
 });
 
-//Gets all of the user's footprints that are of a certain kind (e.g. all periods, all projects) to populate dropdown for bar graph:
+//Gets all of the user's footprints that are of a certain kind (e.g. all periods, all projects) to populate dropdown for bar graph, and for donut chart:
 router.post('/bars', function(req, res) {
   console.log("BODY: ", req.body);
   pool.connect(function(err, db, done) {
@@ -151,15 +145,15 @@ router.post('/bars', function(req, res) {
     } else {
       var queryText;
       if (req.body.view == 'period') {
-        queryText = 'SELECT "period" as period FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" WHERE "users"."id" = 3 GROUP BY "period";';
+        queryText = 'SELECT "period" as period FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" WHERE "users"."id" = $1 GROUP BY "period";';
       } else if (req.body.view == 'project') {
-        queryText = 'SELECT "projects"."name" as project FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" WHERE "users"."id" = 3;';
+        queryText = 'SELECT "projects"."name" as project FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" WHERE "users"."id" = $1;';
       } else if (req.body.view == 'country') {
-        queryText = 'SELECT "countries"."name" as country FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "countries" ON "countries"."id" = "projects"."country_id" WHERE "users"."id" = 3;';
+        queryText = 'SELECT "countries"."name" as country FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "countries" ON "countries"."id" = "projects"."country_id" WHERE "users"."id" = $1;';
       } else if (req.body.view == 'type') {
-        queryText = 'SELECT "types"."name" as type FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id"="type_id" WHERE "users"."id" = 3 GROUP BY "types"."name";';
+        queryText = 'SELECT "types"."name" as type FROM "projects" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id"="type_id" WHERE "users"."id" = $1 GROUP BY "types"."name";';
       }
-      db.query(queryText, function (errorMakingQuery, result) {
+      db.query(queryText, [req.user.id], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
           console.log('Error with country GET', errorMakingQuery);
@@ -370,7 +364,7 @@ router.post('/donut', function(req, res) {
       console.log('Error connecting', err);
       res.sendStatus(500);
     } else {
-      var view, particular, slice, queryText;
+      var view, particular, slice, queryText, array;
 
       if (req.body.view == 'type') {
         view = '"types"';
@@ -390,32 +384,37 @@ router.post('/donut', function(req, res) {
         slice = '"countries"';
       }
 
+      particular = req.body.particular;
+      blingArray = [req.user.id, particular];
+
       queryText = 'SELECT "period", "countries"."id" as country_id, "projects"."name", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
-      ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."id" = $2;';
+      ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."name" = $2;';
 
       if (req.body.slice == 'Category') {
-        queryText = 'SELECT SUM("hotel") as hotel, SUM("fuel") as fuel, SUM("grid") as grid, SUM("propane") as propane, SUM("air") as air, SUM("sea") as sea, SUM("truck") as truck, SUM("freight_train") as freight_train, SUM("car") as car, SUM("plane") as plane, SUM("train") as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."id" = $2;';
+        queryText = 'SELECT SUM("hotel") as hotel, SUM("fuel") as fuel, SUM("grid") as grid, SUM("propane") as propane, SUM("air") as air, SUM("sea") as sea, SUM("truck") as truck, SUM("freight_train") as freight_train, SUM("car") as car, SUM("plane") as plane, SUM("train") as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."name" = $2;';
       }
 
       if (req.body.view == 'category') {
+        blingArray = [req.user.id, 10000];
         queryText = 'SELECT "period", "countries"."id" as country_id, "projects"."name", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
-        ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 OR "countries"."id" = $2;';
+        ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 OR "users"."id" = $2;';
       }
 
       if (req.body.view == 'period') {
         var particularPeriod = '\'' + req.body.particular + '\'';
-
+        blingArray = [req.user.id, 10000];
         queryText = 'SELECT "period", "countries"."id" as country_id, "projects"."name", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
-        ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE ("users"."id" = $1 OR "projects"."id" = $2) AND "period" =' + particularPeriod + ';' ;
+        ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE (("users"."id" = $1) OR ("users"."id" = $2)) AND "period" =' + particularPeriod + ';' ;
       }
 
-      db.query(queryText, [3, 4], function(err, result){
+      db.query(queryText, blingArray, function(err, result){
         done();
         if(err) {
           console.log('Error making query', err);
           res.sendStatus(500);
         } else {
           res.send(result.rows);
+          console.log(result.rows);
         }
       });
     }
@@ -445,15 +444,16 @@ router.get('/footprint_by_project', function(req, res) {
 });
 
 //Slices total footprint of an organization by period, used for line graph on home page (FP's fp):
-router.get('/footprint_by_period', function(req, res) {
+router.get('/footprints_footprint_by_period', function(req, res) {
+  var userId = 1;
   pool.connect(function(err, db, done) {
     if(err) {
       console.log('Error connecting', err);
       res.sendStatus(500);
     } else {
       var queryText = 'SELECT "period", SUM("hotel") OVER (PARTITION BY "period") as hotel, SUM("fuel") OVER (PARTITION BY "period") as fuel, SUM("propane") OVER (PARTITION BY "period") as propane, SUM("grid") OVER (PARTITION BY "period") as grid, SUM("air") OVER (PARTITION BY "period") as air, SUM("sea") OVER (PARTITION BY "period") as sea, SUM("truck") OVER (PARTITION BY "period") as truck, SUM("freight_train") OVER (PARTITION BY "period") as freight_train, SUM("car") OVER (PARTITION BY "period") as car, SUM("plane") OVER (PARTITION BY "period") as plane, SUM("train") OVER (PARTITION BY "period") as train ' +
-      'FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = 3;';
-      db.query(queryText, [], function(err, result){
+      'FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1;';
+      db.query(queryText, [userId], function(err, result){
         done();
         if(err) {
           console.log('Error making query', err);
@@ -466,7 +466,34 @@ router.get('/footprint_by_period', function(req, res) {
   });
 });
 
+//Slices total footprint of an organization by period, used for line graph on home page (FP's fp):
+router.get('/footprint_by_period', function (req, res) {
 
+  if(req.isAuthenticated()) {
+    var userId = req.user.id;
+    pool.connect(function (err, db, done) {
+      if (err) {
+        console.log('Error connecting', err);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "period", SUM("hotel") OVER (PARTITION BY "period") as hotel, SUM("fuel") OVER (PARTITION BY "period") as fuel, SUM("propane") OVER (PARTITION BY "period") as propane, SUM("grid") OVER (PARTITION BY "period") as grid, SUM("air") OVER (PARTITION BY "period") as air, SUM("sea") OVER (PARTITION BY "period") as sea, SUM("truck") OVER (PARTITION BY "period") as truck, SUM("freight_train") OVER (PARTITION BY "period") as freight_train, SUM("car") OVER (PARTITION BY "period") as car, SUM("plane") OVER (PARTITION BY "period") as plane, SUM("train") OVER (PARTITION BY "period") as train ' +
+          'FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1;';
+        db.query(queryText, [userId], function (err, result) {
+          done();
+          if (err) {
+            console.log('Error making query', err);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+
+});
 
 // for the list of user projects on projects view
 router.get('/userprojects/:userId', function (req, res) {

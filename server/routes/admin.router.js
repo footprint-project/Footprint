@@ -38,18 +38,28 @@ router.get('/users', function (req, res) {
       res.sendStatus(500);
     }
     else {
-      var queryText = 'SELECT * FROM "users";';
+      var queryText = 'SELECT "organization", SUM("hotel") as hotel, SUM("propane") as propane, SUM("fuel") as fuel, SUM("grid") as grid, SUM("air") as air, SUM("sea") as sea, SUM("truck") as truck, SUM("freight_train") as freight_train, SUM("train") as train, SUM("car") as car, SUM("plane")as plane FROM "users" JOIN "projects" ON "projects"."user_id" = "users"."id" JOIN "footprints" ON "footprints"."project_id" = "projects"."id" JOIN "shipping" ON "shipping"."footprint_id" = "footprints"."id" JOIN "living" ON "living"."footprint_id" = "footprints"."id" JOIN "travel" ON "travel"."footprint_id" = "footprints"."id" GROUP BY "organization";';
       db.query(queryText, function (errorMakingQuery, result) {
-        done();
+        var totals = result.rows;
         if (errorMakingQuery) {
-          console.log('Error with users GET', errorMakingQuery)
+          console.log('Error with users GET', errorMakingQuery);
           res.sendStatus(501);
         } else {
-          res.send(result.rows);
+          var queryText2 = 'SELECT "username", "organization", "name", "position" FROM "users";';
+          db.query(queryText2, function(err, result) {
+            if (err) {
+              console.log(err);
+              res.sendStatus(501);
+            } else {
+              var otherStuff = result.rows;
+              var data = {totals: totals, otherStuff: otherStuff};
+              res.send(data);
+            }
+          });
         }
       });
     }
-  })
+  });
 });
 
 
