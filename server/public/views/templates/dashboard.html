@@ -67,20 +67,28 @@
 
 <h1>VISUALIZE YOUR IMPACT</h1>
     <!-- DONUTS: -->
-        <div layout="row">
-          View a: <select ng-model="uc.viewBy" ng-change="uc.changeView()">
-            <option value="project">Project</option>
-            <option value="period">Period</option>
-            <option value="category">Category</option>
-            <option value="type">Type</option>
-            <option value="country">Country</option>
-          </select>
+        <div id="dashdonut" layout="row" flex>
+        <div layout="column" flex="25">
+            <h2>VIEW DOUGHNUT CHART</h2>
+        <div>
+            <h3>VIEW BY:
+            </h3>
+          <md-select ng-model="uc.viewBy" ng-change="uc.changeView()">
+            <md-option value="project">Project</md-option>
+            <md-option value="period">Period</md-option>
+            <md-option value="category">Category</md-option>
+            <md-option value="type">Type</md-option>
+            <md-option value="country">Country</md-option>
+          </md-select>
+        </div>
 
           <!-- TO DO: get route for the particulars dependening on selection
           STRETCH: let there be an ALL option
           Which one: <select ng-model="lc.particularDonut">
           </select> -->
-          Which one: <select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
+          <div>
+            <h3>WHICH ONE?</h3>
+          <select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
             <option ng-repeat="x in uc.donutResults" value="{{x.project}}">{{x.project}}</option>
           </select>
           <select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
@@ -97,34 +105,43 @@
             <option value="shipping">Shipping</option>
             <option value="travel">Travel</option>
           </select>
+          </div>
 
-
-          Sliced by: <select ng-model="uc.sliceBy">
+          <div>
+        
+          
+          <select ng-model="uc.sliceBy">
             <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
             <option ng-hide="uc.choseProj" value="{{uc.viewByObject.two}}">{{uc.viewByObject.two}}</option>
             <option ng-hide="uc.choseProj" value="{{uc.viewByObject.three}}">{{uc.viewByObject.three}}</option>
             <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
           </select>
+          </div>
+          <md-button class="md-raised md-accent" ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">View Chart</md-button>
 
-          <button ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">Donut me</button>
         </div>
 
-        <div layout="row">
+        <div flex>
           <canvas id="donutChart" width="400" height="225"></canvas>
+        </div>
         </div>
 
 
 
     <!-- BARS: -->
-        <div layout="row">
-
-          View a: <select ng-model="uc.barBy" ng-change="uc.changeBarView()">
+        <div id="dashbar" layout="row" flex>
+            <div layout="column" flex="25">
+                <h2>VIEW BAR CHART</h2>
+                <div>
+                    <h3>VIEW BY:
+                    </h3>
+          <select ng-model="uc.barBy" ng-change="uc.changeBarView()">
             <option value="project">Project</option>
             <option value="period">Period</option>
             <option value="type">Type</option>
             <option value="country">Country</option>
           </select>
-
+        <H3>WHICH ONE?</H3>
           <select ng-show="uc.activeSelector == 'project'" ng-model="uc.barParticular">
             <option ng-repeat="x in uc.barResults" value="{{x.project}}">{{x.project}}</option>
           </select>
@@ -137,15 +154,15 @@
           <select ng-show="uc.activeSelector == 'country'" ng-model="uc.barParticular">
             <option ng-repeat="x in uc.barResults" value="{{x.country}}">{{x.country}}</option>
           </select>
-
-          <button ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">Bar me</button>
+          </div>
+          <md-button class="md-raised md-accent" ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">View Chart</md-button>
         </div>
+        
 
 
-
-        <div layout="row">
+        <div flex>
           <canvas id="barChart" width="400" height="225"></canvas>
         </div>
-
+    </div> 
 
 </md-content>
