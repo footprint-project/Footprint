@@ -35,9 +35,9 @@ myApp.service('donutService', function($http, $location, UserService) {
 
   self.getFpDividedByProject();
 
-
-  self.getFpDividedByPeriod = function() {
-    return $http.get('/member/footprint_by_period').then(function(response) {
+  self.lineUserId = 1;
+  self.getFpDividedByPeriod = function(userId) {
+    return $http.get('/member/footprint_by_period/'+ userId).then(function(response) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
@@ -73,7 +73,7 @@ myApp.service('donutService', function($http, $location, UserService) {
     });
   };
 
-  self.getFpDividedByPeriod();
+  self.getFpDividedByPeriod(self.lineUserId);
 
 
 

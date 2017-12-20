@@ -31,7 +31,8 @@
   //    }
   //  };
 
-   donutService.getFpDividedByPeriod();
+    //this is called in the lineChart function, not sure why it's called here...
+   //donutService.getFpDividedByPeriod(1);
 
 //re-draws the donut graph with trial data:
    vm.donutDataSetTrial = function(x){
@@ -112,7 +113,7 @@
 
   // gets the data for the landing page lineChart displaying footprints carbon impact
   vm.lineChart = function(){
-    donutService.getFpDividedByPeriod().then(function(response){
+    donutService.getFpDividedByPeriod(1).then(function(response){
       vm.lineData = response;
       var month = '';
       var sum = 0;

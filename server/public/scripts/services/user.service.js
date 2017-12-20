@@ -12,6 +12,7 @@ myApp.service('UserService', function ($http, $location){
   self.footprintsFootprint = {};
   self.clickedProject = {};
   self.users = [];
+ 
   
 
 

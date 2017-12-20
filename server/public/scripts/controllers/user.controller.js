@@ -34,7 +34,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
 //   });
   // gets the data for the DASHBOARD lineChart displaying org's carbon impact
   vm.lineChart = function () {
-    donutService.getFpDividedByPeriod().then(function (response) {
+    donutService.getFpDividedByPeriod(vm.userObject.id).then(function (response) {
       vm.lineData = response;
       var month = '';
       var sum = 0;
