@@ -1,9 +1,22 @@
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var path = require('path');
 var pool = require('../modules/pool.js');
 console.log('member router');
+
+var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
+
+var months = ['January', "February", 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
+//OH wait -- important -- we have to save english/metric in the DB!
+//bugs:
+// hover (.destroy()?);
+// get period and slice by category;
+// aren't yet getting particulars to populate third (second) dropdown;
+
 
 router.get('/countries', function (req, res) {
   console.log('Get Countries');
@@ -27,8 +40,17 @@ router.get('/countries', function (req, res) {
   })
 });
 
-var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "Shelter", "Conflict", "Migration/Camp Management", "Faith-Based", "Research", "Governance", "Business/Entrepreneur", "Donor"];
 
+/**
+* @api {post} /newproject Post new project
+* @api NewProject
+* @apiGroup User
+*
+* @apiSuccessExample Success-Response:
+* HTTP/1.1 201 OK
+*/
+
+//Posts a new project to the database, inserting into "projects" and "project_type":
 router.post('/newproject', function(req, res) {
   console.log("BODY: ", req.body);
   pool.connect(function(err, db, done) {
@@ -39,10 +61,8 @@ router.post('/newproject', function(req, res) {
       var queryText = 'SELECT * FROM "countries" WHERE "countries"."name" = $1;';
 
       db.query(queryText, [req.body.selectedCountry], function (errorMakingQuery, result) {
-        // done();
         if (errorMakingQuery) {
           console.log('Error with country GET', errorMakingQuery);
-          res.sendStatus(501);
         } else {
           console.log(result.rows[0]);
           queryText = 'INSERT INTO "projects" ("name", "user_id", "country_id") VALUES ($1, $2, $3) RETURNING id;';
@@ -50,17 +70,17 @@ router.post('/newproject', function(req, res) {
             done();
             if (err) {
               console.log(err);
-              res.sendStatus(501);
             } else {
               console.log("ID: ", result.rows[0].id);
+
               for (var i=0; i<req.body.project.length - 1; i++) {
                 var typeNow = types.indexOf(req.body.project[i]);
                 queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
-                db.query(queryText, [result.rows[0].id, typeNow], handlePost);
+                db.query(queryText, [result.rows[0].id, typeNow + 1], handlePost);
               }
               var typeNow2 = types.indexOf(req.body.project[req.body.project.length - 1]);
               queryText = 'INSERT INTO "project_type" ("project_id", "type_id") VALUES ($1, $2);';
-              db.query(queryText, [result.rows[0].id, typeNow2], function (err, result) {
+              db.query(queryText, [result.rows[0].id, typeNow2 + 1], function (err, result) {
                 done();
                 if (err) {
                   console.log(err);
@@ -70,10 +90,8 @@ router.post('/newproject', function(req, res) {
 
                 }
               });
-              // queryText = 'INSERT INTO "project_type" ("project_id", "type_id")'
             }
           });
-          // res.send(result.rows);
         }
       });
     }
@@ -88,10 +106,42 @@ function handlePost(err, result) {
   }
 }
 
+/**
+* @api {get} /allprojects Get user's projects
+* @api UserProjects
+* @apiGroup User
+*
+* @apiSuccessExample Success-Response:
+* {
+*   id: 2,
+*   name: "Safe Tiger"
+*   user_id: 2
+*   }
+*/
 
+//Gets all of a user's projects to populate the dropdown in upload footprint modal:
+router.get('/allprojects', function (req, res) {
+  pool.connect(function (err, db, done) {
+    if (err) {
+      console.log("Error connecting for project footprints: ", err);
+      res.sendStatus(500);
+    }
+    else {
+      var queryText = 'SELECT * FROM "projects" WHERE user_id = $1';
+      db.query(queryText, [req.user.id], function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log('Error with project footprints GET', errorMakingQuery);
+          res.sendStatus(501);
+        } else {
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});
 
-
-
+//Gets all of the user's footprints that are of a certain kind (e.g. all periods, all projects) to populate dropdown for bar graph:
 router.post('/bars', function(req, res) {
   console.log("BODY: ", req.body);
   pool.connect(function(err, db, done) {
@@ -122,10 +172,12 @@ router.post('/bars', function(req, res) {
   });
 });
 
+//Gets the requested footprint data, summed into one row:
 router.post('/bars_numbers', function(req, res) {
   console.log("BODY: ", req.body);
   var view;
   var particular;
+
   if (req.body.view == 'project') {
     view = 'projects';
   } else if (req.body.view == 'period') {
@@ -142,7 +194,7 @@ router.post('/bars_numbers', function(req, res) {
     } else {
       var queryText;
       if (req.body.view == 'project') {
-          queryText = 'SELECT SUM(air) as air, SUM(truck) as truck, SUM(sea) as sea, SUM(freight_train) as freight_train, SUM(plane) as plane, SUM(car) as car, SUM(train) as train, SUM(hotel) as hotel, SUM(grid) as grid, SUM(propane) as propane, SUM(fuel) as fuel FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = 3 AND "projects"."name" = ' + '\'' + req.body.particular + '\'' + ';';
+        queryText = 'SELECT SUM(air) as air, SUM(truck) as truck, SUM(sea) as sea, SUM(freight_train) as freight_train, SUM(plane) as plane, SUM(car) as car, SUM(train) as train, SUM(hotel) as hotel, SUM(grid) as grid, SUM(propane) as propane, SUM(fuel) as fuel FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = 3 AND "projects"."name" = ' + '\'' + req.body.particular + '\'' + ';';
       } else if (req.body.view == 'period') {
         var period = req.body.particular.slice(0, 10);
         queryText = 'SELECT SUM(air) as air, SUM(truck) as truck, SUM(sea) as sea, SUM(freight_train) as freight_train, SUM(plane) as plane, SUM(car) as car, SUM(train) as train, SUM(hotel) as hotel, SUM(grid) as grid, SUM(propane) as propane, SUM(fuel) as fuel FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = 3 AND "period" = ' + '\'' + period + '\'' + ';';
@@ -192,8 +244,76 @@ router.get('/project_footprints/:projectId', function (req, res) {
 });
 
 
+//Posts a footprint to "footprints", also inserting into "shipping", "travel" and "living":
 router.post('/project_submit', function(req, res){
-  console.log(req.body);
+  var info = req.body.userInfo;
+  var dataIn = req.body.dataIn;
+  console.log("INFO: ", info, "DATA: ", dataIn);
+  pool.connect(function (err, db, done) {
+    if (err){
+      console.log('error connecting', err);
+      res.sendStatus(500);
+    }
+    else {
+      var querytext = 'SELECT "projects"."id" as id FROM "projects" JOIN "users" ON "projects"."user_id" = "users"."id" WHERE "projects"."name" = $1 AND "users"."id" = $2;';
+      db.query(querytext, [info[2].project, req.user.id], function(errorMakingQuery, result) {
+        // done();
+        if(errorMakingQuery){
+          console.log('Error with FP POST', errorMakingQuery);
+          res.sendStatus(501);
+        } else {
+          console.log(result.rows[0].id);
+          var mon = info[0].selectedMonth;
+          var month = months.indexOf(info[0].selectedMonth) + 1;
+          if (mon == 'October' || mon == 'November' || mon == 'December') {
+            // month = months.indexOf(info[0].selectedMonth) + 1;
+          } else {
+            month = '0' + month;
+          }
+
+          var per = info[1].selectedYear + '-' + month + '-01';
+          queryText = 'INSERT INTO "footprints" ("period", "project_id") VALUES ($1, $2) RETURNING "id";';
+          db.query(queryText, [per, result.rows[0].id], function(err, result) {
+            if(err) {
+              console.log(err);
+            } else {
+              console.log(result.rows[0].id);
+              queryText = 'INSERT INTO "shipping" ("air", "sea", "truck", "freight_train", "footprint_id") VALUES ($1, $2, $3, $4, $5);';
+
+              var dat = dataIn[0];
+              var fpId = result.rows[0].id;
+              db.query(queryText, [dat.air, dat.sea, dat.truck, dat.train_shipping, fpId], function(err, result) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  queryText = 'INSERT INTO "travel" ("plane", "car", "train", "footprint_id") VALUES ($1, $2, $3, $4);';
+                  db.query(queryText, [dat.plane, dat.car, dat.train_travel, fpId], function(err, result) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      queryText = 'INSERT INTO "living" ("hotel", "grid", "fuel", "propane", "footprint_id") VALUES ($1, $2, $3, $4, $5)';
+                      db.query(queryText, [dat.hotel, dat.grid, dat.fuel, dat.propane, fpId], function(err, result) {
+                        done();
+                        if (err) {
+                          console.log(err);
+                          res.sendStatus(501);
+                        } else {
+                          res.sendStatus(201);
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+              // res.sendStatus(201);
+            }
+          });
+          // res.sendStatus(201);
+        }
+      });
+    }
+  });
+
 });
 
 router.get('/linegraph', function(req,res){
@@ -242,8 +362,7 @@ router.get('/footprints_footprint', function(req, res) {
 
 
 
-//cheating -- this is not a post route, but i needed some data.
-//we need to talk about which combinations are actually salient:
+//Gets all the compiled data for footprints of a certain kind (e.g. period) and sliced in a certain way (e.g. by category):
 router.post('/donut', function(req, res) {
   console.log("BODY: ", req.body);
   pool.connect(function(err, db, done) {
@@ -303,11 +422,6 @@ router.post('/donut', function(req, res) {
   });
 });
 
-
-
-
-
-
 //slices a user's total footprint by projects..which now that I think about it is not the most useful thing, but it is a skeleton for more useful things:
 router.get('/footprint_by_project', function(req, res) {
   pool.connect(function(err, db, done) {
@@ -330,7 +444,7 @@ router.get('/footprint_by_project', function(req, res) {
   });
 });
 
-//slices total footprint of an organization by period, used for line graph:
+//Slices total footprint of an organization by period, used for line graph on home page (FP's fp):
 router.get('/footprint_by_period', function(req, res) {
   pool.connect(function(err, db, done) {
     if(err) {
