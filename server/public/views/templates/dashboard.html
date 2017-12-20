@@ -65,36 +65,54 @@
     <!-- </div> -->
 
 
-<h1>VISUALIZE</h1>
+<h2>VISUALIZE</h2>
     <!-- DONUTS: -->
-        <div layout="row">
-          View a: <select ng-model="uc.viewBy" ng-change="uc.changeView()">
-            <option value="project">Project</option>
-            <option value="period">Period</option>
-            <option value="category">Category</option>
-            <option value="type">Type</option>
-            <option value="country">Country</option>
-          </select>
-
+        <div layout="column" layout-align="start start"
+>
+            <div flex>
+                <span>
+                View your organization's carb impact in a doughnut chart. You can choose by project, period, 
+                    category, type, or country. </span>
+                </div>
+            <div flex>
+    
+        
+            
+        <md-input-container>
+            <label>View</label>
+          <md-select ng-model="uc.viewBy" ng-change="uc.changeView()">
+            <md-option value="project">Project</md-option>
+            <md-option value="period">Period</md-option>
+            <md-option value="category">Category</md-option>
+            <md-option value="type">Type</md-option>
+            <md-option value="country">Country</md-option>
+          </md-select>
+        </md-input-container>
+          
+        </div>
           <!-- TO DO: get route for the particulars dependening on selection
           STRETCH: let there be an ALL option
           Which one: <select ng-model="lc.particularDonut">
 
           </select> -->
-
-          Sliced by: <select ng-model="uc.sliceBy">
-            <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
-            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.two}}">{{uc.viewByObject.two}}</option>
-            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.three}}">{{uc.viewByObject.three}}</option>
-            <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
-          </select>
-
-          <button ng-click="uc.submitQuery(uc.viewBy, uc.sliceBy)">Donut me</button>
+          <md-input-container>
+            <label>Divide Chart By</label>
+            <md-select ng-model="uc.sliceBy">
+            <md-option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</md-option>
+            <md-option ng-hide="uc.choseProj" value="{{uc.viewByObject.two}}">{{uc.viewByObject.two}}</md-option>
+            <md-option ng-hide="uc.choseProj" value="{{uc.viewByObject.three}}">{{uc.viewByObject.three}}</md-option>
+            <md-option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</md-option>
+          </md-select>
+        </md-input-container>
+        <div>
+          <md-button class="md-raised md-accent" ng-click="uc.submitQuery(uc.viewBy, uc.sliceBy)">View Chart</md-button>
         </div>
-
+    </div>
+    
         <div layout="row">
           <canvas id="donutChart" width="400" height="225"></canvas>
         </div>
+    </md-content>
 
 
 
