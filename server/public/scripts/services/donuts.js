@@ -41,7 +41,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
-      console.log(response.data);
+      // console.log(response.data);
 
       var allTheStuff = response.data;
       var cleanedStuff = [];
@@ -64,9 +64,9 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
 
-      console.log(cleanedStuff);
+      // console.log(cleanedStuff);
 
-      console.log(periods);
+      // console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
@@ -111,9 +111,13 @@ myApp.service('donutService', function($http, $location, UserService) {
   };
 
 //testing the donut function:
-  self.getDonut = function(view, slice) {
+  self.getDonut = function(view, particular, slice) {
     //i know with req.query there's a way to do this, but i'm just cheating:
-    var instructions = {view: view, particular: '2016-03-01', slice: slice};
+
+    if (view == 'period') {
+      particular = particular.slice(0, 10);
+    }
+    var instructions = {view: view, particular: particular, slice: slice};
     // var instructions = {view: view, particular: 'living', slice: slice};
 
 

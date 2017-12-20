@@ -12,8 +12,7 @@ myApp.service('UserService', function ($http, $location){
   self.footprintsFootprint = {};
   self.clickedProject = {};
   self.users = [];
- 
-  
+
 
 
   const PLANE_CONVERSION = 0.18026;
@@ -151,7 +150,7 @@ self.adminGetUsers = function () {
   };
 
     self.computeFootprint = function(footprint) {
-      console.log(footprint);
+      // console.log(footprint);
       var result = {};
       result.plane = PLANE_CONVERSION * parseInt(footprint.plane);
       result.car = CAR_CONVERSION * parseInt(footprint.car);
@@ -168,7 +167,8 @@ self.adminGetUsers = function () {
       result.name = footprint.name;
       result.type_id = footprint.type_id;
       result.country_id = footprint.country_id;
-      console.log(result);
+      result.organization = footprint.organization
+      // console.log(result);
       return result;
     };
 

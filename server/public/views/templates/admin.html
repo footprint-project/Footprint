@@ -8,11 +8,12 @@
         <th>NAME</th>
         <th>POSITION</th>
     </tr>
-    <tr ng-repeat="user in ac.allUsers">
+    <tr ng-repeat="user in ac.computedFps">
         <td>{{user.organization}}</td>
         <td>{{user.username}}</td>
         <td>{{user.name}}</td>
         <td>{{user.position}}</td>
+        <td>{{user.total}}</td>
     </tr>
 </table>
 </div>

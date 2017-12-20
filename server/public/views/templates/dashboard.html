@@ -79,8 +79,25 @@
           <!-- TO DO: get route for the particulars dependening on selection
           STRETCH: let there be an ALL option
           Which one: <select ng-model="lc.particularDonut">
-
           </select> -->
+          Which one: <select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.project}}">{{x.project}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.period}}">{{x.period}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.type}}">{{x.type}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'country'" ng-model="uc.donutParticular">
+            <option ng-repeat="x in uc.donutResults" value="{{x.country}}">{{x.country}}</option>
+          </select>
+          <select ng-show="uc.activeSelectorDonut == 'category'" ng-model="uc.donutParticular">
+            <option value="living">Living</option>
+            <option value="shipping">Shipping</option>
+            <option value="travel">Travel</option>
+          </select>
+
 
           Sliced by: <select ng-model="uc.sliceBy">
             <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
@@ -89,7 +106,7 @@
             <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
           </select>
 
-          <button ng-click="uc.submitQuery(uc.viewBy, uc.sliceBy)">Donut me</button>
+          <button ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">Donut me</button>
         </div>
 
         <div layout="row">

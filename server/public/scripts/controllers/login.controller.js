@@ -30,6 +30,7 @@
   //      vm.selected.splice(vm.selected.indexOf(item), 1);
   //    }
   //  };
+  
 
     //this is called in the lineChart function, not sure why it's called here...
    //donutService.getFpDividedByPeriod(1);
@@ -238,7 +239,7 @@
     vm.getUserData = function(user) {
      console.log(user);
      csvService.userData(user);
-      
+
     }
 
 
