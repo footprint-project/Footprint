@@ -14,7 +14,7 @@ myApp.controller('ProjectController', function (UserService) {
         console.log('in pc getProFoo', id);
         UserService.getProjectFootprints(id).then(function(response){
             vm.projectFootprints = UserService.selectedProjectFootprints;
-            console.log(vm.projectFootprints);
+            console.log('footprints:', vm.projectFootprints);
             //add alert for catch
         }).catch(function (error) {
             console.log(error, 'error getting footprints for selected project');
