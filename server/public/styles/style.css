@@ -205,15 +205,15 @@ text-transform: uppercase;
 table {  
     color: #333;
     font-family: Helvetica, Arial, sans-serif;
-    width: 640px; 
-    border-collapse: 
-    collapse; border-spacing: 0; 
+    width: 80%; 
+    border-collapse: collapse; 
+    border-spacing: 0; 
 }
 
 td, th {  
     border: 1px solid transparent; /* No more visible border */
     height: 30px; 
-    transition: all 0.3s;  /* Simple transition for hover effect */
+    /* transition: all 0.3s;  Simple transition for hover effect */
 }
 
 th {  
@@ -240,4 +240,26 @@ tr td:hover { background: #666; color: #FFF; }
   top: -110px;
   height: 400px;
   width: auto;
+  overflow: hidden; 
+}
+
+#logoContainer {
+  position: relative;
+  height: 150px;
+  width: auto;
+  overflow: hidden; 
+
+}
+
+md-dialog {
+  padding: 15px;
+}
+
+#footprintsTable {
+  padding-left: -50px;
+}
+
+#projects {
+  padding-left: 25px;
+  padding-right: 25px;
 }

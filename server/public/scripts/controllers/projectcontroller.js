@@ -19,14 +19,14 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
 
     }; //End checkboxes function
 
+    //This function sends checkboxes to the User Service.
     vm.postCheckboxes = function(){
         var sendData = vm.selected;
         vm.userService.countryIn = sendData;
     }
-
+//This function sends user data to the service.
     vm.getUserData = function(user){
-        
         vm.userService.sendProject(user);
-        
     };
+
 });//End Project Dialog Controller

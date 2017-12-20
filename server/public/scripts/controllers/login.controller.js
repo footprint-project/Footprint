@@ -1,4 +1,4 @@
- myApp.controller('LoginController', function ($http, $location, $timeout, $filter, UserService, donutService, csvService) {
+ myApp.controller('LoginController', function ($http, $location, $timeout, $filter, UserService, donutService, csvService, $mdDialog) {
 
     console.log('LoginController created');
     var vm = this;
@@ -233,6 +233,7 @@
     vm.getUserData = function(user) {
      console.log(user);
      csvService.userData(user);
+      
     }
 
 

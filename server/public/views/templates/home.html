@@ -1,30 +1,29 @@
-<div class="container" ng-cloak>
+
     <div ng-include="'/views/partials/login.html'"></div>
-
-
-
-            <div layout="row" layout-align="center center"><h1>VIEW FOOTPRINT'S CARBON IMPACT</h1></div>
-            <div layout="row" layout-xs="column" id="homecharts" layout-align="space-around center">
-            <div flex id="donuthome">
+    <div class="container" ng-cloak>
+    <div layout="row" layout-align="center center">
+        <h1>VIEW FOOTPRINT'S CARBON IMPACT</h1>
+    </div>
+    <div layout="row" layout-xs="column" id="homecharts" layout-align="space-around center">
+        <div flex id="donuthome">
             <canvas id="doughnut-chart" width="400" height="225"></canvas>
-            </div>
-            <div flex id="linehome">
+        </div>
+        <div flex id="linehome">
             <canvas id="line-chart" width="400" height="225"></canvas>
-            </div>
-
         </div>
-        <div layout="row" layout-align="center center">
-            <h1>TRY IT FOR YOURSELF</h1>
-        </div>
-        <div layout="row" layout-align="space-around center" id="homeform">
-            <md-content>
-
+    </div>
+    <div layout="row" layout-align="center center">
+        <h1>TRY IT FOR YOURSELF</h1>
+    </div>
+    <div layout="row" layout-align="space-around center" id="homeform">
+        <md-content>
             <div>
             <md-input-container>
                 <label>Organization Name</label>
                 <input ng-model="user.selectedOrganization">
             </md-input-container>
-            <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
+            <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
+            <a href="./assets/footprint_template_real_nonmetric.csv" download>Download Non-Metric CSV</a>
             </div>
 
 
@@ -40,7 +39,7 @@
                 <div>
                         <md-radio-group ng-model="data.type">
                             <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
-                            <md-radio-button value="English"> English </md-radio-button>
+                            <md-radio-button value="English"> Non-Metric </md-radio-button>
                         </md-radio-group>
                     </form>
                 </div>
@@ -113,19 +112,18 @@
 
                 </md-content>
             </div>
-
-
-            <div id="projectcheckboxes">
-
-                                <h3>PROJECT TYPE</h3>
-                                    <md-checkbox ng-model="active" ng-repeat="item in lc.items" ng-change="lc.change(item, active)"> {{item}}</md-checkbox>
-
-                                <pre ng-bind="lst | json">
-                               </pre>
-
+            <div class="upload-btn-wrapper">
+                <md-button class="md-raised" cursor:pointer>Upload CSV
+                    <md-icon class="material-icons">attach_file</md-icon>
+                </md-button>
+                <input type="file" id="file" name="myfile">
             </div>
-
             <div>
+                <md-radio-group ng-model="data.type">
+                    <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
+                    <md-radio-button value="English"> English </md-radio-button>
+                </md-radio-group>
+                </form>
                 <div class="upload-btn-wrapper">
                     <md-button class="md-raised" cursor:pointer>Upload CSV
                         <md-icon class="material-icons">attach_file</md-icon>
@@ -133,22 +131,21 @@
                     <input type="file" id="file" name="myfile">
 
                 </div>
-                <a href="./assets/footprint_template_real.csv" download>Download CSV</a>
+                <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
             </div>
-                <! <div class="download-csv"> -->
-
-                <!-- </div> -->
-
 
             <div id="homeSubmit">
-                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.change(item, active)">Submit Data</md-button>
+                <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.dataType(data)">Submit Data</md-button>
+                <a href="#register">Register</a>
             </div>
-        </div>
-        <div id="demo" flex>
-            VIEW FOOTPRINT'S FOOTPRINT
+        </md-content>
+    </div>
+</div>
+<div id="demo" flex>
+    VIEW FOOTPRINT'S FOOTPRINT
 
-            <canvas id="doughnut-chart" width="400" height="225"></canvas>
-            <canvas id="line-chart" width="400" height="225"></canvas>
+    <canvas id="doughnut-chart" width="400" height="225"></canvas>
+    <canvas id="line-chart" width="400" height="225"></canvas>
 
         </div>
     </div>
