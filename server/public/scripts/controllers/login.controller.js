@@ -201,7 +201,11 @@
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
             // location works with SPA (ng-route)
+            if (response.data.id != 1){
             $location.path('/user'); // http://localhost:5000/#/user
+            } else{
+              $location.path('/admin');
+            }
           } else {
             console.log('LoginController -- login -- failure: ', response);
             vm.message = "Please try again!";
