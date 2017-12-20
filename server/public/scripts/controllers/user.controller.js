@@ -8,7 +8,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   vm.selectedIndex = UserService.userProjects.selectedIndex;
   vm.lineData = [];
   //this is for the list of user projects
-
+  console.log(vm.userObject);
+  
 
 
 // // Bar chart
@@ -34,7 +35,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
 //   });
   // gets the data for the DASHBOARD lineChart displaying org's carbon impact
   vm.lineChart = function () {
-    donutService.getFpDividedByPeriod().then(function (response) {
+    donutService.getUserFpDividedByPeriod().then(function (response) {
       vm.lineData = response;
       var month = '';
       var sum = 0;
@@ -45,9 +46,9 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(sum);
-        console.log(sumsArray);
+        //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
-        console.log(month);
+        //console.log(month);
         periodArray.push(month);
         // console.log(periodArray);
       }
@@ -75,7 +76,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       console.log(error, 'error with line graph data footprints by period');
     });
   };
-  vm.lineChart();
+
+
 //gets users projects
   vm.userService.getProjects(vm.userObject.id);
   //dashboard dialog
@@ -612,7 +614,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       }
 
 
-
+  vm.lineChart();
 
 
 });
