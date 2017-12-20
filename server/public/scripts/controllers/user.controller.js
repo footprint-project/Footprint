@@ -1,4 +1,4 @@
-myApp.controller('UserController', function (UserService, $mdDialog, $http, donutService) {
+myApp.controller('UserController', function (UserService, $mdDialog, $http, $filter, donutService) {
   console.log('UserController created');
   var vm = this;
   vm.userService = UserService;
@@ -6,31 +6,77 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, donu
   vm.countries = UserService.countries.data;
   vm.userProjects = UserService.userProjects;
   vm.selectedIndex = UserService.userProjects.selectedIndex;
+  vm.lineData = [];
   //this is for the list of user projects
+  console.log(vm.userObject);
 
 
 
-  // Bar chart
-  new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-          data: [2478, 5267, 734, 784, 433]
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Predicted world population (millions) in 2050'
+// // Bar chart
+//   new Chart(document.getElementById("bar-chart"), {
+//     type: 'bar',
+//     data: {
+//       labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+//       datasets: [
+//         {
+//           label: "Population (millions)",
+//           backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+//           data: [2478, 5267, 734, 784, 433]
+//         }
+//       ]
+//     },
+//     options: {
+//       legend: { display: false },
+//       title: {
+//         display: true,
+//         text: 'Predicted world population (millions) in 2050'
+//       }
+//     }
+//   });
+  // gets the data for the DASHBOARD lineChart displaying org's carbon impact
+  vm.lineChart = function () {
+    donutService.getUserFpDividedByPeriod().then(function (response) {
+      vm.lineData = response;
+      var month = '';
+      var sum = 0;
+      console.log(vm.lineData);
+      var periodArray = [];
+      var sumsArray = [];
+      for (var i = 0; i < vm.lineData.length; i += 1) {
+        lineData = vm.lineData[i];
+        sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
+        sumsArray.push(sum);
+        //console.log(sumsArray);
+        month = $filter('date')(vm.lineData[i].period, 'MMM yy');
+        //console.log(month);
+        periodArray.push(month);
+        // console.log(periodArray);
       }
-    }
-  });
+      new Chart(document.getElementById("linechart"), {
+        type: 'line',
+        data: {
+          labels: periodArray,
+          datasets: [{
+            //make an array with the sum of all categories
+            data: sumsArray,
+            label: "CO2",
+            borderColor: "#3e95cd",
+            fill: false
+          }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Carbon Footprint'
+          }
+        }
+      });
+    }).catch(function (error) {
+      console.log(error, 'error with line graph data footprints by period');
+    });
+  };
+
 
   //gets users projects
   vm.userService.getProjects(vm.userObject.id);
@@ -590,7 +636,7 @@ function viewByCategory(resp) {
 }
 
 
-
+  vm.lineChart();
 
 
 });

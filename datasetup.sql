@@ -22,20 +22,20 @@ CREATE TABLE "types" (
 CREATE TABLE "projects" (
     "id" serial PRIMARY key NOT NULL,
     "name" varchar(100) NOT NULL,
-    "user_id" INT REFERENCES "users" NOT NULL,
+    "user_id" INT REFERENCES "users" ON DELETE CASCADE NOT NULL,
     "country_id" INT REFERENCES "countries" NOT NULL
 );  
 
 CREATE TABLE "project_type" (
     "id" serial PRIMARY KEY NOT NULL,
-    "project_id" INT REFERENCES "projects" NOT NULL,
+    "project_id" INT REFERENCES "projects" ON DELETE CASCADE NOT NULL,
     "type_id" INT REFERENCES "types" NOT NULL
 );
 
 CREATE TABLE "footprints" (
     "id" serial PRIMARY KEY NOT NULL,
     "period" date NOT NULL,
-    "project_id" INT REFERENCES "projects" NOT NULL
+    "project_id" INT REFERENCES "projects" ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE "living" (
@@ -44,7 +44,7 @@ CREATE TABLE "living" (
     "fuel" INT,
     "grid" INT,
     "propane" INT,
-    "footprint_id" INT REFERENCES "footprints" NOT NULL
+    "footprint_id" INT REFERENCES "footprints" ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE "travel" (
@@ -52,7 +52,7 @@ CREATE TABLE "travel" (
     "plane" INT,
     "car" INT,
     "train" INT,
-    "footprint_id" INT REFERENCES "footprints" NOT NULL
+    "footprint_id" INT REFERENCES "footprints" ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE "shipping" (
@@ -61,7 +61,7 @@ CREATE TABLE "shipping" (
     "truck" INT,
     "sea" INT,
     "freight_train" INT,
-    "footprint_id" INT REFERENCES "footprints" NOT NULL
+    "footprint_id" INT REFERENCES "footprints" ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE "trial_footprints" (

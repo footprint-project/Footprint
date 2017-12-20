@@ -42,6 +42,7 @@ myApp.service('UserService', function ($http, $location){
         self.userObject.name = response.data.name;
         self.userObject.position = response.data.position;
         self.userObject.id = response.data.id;
+        return self.userObject;
         console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
       } else {
         console.log('UserService -- getuser -- failure');
