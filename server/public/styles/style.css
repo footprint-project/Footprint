@@ -1,8 +1,9 @@
 body, html {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  font-size: 14px;
+  font-family: 'Karla', sans-serif;
+  font-size: 16px;
+
 }
 
 /* .instructions .container h1 {
@@ -213,27 +214,27 @@ table {
 td, th {  
     border: 1px solid transparent; /* No more visible border */
     height: 30px; 
+    width: 40px;
     /* transition: all 0.3s;  Simple transition for hover effect */
 }
 
 th {  
-    background: #DFDFDF;  /* Darken header a bit */
+    background: #90a4ae;  /* Darken header a bit */
     font-weight: bold;
 }
 
 td {  
-    background: #FAFAFA;
+    background: #eceff1;
     text-align: center;
 }
 
 /* Cells in even rows (2,4,6...) are one color */        
-tr:nth-child(even) td { background: #F1F1F1; }   
+tr:nth-child(even) td { background: #eceff1; }   
 
 /* Cells in odd rows (1,3,5...) are another (excludes header cells)  */        
-tr:nth-child(odd) td { background: #FEFEFE; }  
+tr:nth-child(odd) td { background: #b0bec5; }  
 
-tr td:hover { background: #666; color: #FFF; }  
-/* Hover cell effect! */
+
 
 #logo {
   position: relative;
@@ -281,7 +282,35 @@ md-nav-bar {
   color: #90a4ae;
 }
 
-a:link {
+a {
     text-decoration: none;
     color: #37474f;
+}
+
+.navigateback {
+  color: #90a4ae;
+}
+
+.homeimages {
+  height: 100px;
+  width: auto;
+  opacity: 0.5;
+  filter: alpha(opacity=50)
+  
+  
+
+}
+
+.blurb {
+  height: auto;
+  width: 100px;
+  align-content: middle;
+  vertical-align: middle;
+  text-align: center;
+  text-justify: inter-word;
+}
+#nonmetric {
+
+
+color: #80cbc4;
 }

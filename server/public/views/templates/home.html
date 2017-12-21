@@ -15,6 +15,28 @@
     <div layout="row" layout-align="center center">
         <h1 class="md-primary">NOW TRY IT FOR YOUR OWN ORGANIZATION</h1>
     </div>
+    <div layout="row" layout-align="space-between center">
+         <div class="blurb" flex="20">
+             <h3>MEASURE</h3>
+             <img class="homeimages" src="images/measure.svg"/>
+            <p>Your data, your footprint. Before you can mitigate your environmental impact, first you need to understand it. Start
+        crunching the numbers for free, today.</p>
+    </div>
+    <div class="blurb" flex="20">
+        
+        <h3>BENCHMARK</h3>
+        <img class="homeimages" src="images/benchmark.svg" />
+         <p>Track your footprint over time with our simplified carbon calculator. Identify areas for improvement and build metrics for
+        success.</p>
+    </div>
+    <div class="blurb" flex="20">
+        <h3>OPTIMIZE</h3>
+        <img class="homeimages" src="images/optimize.svg" />
+        <p>Reduce your footprint by increasing efficiency. Generate cost-savings to do more on each dime. Sustainability is worth more
+        than just the warm fuzzy feeling.
+        </p>
+    </div>
+    </div>
     <div layout="row" layout-align="space-around center" id="homeform">
         <md-content>
             <div>
@@ -23,7 +45,7 @@
                 <input ng-model="user.selectedOrganization">
             </md-input-container>
             <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
-            <a href="./assets/footprint_template_real_nonmetric.csv" download>Download Non-Metric CSV</a>
+            <a href="./assets/footprint_template_real_nonmetric.csv" id="nonmetric" download>Download Non-Metric CSV</a>
             </div>
 
 
@@ -46,7 +68,7 @@
 
             <div id="homeSubmit">
                 <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.dataType(data)">Submit Data</md-button>
-                
+               <a href="https://docs.google.com/forms/d/e/1FAIpQLSdA4eLoZ4m_Ec_nLWfnloq8z-tselxp6phQhOEKnYxvUQ-eRw/viewform">Give us feedback!</a>
             </div>
             </md-content>
             </div>
