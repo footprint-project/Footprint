@@ -237,7 +237,7 @@ tr td:hover { background: #666; color: #FFF; }
 
 #logo {
   position: relative;
-  top: -110px;
+  top: -120px;
   height: 400px;
   width: auto;
   overflow: hidden; 
@@ -262,4 +262,26 @@ md-dialog {
 #projects {
   padding-left: 25px;
   padding-right: 25px;
+}
+
+h1 {
+  color: #90a4ae;
+}
+
+h2, h3 {
+  color: #37474f;
+}
+
+#recent {
+  background-color: #80cbc4;
+  
+}
+
+md-nav-bar {
+  color: #90a4ae;
+}
+
+a:link {
+    text-decoration: none;
+    color: #37474f;
 }
