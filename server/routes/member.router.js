@@ -520,6 +520,10 @@ router.get('/userprojects/:userId', function (req, res) {
   });
 });
 
+router.put('/project_edit:', function (req, res) {
+  console.log(req.body);
+});
+
 
 
 

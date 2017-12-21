@@ -1,4 +1,4 @@
-myApp.controller('ProjectController', function (UserService) {
+myApp.controller('ProjectController', function ($http, UserService, csvService, $mdDialog, $interval) {
     console.log('ProjectController created');
     var vm = this;
     vm.userService = UserService;
@@ -54,7 +54,7 @@ myApp.controller('ProjectController', function (UserService) {
             controller: 'projecteditdcontroller as pec',
             templateUrl: '/views/templates/projecteditdialog.html',
             parent: angular.element(document.body),
-            targetEvent: ev,
+            targetEvent: event,
             clickOutsideToClose: true
         })
     }
