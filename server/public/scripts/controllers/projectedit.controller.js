@@ -20,14 +20,13 @@ myApp.controller('projecteditdcontroller', function ($http, UserService, csvServ
         var file = document.getElementById('file').files[0];
         var result = new FileReader();
         result.onloadend = function (e) {
-            var data = e.target.result;
-            // console.log(data);
+            var data = {data: e.target.result};
+            data.project = vm.projects;
+            console.log(data);
             UserService.sendEdits(data);
         };
         result.readAsBinaryString(file);
         console.log(result);
     };  //End CSV upload
     
-
-
 });//This is the end of the project edit controller

@@ -55,5 +55,4 @@ myApp.controller('DashboardDialogController', function ($http, UserService, csvS
     };
 
 
-
 }); //End Dialog controller

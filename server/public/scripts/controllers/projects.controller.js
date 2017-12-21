@@ -8,6 +8,7 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
     vm.selectedIndex = UserService.userProjects.selectedIndex;
     vm.clickedProject = UserService.clickedProject;
     vm.projectFootprints = [];
+    vm.userObj = UserService.userObj;
 
     //gets the footprints for selected project
     vm.getProjectFootprints = function (id) {
@@ -46,6 +47,7 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
         //window.location.reload(i);
     };
 
+    //Opens edit dialog box.
     vm.editModal = function(event, index) {
         vm.userService.userObj.selectedIndex = index;
         console.log('open dialog', index);
@@ -57,9 +59,28 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
             targetEvent: event,
             clickOutsideToClose: true
         })
+    }//End edit dialog box function.
+
+    vm.deleteModal = function (event, index) {
+        vm.userService.userObj.selectedIndex = index;
+        console.log('Delete controller open');
+
+        $mdDialog.show({
+            controller: 'ProjectController as pc',
+            templateUrl: '/views/templates/deleteconfirmdialog.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true
+        })
     }
 
+    vm.hide = function(){
+        $mdDialog.hide();
+    }
 
+    vm.deleteFootprint = function () {
+        var index = vm.userObj.selectedIndex;
+        
+    }
 
-    
 });

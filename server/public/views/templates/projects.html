@@ -29,7 +29,7 @@
             <td>{{projectFootprint.period | date: "yyyy-MM"}}</td>
             <td><md-button class="md-raised md-primary" ng-click="pc.editModal($event, $index)">Edit</md-button></td>
             <td>
-                <md-button class="md-raised md-warn">Delete</md-button>
+                <md-button class="md-raised md-warn" ng-click="pc.deleteModal($event, $index)">Delete</md-button>
             </td>
            
         </tr>

@@ -234,8 +234,10 @@ self.adminGetUsers = function () {
 };
 
 //This function sends edited footprints to the DB.
- self.sendEdits = function (data) {
-
+ self.sendEdits = function (dataIn) {
+ var data = dataIn.data;
+ var footprintInfo = dataIn.project;
+ console.log(data, footprintInfo);
    var csvSend = {
      plane: 0,
      car: 0,
@@ -291,14 +293,15 @@ self.adminGetUsers = function () {
      csvSend.train_shipping = Math.round((csvSend.train_shipping * 1.460));
      csvSend.truck = Math.round((csvSend.truck * 1.460));
      csvSend.sea = Math.round((csvSend.sea * 1.460));
-     csvSend.projectInfo = self.selectedProjectFootprints;
+     csvSend.projectInfo = footprintInfo;
      console.log('Post English conversion,' + csvSend);
 
    } else {
-     csvSend.projectInfo = self.selectedProjectFootprints;
-     console.log('Post English conversion,' + csvSend);
+     csvSend.projectInfo = footprintInfo;
+     console.log('add variable,' + csvSend.projectInfo);
    }
-   self.sendEdits(csvSend);
+   self.sendEditsOut(csvSend);
+
    csvSend = {
     plane: 0,
     car: 0,
@@ -315,7 +318,7 @@ self.adminGetUsers = function () {
 
  }//End send function
 
- self.sendEdits = function (csvSend) {
+ self.sendEditsOut = function (csvSend) {
    $http.put('/member/project_edit', csvSend).then(function (response) {
      console.log('send footprint', response);
    }).catch(function (error) {
