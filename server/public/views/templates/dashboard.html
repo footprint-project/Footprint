@@ -93,16 +93,16 @@
             <h3>WHICH ONE?</h3>
             
           <md-select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
-            <md-option ng-repeat="x in uc.donutResults" value="{{x.project}}">{{x.project}}</md-option>
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.project">{{x.project}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
-            <md-option ng-repeat="x in uc.donutResults" value="{{x.period}}">{{x.period | date: "yyyy-MM"}}</md-option>
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.period">{{x.period | date: "yyyy-MM"}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
-            <md-option ng-repeat="x in uc.donutResults" value="{{x.type}}">{{x.type}}</md-option>
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.type">{{x.type}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'country'" ng-model="uc.donutParticular">
-            <md-option ng-repeat="x in uc.donutResults" value="{{x.country}}">{{x.country}}</md-option>
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.country">{{x.country}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'category'" ng-model="uc.donutParticular">
             <md-option value="living">Living</md-option>
@@ -149,7 +149,7 @@
             <md-option ng-repeat="x in uc.barResults" ng-value="x.project">{{x.project}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelector == 'period'" ng-model="uc.barParticular">
-            <md-option ng-repeat="x in uc.barResults" ng-value="x.period">{{x.period | "yyyy-MM"}}</md-option>
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.period">{{x.period}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelector == 'type'" ng-model="uc.barParticular">
             <md-option ng-repeat="x in uc.barResults" ng-value="x.type">{{x.type}}</md-option>
