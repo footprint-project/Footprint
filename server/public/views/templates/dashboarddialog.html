@@ -9,9 +9,9 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <md-input-container>
-                <select ng-model="user.project">
-                  <option ng-repeat="project in ddc.userProjects" value="{{project.name}}">{{project.name}}</option>
-                </select>
+                <md-select ng-model="user.project">
+                  <md-option ng-repeat="project in ddc.userProjects" ng-value="project.name">{{project.name}}</md-option>
+                </md-select>
                 <!-- <input ng-model="user.projectName"> -->
             </md-input-container>
 
@@ -61,7 +61,7 @@
                 </div>
                 <div>
                     <div class="upload-btn-wrapper">
-                        <md-button class="md-raised" cursor:pointer>Upload CSV
+                        <md-button class="md-raised md-accent" cursor:pointer>Upload CSV
                             <md-icon class="material-icons">attach_file</md-icon>
                         </md-button>
                         <input type="file" id="file" name="myfile">

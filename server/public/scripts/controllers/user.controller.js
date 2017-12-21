@@ -414,7 +414,7 @@ function sanitizeByProject(resp) {
       datasets: [
         {
           label: "CO2",
-          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
           data: totals
         }
       ]
@@ -471,7 +471,7 @@ function sanitizeByType(resp) {
       datasets: [
         {
           label: "CO2",
-          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
           data: totals
         }
       ]
@@ -527,7 +527,7 @@ function sanitizeByCountry(resp) {
       datasets: [
         {
           label: "CO2",
-          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
           data: totals
         }
       ]
@@ -572,7 +572,7 @@ function sanitizeByCategory(resp) {
       datasets: [
         {
           label: "CO2",
-          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+          backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
           data: [living, travel, shipping]
         }
       ]
