@@ -64,7 +64,11 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     // default shades
     .accentPalette('blue-grey', {
       'default': '200' // use shade 200 for default, and keep all other shades the same
-    });
+    })
+
+    .warnPalette('deep-orange', {
+    'default': '400' // use shade 200 for default, and keep all other shades the same
+  });
 
 
 

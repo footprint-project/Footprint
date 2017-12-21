@@ -1,8 +1,8 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 
-<div layout="row" layout-align="start start">
-<md-button href="/#/user">BACK TO DASHBOARD</md-button><span flex></span>
+<div layout="row" layout-align="start start" class="navigateback">
+<md-button  href="/#/user">BACK TO DASHBOARD</md-button><span flex></span>
 
   
 
@@ -39,11 +39,10 @@
     <h2>YOUR PROJECTS</h2>
 
     <md-card id="recent">
-
+        <p>View project uploads</p>
         <h3 ng-repeat="userProject in pc.userProjects">
-            {{userProject.name}}
 
-            <md-button class="md-raised md-primary" ng-click="pc.showAnotherProject($event, $index)" layout-align="left">VIEW UPLOADS</md-button>
+            <md-button  ng-click="pc.showAnotherProject($event, $index)" layout-align="left">{{userProject.name}}</md-button>
 
         </h3>
         <!-- {{pc.projectFootprints}} -->
