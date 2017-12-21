@@ -45,7 +45,7 @@
           labels: ["Living", "Travel", "Shipping"],
           datasets: [
             {
-              label: "CO2",
+              label: "Kgs of CO2",
               backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
               data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
             }
@@ -54,7 +54,7 @@
         options: {
           title: {
             display: true,
-            text: 'Total Footprint'
+            text: 'Total Footprint by Category'
           }
         }
       });
@@ -93,7 +93,7 @@
         labels: ["Living", "Travel", "Shipping"],
         datasets: [
           {
-            label: "CO2",
+            label: "Kgs of CO2",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
             data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
           }
@@ -102,7 +102,7 @@
       options: {
         title: {
           display: true,
-          text: 'Total Footprint'
+          text: 'Total Kgs of CO2 by Category'
         }
       }
     });
@@ -138,7 +138,7 @@
           datasets: [{
             //make an array with the sum of all categories
             data: sumsArray,
-            label: "CO2",
+            label: "Kgs of CO2",
             borderColor: "#3e95cd",
             fill: false
           }
@@ -147,7 +147,7 @@
         options: {
           title: {
             display: true,
-            text: 'Carbon Footprint'
+            text: 'Carbon Footprint over Time'
           }
         }
       });

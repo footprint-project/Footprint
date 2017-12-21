@@ -61,7 +61,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: sumsArray,
-            label: "CO2",
+            label: "Kgs of CO2",
             borderColor: "#3e95cd",
             fill: false
           }
@@ -70,7 +70,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
         options: {
           title: {
             display: true,
-            text: 'Carbon Footprint'
+            text: 'Carbon Footprint over Time'
           }
         }
       });
@@ -205,7 +205,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: bars,
-            label: "CO2",
+            label: "Kgs of CO2",
             borderColor: "#3e95cd",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
             fill: false
@@ -298,7 +298,7 @@ vm.submitQuery = function(view, particular, slice) {
     }
 
     if (vm.sliceBy == 'Period') {
-      sanitizeByPeriod(response.data);
+      sanitizeByPeriod(response.data); 
     } else if (vm.sliceBy == 'Type') {
       sanitizeByType(response.data);
     } else if (vm.sliceBy == 'Country') {
@@ -339,9 +339,9 @@ function sanitizeByPeriod(resp) {
   //finally, sum up the columns to find total impact for each period:
   var totals = [], totals_period = [];
   for (var k=0; k<periods.length; k++) {
-    var p = periods[k];
+    var p = periods[k]; 
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
-    totals_period.push(p.period);
+    totals_period.push($filter('date')(p.period, 'MMM yy'));
     totals.push(total);
   }
   console.log(totals);
@@ -368,11 +368,11 @@ function sanitizeByPeriod(resp) {
   chart1= new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'line',
     data: {
-      labels: totals_period,
+      labels: totals_period,  
       datasets: [{
         //make an array with the sum of all categories
         data: totals,
-        label: "CO2",
+        label: "Kgs of CO2",
         borderColor: "#3e95cd",
         fill: false
       }
@@ -381,7 +381,7 @@ function sanitizeByPeriod(resp) {
   options: {
     title: {
       display: true,
-      text: 'Carbon Footprint'
+      text: 'Carbon Footprint Over Time'
     }
   }
 });
