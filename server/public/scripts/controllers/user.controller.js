@@ -7,6 +7,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   vm.userProjects = UserService.userProjects;
   vm.selectedIndex = UserService.userProjects.selectedIndex;
   vm.lineData = [];
+  vm.sliceBy = 'abc';
   //this is for the list of user projects
   console.log(vm.userObject);
 
@@ -196,12 +197,13 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       new Chart(document.getElementById("barChart"), {
         type: 'bar',
         data: {
-          labels: ['air', 'truck', 'sea', 'freight_train', 'plane', 'car', 'train', 'hotel', 'fuel', 'grid', 'propane'],
+          labels: ['air', 'truck', 'sea', 'freight train', 'plane', 'car', 'train', 'hotel', 'fuel', 'grid', 'propane'],
           datasets: [{
             //make an array with the sum of all categories
             data: bars,
             label: "CO2",
             borderColor: "#3e95cd",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
             fill: false
           }
         ]
