@@ -12,6 +12,9 @@ myApp.service('UserService', function ($http, $location){
   self.footprintsFootprint = {};
   self.clickedProject = {};
   self.users = [];
+  self.userObj = { selectedIndex: 0 };
+  self.selectedProjectFootprints = [];
+  
 
 
 
@@ -90,6 +93,7 @@ myApp.service('UserService', function ($http, $location){
     console.log('Getting user projects', id);
     return $http.get('member/userprojects/' + id).then(function (response) {
       return self.userProjects = response.data;
+      self.selectedProjectFootprints = response.data;
       console.log('user projects', self.userProjects);
     }).catch(function (err) {
       console.log('problem getting projects', err);
@@ -229,9 +233,99 @@ self.adminGetUsers = function () {
    });
 };
 
+//This function sends edited footprints to the DB.
+ self.sendEdits = function (dataIn) {
+ var data = dataIn.data;
+ var footprintInfo = dataIn.project;
+ console.log(data, footprintInfo);
+   var csvSend = {
+     plane: 0,
+     car: 0,
+     train_travel: 0,
+     air: 0,
+     train_shipping: 0,
+     truck: 0,
+     sea: 0,
+     hotel: 0,
+     fuel: 0,
+     grid: 0,
+     propane: 0
+   };
 
+   var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
+   //  console.log(dataNums);
 
+   var arrayOfNums = dataNums.split(',');
+   console.log(arrayOfNums);
 
+   for (var i = 0; i < arrayOfNums.length; i++) {
+     var num = arrayOfNums[i];
+     if (i % 11 == 1 && num !== '') {
+      csvSend.plane += Number(num);
+     } else if (i % 11 == 2 && num !== '') {
+      csvSend.car += Number(num);
+     } else if (i % 11 == 3 && num !== '') {
+      csvSend.train_travel += Number(num);
+     } else if (i % 11 == 4 && num !== '') {
+      csvSend.air += Number(num);
+     } else if (i % 11 == 5 && num !== '') {
+      csvSend.train_shipping += Number(num);
+     } else if (i % 11 == 6 && num !== '') {
+      csvSend.truck += Number(num);
+     } else if (i % 11 == 7 && num !== '') {
+      csvSend.sea += Number(num);
+     } else if (i % 11 == 8 && num !== '') {
+      csvSend.hotel += Number(num);
+     } else if (i % 11 == 9 && num !== '') {
+      csvSend.fuel += Number(num);
+     } else if (i % 11 == 10 && num !== '') {
+      csvSend.grid += Number(num);
+     } else if (i % 11 == 0 && num !== '' && i > 1) {
+      csvSend.propane += Number(num);
+     }
+   }
+
+   if (csvSend.type === 'English') {
+     csvSend.plane = Math.round((csvSend.plane * 1.609344));
+     csvSend.car = Math.round((csvSend.car * 1.609344));
+     csvSend.train_travel = Math.round((csvSend.train_travel * 1.609344));
+     csvSend.air = Math.round((csvSend.air * 1.460));
+     csvSend.train_shipping = Math.round((csvSend.train_shipping * 1.460));
+     csvSend.truck = Math.round((csvSend.truck * 1.460));
+     csvSend.sea = Math.round((csvSend.sea * 1.460));
+     csvSend.projectInfo = footprintInfo;
+     console.log('Post English conversion,' + csvSend);
+
+   } else {
+     csvSend.projectInfo = footprintInfo;
+     console.log('add variable,' + csvSend.projectInfo);
+   }
+   self.sendEditsOut(csvSend);
+
+   csvSend = {
+    plane: 0,
+    car: 0,
+    train_travel: 0,
+    air: 0,
+    train_shipping: 0,
+    truck: 0,
+    sea: 0,
+    hotel: 0,
+    fuel: 0,
+    grid: 0,
+    propane: 0
+  };
+
+ }//End send function
+
+ self.sendEditsOut = function (csvSend) {
+   $http.put('/member/project_edit', csvSend).then(function (response) {
+     console.log('send footprint', response);
+   }).catch(function (error) {
+     console.log('error sending footprint', error)
+   })
+
+ }
 
 
 }); //End of UserService
