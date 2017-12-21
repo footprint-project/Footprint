@@ -408,6 +408,13 @@ router.post('/donut', function(req, res) {
         ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE (("users"."id" = $1) OR ("users"."id" = $2)) AND "period" =' + particularPeriod + ';' ;
       }
 
+      if (req.body.view == 'period' && req.body.slice == 'Category') {
+        var particularPeriod2 = '\'' + req.body.particular + '\'';
+        blingArray= [req.user.id, 10000];
+        queryText = 'SELECT SUM("hotel") as hotel, SUM("fuel") as fuel, SUM("grid") as grid, SUM("propane") as propane, SUM("air") as air, SUM("sea") as sea, SUM("truck") as truck, SUM("freight_train") as freight_train, SUM("car") as car, SUM("plane") as plane, SUM("train") as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE (("users"."id" = $1) OR ("users"."id" = $2)) AND "period" =' + particularPeriod2 + ';' ;
+
+      }
+
       db.query(queryText, blingArray, function(err, result){
         done();
         if(err) {
