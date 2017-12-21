@@ -21,7 +21,7 @@
             <h2>YOUR PROJECTS</h2>
             <md-card id="recent">
                 <h3 ng-repeat="userProject in uc.userService.userProjects">
-                    
+
                         <md-button ng-click="uc.showProject($event, $index)" layout-align="left">{{userProject.name}}</md-button>
                     </md-button>
                 </h3>
@@ -74,7 +74,7 @@
             <h3>VIEW BY:
             </h3>
     <md-input-container>
-            
+
           <md-select ng-model="uc.viewBy" ng-change="uc.changeView()">
             <md-option value="project">Project</md-option>
             <md-option value="period">Period</md-option>
@@ -91,7 +91,7 @@
           </select> -->
           <div>
             <h3>WHICH ONE?</h3>
-            
+
           <md-select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
             <md-option ng-repeat="x in uc.donutResults" ng-value="x.project">{{x.project}}</md-option>
           </md-select>
@@ -124,7 +124,7 @@
 
         </div>
 
-        <div flex>
+        <div flex id="donutChartContainer">
           <canvas id="donutChart" width="400" height="225"></canvas>
         </div>
         </div>
@@ -160,12 +160,12 @@
           </div>
           <md-button class="md-raised md-accent" ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">View Chart</md-button>
         </div>
-        
 
 
-        <div flex>
+
+        <div flex id="barChartContainer">
           <canvas id="barChart" width="400" height="225"></canvas>
         </div>
-    </div> 
+    </div>
 
 </md-content>

@@ -53,6 +53,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
         periodArray.push(month);
         // console.log(periodArray);
       }
+
       new Chart(document.getElementById("linechart"), {
         type: 'line',
         data: {
@@ -94,8 +95,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       targetEvent: ev,
       clickOutsideToClose: true
 
-    })
-  } //End modal function
+    });
+  }; //End modal function
 
   //Add new project modal.
   vm.newProject = function (ev, i) {
@@ -107,8 +108,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       targetEvent: ev,
       clickOutsideToClose: true
 
-    })
-  }
+    });
+  };
 
   vm.hide = function () {
     $mdDialog.hide();
@@ -160,15 +161,6 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       //ty Chrisco:
       vm.activeSelector = vm.barBy;
 
-      // if (vm.barBy == 'project') {
-      //   vm.activeSelector = 'project';
-      // } else if (vm.barBy == 'period') {
-      //   vm.activeSelector = 'period';
-      // } else if (vm.barBy == 'type') {
-      //   vm.activeSelector = 'type';
-      // } else if (vm.barBy == 'country') {
-      //   vm.activeSelector = 'country';
-      // }
     }).catch(function(err) {
       console.log(err);
     });
@@ -193,7 +185,19 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       bars.push(computedFp.fuel);
       bars.push(computedFp.grid);
       bars.push(computedFp.propane);
+      var canvas = document.getElementById("barChart");
 
+      // if (chart1) {
+      //   chart1.destroy();
+      // } else if (chart2) {
+      //   chart2.destroy();
+      // } else if (chart3) {
+      //   chart3.destroy();
+      // } else if (chart4) {
+      //   chart4.destroy();
+      // } else if (chart5) {
+      //   chart5.destroy();
+      // }
       new Chart(document.getElementById("barChart"), {
         type: 'bar',
         data: {
@@ -308,9 +312,9 @@ vm.submitQuery = function(view, particular, slice) {
 };
 
 
-//THIS IS UGLY: all five functions should prob be consolidated into one, or at least four of them, excluding categories:
+var chart1, chart2, chart3, chart4, chart5;
+
 //call if they slice by PERIOD:
-//wait I don't know if this makes sense...shouldn't this be a line graph?:
 function sanitizeByPeriod(resp) {
   var allThings = resp;
   var cleanedThings = [];
@@ -342,10 +346,26 @@ function sanitizeByPeriod(resp) {
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+
+  //well we don't need the following 2 declarations, and we get a weird error, but it does fix the hover bug!:
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+
+  chart1= new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'line',
     data: {
       labels: totals_period,
@@ -404,10 +424,22 @@ function sanitizeByProject(resp) {
 
   //the issue here is their array of projects will be indefinitely long: how do we set data equal to the proper array? Oh i guess we can split "totals" into two arrays for data and for labels.
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart2= new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_name,
@@ -461,10 +493,22 @@ function sanitizeByType(resp) {
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart3=new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_type,
@@ -517,10 +561,22 @@ function sanitizeByCountry(resp) {
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart4 = new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_country,
@@ -562,10 +618,23 @@ function sanitizeByCategory(resp) {
   totals.push(travel);
   console.log("totals: ", totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+
+  chart5 = new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: ["Living", "Travel", "Shipping"],
