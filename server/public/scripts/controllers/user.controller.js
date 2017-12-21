@@ -46,7 +46,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       for (var i = 0; i < vm.lineData.length; i += 1) {
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
-        sumsArray.push(sum);
+        sumsArray.push(Math.round(sum, 1));
         //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
         //console.log(month);
@@ -174,17 +174,17 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       console.log(response);
       var computedFp = UserService.computeFootprint(response.data[0]);
       var bars = [];
-      bars.push(computedFp.air);
-      bars.push(computedFp.truck);
-      bars.push(computedFp.sea);
-      bars.push(computedFp.freight_train);
-      bars.push(computedFp.plane);
-      bars.push(computedFp.car);
-      bars.push(computedFp.train);
-      bars.push(computedFp.hotel);
-      bars.push(computedFp.fuel);
-      bars.push(computedFp.grid);
-      bars.push(computedFp.propane);
+      bars.push(Math.round(computedFp.air,1));
+      bars.push(Math.round(computedFp.truck,1));
+      bars.push(Math.round(computedFp.sea,1));
+      bars.push(Math.round(computedFp.freight_train, 1));
+      bars.push(Math.round(computedFp.plane, 1));
+      bars.push(Math.round(computedFp.car, 1));
+      bars.push(Math.round(computedFp.train, 1));
+      bars.push(Math.round(computedFp.hotel, 1));
+      bars.push(Math.round(computedFp.fuel, 1));
+      bars.push(Math.round(computedFp.grid, 1));
+      bars.push(Math.round(computedFp.propane, 1));
       var canvas = document.getElementById("barChart");
 
       // if (chart1) {
@@ -342,7 +342,7 @@ function sanitizeByPeriod(resp) {
     var p = periods[k]; 
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
     totals_period.push($filter('date')(p.period, 'MMM yy'));
-    totals.push(total);
+    totals.push(Math.round(total, 1));
   }
   console.log(totals);
 
@@ -418,7 +418,7 @@ function sanitizeByProject(resp) {
     var p = projects[k];
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
     totals_name.push(p.name);
-    totals.push(total);
+    totals.push(Math.round(total,1));
   }
   console.log(totals);
 
@@ -488,7 +488,7 @@ function sanitizeByType(resp) {
   for (var k=0; k<types.length; k++) {
     var t = types[k];
     var total = t.air + t.car + t.freight_train + t.fuel + t.grid + t.hotel + t.plane + t.propane + t.sea + t.train + t.truck;
-    totals.push(total);
+    totals.push(Math.round(total,1));
     totals_type.push(t.type_id);
   }
   console.log(totals);
@@ -556,7 +556,7 @@ function sanitizeByCountry(resp) {
   for (var k=0; k<countries.length; k++) {
     var t = countries[k];
     var total = t.air + t.car + t.freight_train + t.fuel + t.grid + t.hotel + t.plane + t.propane + t.sea + t.train + t.truck;
-    totals.push(total);
+    totals.push(Math.round(total,1));
     totals_country.push(t.country_id);
   }
   console.log(totals);
@@ -613,9 +613,9 @@ function sanitizeByCategory(resp) {
   var shipping = fp.air + fp.truck + fp.sea + fp.freight_train;
   var travel = fp.plane + fp.train + fp.car;
 
-  totals.push(living);
-  totals.push(shipping);
-  totals.push(travel);
+  totals.push(Math.round(living, 1));
+  totals.push(Math.round(shipping, 1));
+  totals.push(Math.round(travel, 1));
   console.log("totals: ", totals);
 
   if (chart1) {

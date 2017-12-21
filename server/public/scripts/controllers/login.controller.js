@@ -47,7 +47,7 @@
             {
               label: "Kgs of CO2",
               backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-              data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+              data: [Math.round(vm.donutResult.living, 1), Math.round(vm.donutResult.travel, 1), Math.round(vm.donutResult.shipping,1)]
             }
           ]
         },
@@ -95,7 +95,7 @@
           {
             label: "Kgs of CO2",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-            data: [vm.donutResult.living, vm.donutResult.travel, vm.donutResult.shipping]
+            data: [Math.round(vm.donutResult.living, 1), Math.round(vm.donutResult.travel, 1), Math.round(vm.donutResult.shipping, 1)]
           }
         ]
       },
@@ -124,7 +124,7 @@
       for (var i=0; i<vm.lineData.length; i+=1){
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
-        sumsArray.push(sum);
+        sumsArray.push(Math.round(sum,1));
         //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
        // console.log(month);
