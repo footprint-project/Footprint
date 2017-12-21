@@ -9,7 +9,7 @@
 </div>
 
 <div layout="row" layout-align="center center">
-<h1 id="projectheader">{{pc.clickedProject.name}}</h1>
+<h1 id="projectheader">Currently viewing: {{pc.clickedProject.name}}</h1>
 </div>
 
 <div layout="row" id="projects">
@@ -17,7 +17,7 @@
 <div flex="70">
 <!-- <div flex="60" layout="row" layout-align="center center"> -->
     <table id="footprintsTable">
-        <h2>FOOTPRINTS</h2>
+        <h2>UPLOADED PERIODS</h2>
         <tr>
             <!-- will add footprint in a moment -->
             <th>PERIOD</th>
@@ -36,14 +36,14 @@
     </table>
 </div>
 <div flex="30">
-    <h2>RECENT PROJECTS</h2>
+    <h2>YOUR PROJECTS</h2>
 
     <md-card id="recent">
 
         <h3 ng-repeat="userProject in pc.userProjects">
             {{userProject.name}}
 
-            <md-button class="md-raised md-primary" ng-click="pc.showAnotherProject($event, $index)" layout-align="left">More Info</md-button>
+            <md-button class="md-raised md-primary" ng-click="pc.showAnotherProject($event, $index)" layout-align="left">VIEW UPLOADS</md-button>
 
         </h3>
         <!-- {{pc.projectFootprints}} -->
