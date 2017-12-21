@@ -17,12 +17,12 @@
 
         </div>
 
-        <div flex="30">
+        <div flex="25">
             <h2>YOUR PROJECTS</h2>
             <md-card id="recent">
                 <h3 ng-repeat="userProject in uc.userService.userProjects">
-                    {{userProject.name}}
-                        <md-button class="md-raised md-primary" ng-click="uc.showProject($event, $index)" layout-align="left">More Info</md-button>
+                    
+                        <md-button ng-click="uc.showProject($event, $index)" layout-align="left">{{userProject.name}}</md-button>
                     </md-button>
                 </h3>
 
@@ -67,85 +67,105 @@
 
 <h1>VISUALIZE YOUR IMPACT</h1>
     <!-- DONUTS: -->
-        <div layout="row">
-          View a: <select ng-model="uc.viewBy" ng-change="uc.changeView()">
-            <option value="project">Project</option>
-            <option value="period">Period</option>
-            <option value="category">Category</option>
-            <option value="type">Type</option>
-            <option value="country">Country</option>
-          </select>
+        <div id="dashdonut" layout="row" flex>
+        <div layout="column" flex="15">
+            <h2>VIEW DOUGHNUT CHART</h2>
+        <div>
+            <h3>VIEW BY:
+            </h3>
+    <md-input-container>
+            
+          <md-select ng-model="uc.viewBy" ng-change="uc.changeView()">
+            <md-option value="project">Project</md-option>
+            <md-option value="period">Period</md-option>
+            <md-option value="category">Category</md-option>
+            <md-option value="type">Type</md-option>
+            <md-option value="country">Country</md-option>
+          </md-select>
+    </md-input-container>
+        </div>
 
           <!-- TO DO: get route for the particulars dependening on selection
           STRETCH: let there be an ALL option
           Which one: <select ng-model="lc.particularDonut">
           </select> -->
-          Which one: <select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
-            <option ng-repeat="x in uc.donutResults" value="{{x.project}}">{{x.project}}</option>
-          </select>
-          <select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
-            <option ng-repeat="x in uc.donutResults" value="{{x.period}}">{{x.period}}</option>
-          </select>
-          <select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
-            <option ng-repeat="x in uc.donutResults" value="{{x.type}}">{{x.type}}</option>
-          </select>
-          <select ng-show="uc.activeSelectorDonut == 'country'" ng-model="uc.donutParticular">
-            <option ng-repeat="x in uc.donutResults" value="{{x.country}}">{{x.country}}</option>
-          </select>
-          <select ng-show="uc.activeSelectorDonut == 'category'" ng-model="uc.donutParticular">
-            <option value="living">Living</option>
-            <option value="shipping">Shipping</option>
-            <option value="travel">Travel</option>
-          </select>
+          <div>
+            <h3>WHICH ONE?</h3>
+            
+          <md-select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.project">{{x.project}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.period">{{x.period | date: "yyyy-MM"}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.type">{{x.type}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelectorDonut == 'country'" ng-model="uc.donutParticular">
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.country">{{x.country}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelectorDonut == 'category'" ng-model="uc.donutParticular">
+            <md-option value="living">Living</md-option>
+            <md-option value="shipping">Shipping</md-option>
+            <md-option value="travel">Travel</md-option>
+          </md-select>
+          </div>
 
+          <div>
+          <h3>DIVIDED BY:</h3>
+          <md-select ng-model="uc.sliceBy">
+            <md-option ng-value="uc.viewByObject.one">{{uc.viewByObject.one}}</md-option>
+            <md-option ng-hide="uc.choseProj" ng-value="uc.viewByObject.two">{{uc.viewByObject.two}}</md-option>
+            <md-option ng-hide="uc.choseProj" ng-value="uc.viewByObject.three">{{uc.viewByObject.three}}</md-option>
+            <md-option ng-value="uc.viewByObject.four">{{uc.viewByObject.four}}</md-option>
+          </md-select>
+          </div>
+          <md-button class="md-raised md-accent" ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">View Chart</md-button>
 
-          Sliced by: <select ng-model="uc.sliceBy">
-            <option value="{{uc.viewByObject.one}}">{{uc.viewByObject.one}}</option>
-            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.two}}">{{uc.viewByObject.two}}</option>
-            <option ng-hide="uc.choseProj" value="{{uc.viewByObject.three}}">{{uc.viewByObject.three}}</option>
-            <option value="{{uc.viewByObject.four}}">{{uc.viewByObject.four}}</option>
-          </select>
-
-          <button ng-click="uc.submitQuery(uc.viewBy, uc.donutParticular, uc.sliceBy)">Donut me</button>
         </div>
 
-        <div layout="row">
+        <div flex>
           <canvas id="donutChart" width="400" height="225"></canvas>
+        </div>
         </div>
 
 
 
     <!-- BARS: -->
-        <div layout="row">
-
-          View a: <select ng-model="uc.barBy" ng-change="uc.changeBarView()">
-            <option value="project">Project</option>
-            <option value="period">Period</option>
-            <option value="type">Type</option>
-            <option value="country">Country</option>
-          </select>
-
-          <select ng-show="uc.activeSelector == 'project'" ng-model="uc.barParticular">
-            <option ng-repeat="x in uc.barResults" value="{{x.project}}">{{x.project}}</option>
-          </select>
-          <select ng-show="uc.activeSelector == 'period'" ng-model="uc.barParticular">
-            <option ng-repeat="x in uc.barResults" value="{{x.period}}">{{x.period}}</option>
-          </select>
-          <select ng-show="uc.activeSelector == 'type'" ng-model="uc.barParticular">
-            <option ng-repeat="x in uc.barResults" value="{{x.type}}">{{x.type}}</option>
-          </select>
-          <select ng-show="uc.activeSelector == 'country'" ng-model="uc.barParticular">
-            <option ng-repeat="x in uc.barResults" value="{{x.country}}">{{x.country}}</option>
-          </select>
-
-          <button ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">Bar me</button>
+        <div id="dashbar" layout="row" flex>
+            <div layout="column" flex="15">
+                <h2>VIEW BAR CHART</h2>
+                <div>
+                    <h3>VIEW BY:
+                    </h3>
+          <md-select ng-model="uc.barBy" ng-change="uc.changeBarView()">
+            <md-option value="project">Project</md-option>
+            <md-option value="period">Period</md-option>
+            <md-option value="type">Type</md-option>
+            <md-option value="country">Country</md-option>
+          </md-select>
+        <h3>WHICH ONE?</h3>
+          <md-select ng-show="uc.activeSelector == 'project'" ng-model="uc.barParticular">
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.project">{{x.project}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelector == 'period'" ng-model="uc.barParticular">
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.period">{{x.period}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelector == 'type'" ng-model="uc.barParticular">
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.type">{{x.type}}</md-option>
+          </md-select>
+          <md-select ng-show="uc.activeSelector == 'country'" ng-model="uc.barParticular">
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.country">{{x.country}}</md-option>
+          </md-select>
+          </div>
+          <md-button class="md-raised md-accent" ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">View Chart</md-button>
         </div>
+        
 
 
-
-        <div layout="row">
+        <div flex>
           <canvas id="barChart" width="400" height="225"></canvas>
         </div>
-
+    </div> 
 
 </md-content>
