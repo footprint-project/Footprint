@@ -28,7 +28,7 @@ myApp.controller('AdminController', function (UserService, $http) {
           var total = fpComp.air + fpComp.truck + fpComp.sea + fpComp.freight_train + fpComp.propane + fpComp.fuel + fpComp.grid + fpComp.hotel + fpComp.train + fpComp.car + fpComp.plane;
           var organization = fpComp.organization;
           var fpObj = {
-            total: total,
+            total: Math.round(total,1),
             organization: organization
           };
           vm.computedFps.push(fpObj);
