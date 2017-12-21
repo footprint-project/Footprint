@@ -224,7 +224,7 @@ router.get('/project_footprints/:projectId', function (req, res) {
       res.sendStatus(500);
     }
     else {
-      var queryText = 'SELECT * FROM "footprints" WHERE project_id = $1';
+      var queryText = 'SELECT * FROM "footprints" WHERE project_id = $1 ORDER BY period';
       db.query(queryText,[projectId], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
