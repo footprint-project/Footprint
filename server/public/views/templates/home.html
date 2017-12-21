@@ -13,7 +13,7 @@
         </div>
     </div>
     <div layout="row" layout-align="center center">
-        <h1>NOW TRY IT FOR YOUR OWN ORGANIZATION</h1>
+        <h1 class="md-primary">NOW TRY IT FOR YOUR OWN ORGANIZATION</h1>
     </div>
     <div layout="row" layout-align="space-around center" id="homeform">
         <md-content>
@@ -29,7 +29,7 @@
 
 
                 <div class="upload-btn-wrapper">
-                    <md-button class="md-raised" cursor:pointer>Upload CSV
+                    <md-button class="md-raised md-accent" cursor:pointer>Upload CSV
                         <md-icon class="material-icons">attach_file</md-icon>
                     </md-button>
                     <input type="file" id="file" name="myfile">
@@ -46,7 +46,7 @@
 
             <div id="homeSubmit">
                 <md-button class="md-primary md-raised" ng-click="lc.getUserData(user); lc.uploadFile(); lc.dataType(data)">Submit Data</md-button>
-                <a href="#register">Register</a>
+                
             </div>
             </md-content>
             </div>

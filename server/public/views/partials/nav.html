@@ -4,13 +4,13 @@
   <!-- , $index -->
    <span flex></span>
   <div ng-controller="UserController as uc">
-      <md-button class="md-primary md-raised" ng-click="uc.newProject($event)" class="md-raised" aria-label="Open Dialog" id="dashdialog">
+      <md-button  ng-click="uc.newProject($event)"  aria-label="Open Dialog" id="dashdialog">
           Create Project
         </md-button>
-    <md-button class="md-primary md-raised" ng-click="uc.upload($event)" class="md-raised" aria-label="Open Dialog"
+    <md-button  ng-click="uc.upload($event)"  aria-label="Open Dialog"
       id="dashdialog">
       Upload New Month for existing project
     </md-button>
-    <md-button class="md-raised md-primary" id="log" ng-click="uc.userService.logout()">Log Out</md-button>
+    <md-button  id="log" ng-click="uc.userService.logout()">Log Out</md-button>
   </div>
 </md-nav-bar>
