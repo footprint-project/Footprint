@@ -1,4 +1,4 @@
-myApp.controller('ProjectDialogController', function (UserService, csvService, $mdDialog, $interval) {
+myApp.controller('ProjectDialogController', function (UserService, csvService, $mdDialog, $interval, $location) {
     var vm = this;
     vm.userService = UserService;
     vm.userObject = UserService.userObject;
@@ -8,7 +8,7 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
 
     //This function sends checkboxes
     vm.change = function (item, active) {
-        
+
         if (active) {
             vm.selected.push(item);
             var data = item;
@@ -23,10 +23,13 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
     vm.postCheckboxes = function(){
         var sendData = vm.selected;
         vm.userService.countryIn = sendData;
-    }
+    };
 //This function sends user data to the service.
     vm.getUserData = function(user){
         vm.userService.sendProject(user);
+        console.log('what up');
+        // $location.path('/user')
+        
     };
 
 });//End Project Dialog Controller

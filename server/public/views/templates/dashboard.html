@@ -21,7 +21,7 @@
             <h2>YOUR PROJECTS</h2>
             <md-card id="recent">
                 <h3 ng-repeat="userProject in uc.userService.userProjects">
-                    
+
                         <md-button ng-click="uc.showProject($event, $index)" layout-align="left">{{userProject.name}}</md-button>
                     </md-button>
                 </h3>
@@ -69,12 +69,12 @@
     <!-- DONUTS: -->
         <div id="dashdonut" layout="row" flex>
         <div layout="column" flex="15">
-            <h2>VIEW DOUGHNUT CHART</h2>
+            <h2>TARGET YOUR IMPACT, CUSTOMIZE YOUR VIEW</h2>
         <div>
             <h3>VIEW BY:
             </h3>
     <md-input-container>
-            
+
           <md-select ng-model="uc.viewBy" ng-change="uc.changeView()">
             <md-option value="project">Project</md-option>
             <md-option value="period">Period</md-option>
@@ -91,12 +91,12 @@
           </select> -->
           <div>
             <h3>WHICH ONE?</h3>
-            
+
           <md-select ng-show="uc.activeSelectorDonut == 'project'" ng-model="uc.donutParticular">
             <md-option ng-repeat="x in uc.donutResults" ng-value="x.project">{{x.project}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'period'" ng-model="uc.donutParticular">
-            <md-option ng-repeat="x in uc.donutResults" ng-value="x.period">{{x.period | date: "yyyy-MM"}}</md-option>
+            <md-option ng-repeat="x in uc.donutResults" ng-value="x.period">{{x.period | date: "MMM yyyy"}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelectorDonut == 'type'" ng-model="uc.donutParticular">
             <md-option ng-repeat="x in uc.donutResults" ng-value="x.type">{{x.type}}</md-option>
@@ -124,7 +124,7 @@
 
         </div>
 
-        <div flex>
+        <div flex id="donutChartContainer">
           <canvas id="donutChart" width="400" height="225"></canvas>
         </div>
         </div>
@@ -134,7 +134,7 @@
     <!-- BARS: -->
         <div id="dashbar" layout="row" flex>
             <div layout="column" flex="15">
-                <h2>VIEW BAR CHART</h2>
+                <h2>VIEW IMPACT BY CATEGORY OF USE</h2>
                 <div>
                     <h3>VIEW BY:
                     </h3>
@@ -149,7 +149,7 @@
             <md-option ng-repeat="x in uc.barResults" ng-value="x.project">{{x.project}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelector == 'period'" ng-model="uc.barParticular">
-            <md-option ng-repeat="x in uc.barResults" ng-value="x.period">{{x.period}}</md-option>
+            <md-option ng-repeat="x in uc.barResults" ng-value="x.period">{{x.period | date: "MMM yyyy"}}</md-option>
           </md-select>
           <md-select ng-show="uc.activeSelector == 'type'" ng-model="uc.barParticular">
             <md-option ng-repeat="x in uc.barResults" ng-value="x.type">{{x.type}}</md-option>
@@ -160,12 +160,12 @@
           </div>
           <md-button class="md-raised md-accent" ng-click="uc.submitBarQuery(uc.barBy, uc.barParticular)">View Chart</md-button>
         </div>
-        
 
 
-        <div flex>
+
+        <div flex id="barChartContainer">
           <canvas id="barChart" width="400" height="225"></canvas>
         </div>
-    </div> 
+    </div>
 
 </md-content>

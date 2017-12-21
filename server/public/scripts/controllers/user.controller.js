@@ -46,13 +46,14 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       for (var i = 0; i < vm.lineData.length; i += 1) {
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
-        sumsArray.push(sum);
+        sumsArray.push(Math.round(sum, 1));
         //console.log(sumsArray);
         month = $filter('date')(vm.lineData[i].period, 'MMM yy');
         //console.log(month);
         periodArray.push(month);
         // console.log(periodArray);
       }
+
       new Chart(document.getElementById("linechart"), {
         type: 'line',
         data: {
@@ -60,7 +61,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: sumsArray,
-            label: "CO2",
+            label: "Kgs of CO2",
             borderColor: "#3e95cd",
             fill: false
           }
@@ -69,7 +70,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
         options: {
           title: {
             display: true,
-            text: 'Carbon Footprint'
+            text: 'Carbon Footprint over Time'
           }
         }
       });
@@ -94,8 +95,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       targetEvent: ev,
       clickOutsideToClose: true
 
-    })
-  } //End modal function
+    });
+  }; //End modal function
 
   //Add new project modal.
   vm.newProject = function (ev, i) {
@@ -107,8 +108,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       targetEvent: ev,
       clickOutsideToClose: true
 
-    })
-  }
+    });
+  };
 
   vm.hide = function () {
     $mdDialog.hide();
@@ -160,15 +161,6 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       //ty Chrisco:
       vm.activeSelector = vm.barBy;
 
-      // if (vm.barBy == 'project') {
-      //   vm.activeSelector = 'project';
-      // } else if (vm.barBy == 'period') {
-      //   vm.activeSelector = 'period';
-      // } else if (vm.barBy == 'type') {
-      //   vm.activeSelector = 'type';
-      // } else if (vm.barBy == 'country') {
-      //   vm.activeSelector = 'country';
-      // }
     }).catch(function(err) {
       console.log(err);
     });
@@ -182,18 +174,30 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       console.log(response);
       var computedFp = UserService.computeFootprint(response.data[0]);
       var bars = [];
-      bars.push(computedFp.air);
-      bars.push(computedFp.truck);
-      bars.push(computedFp.sea);
-      bars.push(computedFp.freight_train);
-      bars.push(computedFp.plane);
-      bars.push(computedFp.car);
-      bars.push(computedFp.train);
-      bars.push(computedFp.hotel);
-      bars.push(computedFp.fuel);
-      bars.push(computedFp.grid);
-      bars.push(computedFp.propane);
+      bars.push(Math.round(computedFp.air,1));
+      bars.push(Math.round(computedFp.truck,1));
+      bars.push(Math.round(computedFp.sea,1));
+      bars.push(Math.round(computedFp.freight_train, 1));
+      bars.push(Math.round(computedFp.plane, 1));
+      bars.push(Math.round(computedFp.car, 1));
+      bars.push(Math.round(computedFp.train, 1));
+      bars.push(Math.round(computedFp.hotel, 1));
+      bars.push(Math.round(computedFp.fuel, 1));
+      bars.push(Math.round(computedFp.grid, 1));
+      bars.push(Math.round(computedFp.propane, 1));
+      var canvas = document.getElementById("barChart");
 
+      // if (chart1) {
+      //   chart1.destroy();
+      // } else if (chart2) {
+      //   chart2.destroy();
+      // } else if (chart3) {
+      //   chart3.destroy();
+      // } else if (chart4) {
+      //   chart4.destroy();
+      // } else if (chart5) {
+      //   chart5.destroy();
+      // }
       new Chart(document.getElementById("barChart"), {
         type: 'bar',
         data: {
@@ -201,7 +205,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: bars,
-            label: "CO2",
+            label: "Kgs of CO2",
             borderColor: "#3e95cd",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
             fill: false
@@ -294,7 +298,7 @@ vm.submitQuery = function(view, particular, slice) {
     }
 
     if (vm.sliceBy == 'Period') {
-      sanitizeByPeriod(response.data);
+      sanitizeByPeriod(response.data); 
     } else if (vm.sliceBy == 'Type') {
       sanitizeByType(response.data);
     } else if (vm.sliceBy == 'Country') {
@@ -308,9 +312,9 @@ vm.submitQuery = function(view, particular, slice) {
 };
 
 
-//THIS IS UGLY: all five functions should prob be consolidated into one, or at least four of them, excluding categories:
+var chart1, chart2, chart3, chart4, chart5;
+
 //call if they slice by PERIOD:
-//wait I don't know if this makes sense...shouldn't this be a line graph?:
 function sanitizeByPeriod(resp) {
   var allThings = resp;
   var cleanedThings = [];
@@ -335,24 +339,40 @@ function sanitizeByPeriod(resp) {
   //finally, sum up the columns to find total impact for each period:
   var totals = [], totals_period = [];
   for (var k=0; k<periods.length; k++) {
-    var p = periods[k];
+    var p = periods[k]; 
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
-    totals_period.push(p.period);
-    totals.push(total);
+    totals_period.push($filter('date')(p.period, 'MMM yy'));
+    totals.push(Math.round(total, 1));
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+
+  //well we don't need the following 2 declarations, and we get a weird error, but it does fix the hover bug!:
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+
+  chart1= new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'line',
     data: {
-      labels: totals_period,
+      labels: totals_period,  
       datasets: [{
         //make an array with the sum of all categories
         data: totals,
-        label: "CO2",
+        label: "Kgs of CO2",
         borderColor: "#3e95cd",
         fill: false
       }
@@ -361,7 +381,7 @@ function sanitizeByPeriod(resp) {
   options: {
     title: {
       display: true,
-      text: 'Carbon Footprint'
+      text: 'Carbon Footprint Over Time'
     }
   }
 });
@@ -398,16 +418,28 @@ function sanitizeByProject(resp) {
     var p = projects[k];
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
     totals_name.push(p.name);
-    totals.push(total);
+    totals.push(Math.round(total,1));
   }
   console.log(totals);
 
   //the issue here is their array of projects will be indefinitely long: how do we set data equal to the proper array? Oh i guess we can split "totals" into two arrays for data and for labels.
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart2= new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_name,
@@ -456,15 +488,27 @@ function sanitizeByType(resp) {
   for (var k=0; k<types.length; k++) {
     var t = types[k];
     var total = t.air + t.car + t.freight_train + t.fuel + t.grid + t.hotel + t.plane + t.propane + t.sea + t.train + t.truck;
-    totals.push(total);
+    totals.push(Math.round(total,1));
     totals_type.push(t.type_id);
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart3=new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_type,
@@ -512,15 +556,27 @@ function sanitizeByCountry(resp) {
   for (var k=0; k<countries.length; k++) {
     var t = countries[k];
     var total = t.air + t.car + t.freight_train + t.fuel + t.grid + t.hotel + t.plane + t.propane + t.sea + t.train + t.truck;
-    totals.push(total);
+    totals.push(Math.round(total,1));
     totals_country.push(t.country_id);
   }
   console.log(totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+  chart4 = new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: totals_country,
@@ -557,15 +613,28 @@ function sanitizeByCategory(resp) {
   var shipping = fp.air + fp.truck + fp.sea + fp.freight_train;
   var travel = fp.plane + fp.train + fp.car;
 
-  totals.push(living);
-  totals.push(shipping);
-  totals.push(travel);
+  totals.push(Math.round(living, 1));
+  totals.push(Math.round(shipping, 1));
+  totals.push(Math.round(travel, 1));
   console.log("totals: ", totals);
 
-  var canvas = document.getElementById("donutChart");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,1000,1000);
-  new Chart(document.getElementById("donutChart"), {
+  if (chart1) {
+    chart1.destroy();
+  } else if (chart2) {
+    chart2.destroy();
+  } else if (chart3) {
+    chart3.destroy();
+  } else if (chart4) {
+    chart4.destroy();
+  } else if (chart5) {
+    chart5.destroy();
+  }
+  var canvas = angular.element(document.getElementById("donutChart"));
+  canvas.remove();
+  var canvasContainer = angular.element(document.querySelector("#donutChartContainer"));
+  canvasContainer.append("<canvas id='donutChart' height=225 width=400></canvas>");
+
+  chart5 = new Chart(document.getElementById("donutChart").getContext("2d"), {
     type: 'doughnut',
     data: {
       labels: ["Living", "Travel", "Shipping"],
