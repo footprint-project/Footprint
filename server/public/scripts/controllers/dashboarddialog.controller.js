@@ -23,6 +23,7 @@ myApp.controller('DashboardDialogController', function ($http, UserService, csvS
 
     vm.getUserProjects();
 
+    
 
 
 
@@ -53,6 +54,10 @@ myApp.controller('DashboardDialogController', function ($http, UserService, csvS
       console.log(data);
       csvService.dataType = data;
     };
+
+    vm.hide = function() {
+      $mdDialog.hide();
+  }
 
 
 }); //End Dialog controller
