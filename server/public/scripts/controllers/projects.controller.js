@@ -1,4 +1,4 @@
-myApp.controller('ProjectController', function (UserService) {
+myApp.controller('ProjectController', function ($http, UserService, csvService, $mdDialog, $interval) {
     console.log('ProjectController created');
     var vm = this;
     vm.userService = UserService;
@@ -8,6 +8,7 @@ myApp.controller('ProjectController', function (UserService) {
     vm.selectedIndex = UserService.userProjects.selectedIndex;
     vm.clickedProject = UserService.clickedProject;
     vm.projectFootprints = [];
+    vm.userObj = UserService.userObj;
 
     //gets the footprints for selected project
     vm.getProjectFootprints = function (id) {
@@ -27,14 +28,14 @@ myApp.controller('ProjectController', function (UserService) {
     // click function for selecting project to view
     vm.changeSelected = function(){
         vm.clickedProject = UserService.clickedProject;
-    }
+    };
 
     //function for displaying selected project
     vm.showSelected = function() {
         console.log('show selected', vm.selectedIndex);
         vm.changeSelected();
         vm.getProjectFootprints(vm.clickedProject.id);
-    }
+    };
     vm.showSelected();
 
     //this is for when the project is selected from projects page instead of from dashboard
@@ -45,5 +46,44 @@ myApp.controller('ProjectController', function (UserService) {
         vm.getProjectFootprints(vm.clickedProject.id);
         //window.location.reload(i);
     };
-    
+
+    //Opens edit dialog box.
+    vm.editModal = function(event, index) {
+        vm.userService.userObj.selectedIndex = index;
+        console.log('open dialog', index);
+
+        $mdDialog.show({
+            controller: 'projecteditdcontroller as pec',
+            templateUrl: '/views/templates/projecteditdialog.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true
+        });
+    };//End edit dialog box function.
+
+    vm.deleteModal = function (event, index) {
+        vm.userService.userObj.selectedIndex = index;
+        console.log('Delete controller open');
+
+        $mdDialog.show({
+            controller: 'ProjectController as pc',
+            templateUrl: '/views/templates/deleteconfirmdialog.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true
+        });
+    };
+
+    vm.hide = function(){
+        $mdDialog.hide();
+    };
+
+    vm.deleteFootprint = function () {
+        var index = vm.userObj.selectedIndex;
+        console.log(index);
+        var fp = UserService.selectedProjectFootprints[index];
+        console.log(fp);
+
+    };
+
 });
