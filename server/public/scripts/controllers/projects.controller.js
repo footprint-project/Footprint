@@ -99,8 +99,16 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
 
       $mdDialog.show(confirm).then(function() {
         console.log('whatup');
+        console.log(vm.projectFootprints);
         $http.delete('/member/delete/' + x).then(function(response) {
           console.log(response);
+          for (var i=0; i<vm.projectFootprints.length; i++) {
+            var fp = vm.projectFootprints[i];
+            if (fp.id == x) {
+              vm.projectFootprints.splice(i, 1);
+            }
+          }
+          console.log(vm.projectFootprints);
         }).catch(function(err) {
           console.log(err);
         });

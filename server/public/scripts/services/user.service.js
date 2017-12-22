@@ -113,7 +113,7 @@ self.adminGetUsers = function () {
     console.log(response.data);
     self.users = response.data;
     return self.users;
-    console.log('users for admin', self.users);
+    // console.log('users for admin', self.users);
   }).catch(function (err) {
     console.log('problem getting all users for admin', err);
   });
