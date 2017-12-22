@@ -302,15 +302,21 @@ a {
 }
 
 .blurb {
-  height: auto;
-  width: 100px;
+  height: 100px;
+  width: auto;
   align-content: middle;
   vertical-align: middle;
   text-align: center;
   text-justify: inter-word;
+  padding-bottom: 10px;
 }
 #nonmetric {
 
 
 color: #80cbc4;
+}
+
+#tryit {
+
+  padding: 10px;
 }
