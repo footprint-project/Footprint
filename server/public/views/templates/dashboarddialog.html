@@ -1,0 +1,79 @@
+<!-- <md-dialog ng-controller="DashboardDialogController"> -->
+<md-dialog aria-label="Upload CSV">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload your month's CSV</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <md-input-container>
+                <md-select ng-model="user.project">
+                  <md-option ng-repeat="project in ddc.userProjects" ng-value="project.name">{{project.name}}</md-option>
+                </md-select>
+                <!-- <input ng-model="user.projectName"> -->
+            </md-input-container>
+
+
+        </div>
+
+        <div layout-gt-sm="row">
+
+
+            <div>
+                <md-input-container>
+                    <label>Month</label>
+                    <md-select class="select" ng-model="user.selectedMonth" md-selected-text="user.selectedMonth">
+                        <md-option>
+                            <!-- <em>None</em> -->
+                        </md-option>
+                        <md-option ng-repeat="month in ddc.months">
+                            {{month}}
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Year</label>
+
+                    <md-select class="select" ng-model="user.selectedYear" md-selected-text="user.selectedYear" ng-value="">
+                        <md-option>
+
+                        </md-option>
+                        <md-option ng-repeat="year in ddc.years">
+                            {{year}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <!-- <div id="projectcheckboxes">
+
+                    <h3>PROJECT TYPE</h3>
+                    <md-checkbox ng-model="active" ng-repeat="item in ddc.items" ng-change="ddc.change(item, active)"> {{item}}</md-checkbox>
+
+                    <pre ng-bind="lst | json">
+                      </pre>
+                </div> -->
+                <div>
+                    <md-radio-group ng-model="data.type">
+                        <md-radio-button value="Metric" class="md-primary"> Metric </md-radio-button>
+                        <md-radio-button value="English"> Non-Metric </md-radio-button>
+                    </md-radio-group>
+                    </form>
+                </div>
+                <div>
+                    <div class="upload-btn-wrapper">
+                        <md-button class="md-raised md-accent" cursor:pointer>Upload CSV
+                            <md-icon class="material-icons">attach_file</md-icon>
+                        </md-button>
+                        <input type="file" id="file" name="myfile">
+
+                    </div>
+                    <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
+                    <a href="./assets/footprint_template_real_nonmetric.csv" download>Download Non-Metric CSV</a>
+                </div>
+                <div id="homeSubmit">
+                    <md-button class="md-primary md-raised" ng-click="ddc.getUserData(user); ddc.uploadFile(); ddc.dataType(data)">Submit Data</md-button>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

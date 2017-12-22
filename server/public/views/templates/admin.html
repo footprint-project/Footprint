@@ -1,0 +1,20 @@
+<div ng-include="'views/partials/nav.html'"></div>
+<div layout="row" layout-align="center center">
+<table>
+    <tr>
+        <!-- will add footprint in a moment -->
+        <th>ORGANIZATION</th>
+        <th>EMAIL</th>
+        <th>NAME</th>
+        <th>POSITION</th>
+        <th>Total Kg of CO2</th>
+    </tr>
+    <tr ng-repeat="user in ac.computedFps">
+        <td>{{user.organization}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.position}}</td>
+        <td>{{user.total}}</td>
+    </tr>
+</table>
+</div>

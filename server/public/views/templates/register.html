@@ -1,0 +1,54 @@
+<div  id="registerForm"class="container">
+  <div layout-align="start start" class="navigateback">
+    <md-button  href="/#/user">GO BACK</md-button>
+    <span flex></span>
+</div>
+  <h1 class="lead">REGISTER FOR AN ACCOUNT</h1>
+  <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
+  <md-content layout-padding>
+    <form>
+    <div layout="row" layout-align="center center">
+    <div>
+      <md-input-container>
+        <label for="email">Email</label>
+        <input type="text" ng-model="lc.user.username" required/>
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label for="password">Password</label>
+        <input type="password" ng-model="lc.user.password" required/>
+      </md-input-container>
+    </div>
+    <div>
+    <md-input-container>
+      <label for="organization">Organization Name</label>
+      <input type="organization" ng-model="lc.user.organization" required/>
+    </md-input-container>
+    
+    </div>
+    <div class="errors" ng-messages="myForm.favoriteColor.$error">
+      <div ng-message="required">Required</div>
+    </div>
+    <div>
+    <md-input-container>
+      <label for="Name">Name</label>
+      <input type="name" ng-model="lc.user.name" />
+    </md-input-container>
+    </div>
+    <div>
+    <md-input-container>
+      <label for="Position">Position</label>
+      <input type="position" ng-model="lc.user.position" />
+    </md-input-container>
+    </div>
+    </form>
+    <div>
+      
+    <md-button class="md-raised md-primary" type="submit" name="submit" value="submit" ng-click="lc.registerUser()">Register</md-button>
+    
+    </div>
+  
+</md-content>
+</div>
+</div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Footprint</title>
+        <link rel="stylesheet" href="styles/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script type="text/javascript" src="vendors/angular/angular.js"></script>
+        <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="vendors/angular-material.min.css">
+        <script src="vendors/angular-material.min.js" charset="utf-8"></script>
+        <script src="vendors/angular-animate.min.js" charset="utf-8"></script>
+        <script src="vendors/angular-aria.min.js" charset="utf-8"></script>
+        <script src="vendors/angular-messages.min.js" charset="utf-8"></script>
+        <script src="vendors/ng-file-upload.js" charset="utf-8"></script>
+        <script src="vendors/ng-file-upload-shim.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="scripts/client.js"></script>
+        <script type="text/javascript" src="scripts/controllers/info.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/user.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/dashboarddialog.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/projects.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/projectcontroller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/admin.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/projectedit.controller.js"></script>
+
+        <!-- <script type="text/javascript" src="scripts/controllers/upload.controller.js"></script> -->
+        <script type="text/javascript" src="scripts/services/user.service.js"></script>
+        <script type="text/javascript" src="scripts/services/donuts.js"></script>
+
+        <script src="scripts/services/csv_service.js" charset="utf-8"></script>
+        <!-- <script type="text/javascript" src="scripts/services/upload.service.js"></script> -->
+    </head>
+
+    <body ng-app="myApp">
+        <header ng-include="'/views/partials/header.html'"></header>
+
+        <!-- <div ng-include="'views/partials/nav.html'"></div> -->
+        <main ng-view>
+
+        </main>
+
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<div ng-include="'views/partials/nav.html'"></div>
+
+
+<div layout="row" layout-align="start start" class="navigateback">
+<md-button  href="/#/user">BACK TO DASHBOARD</md-button><span flex></span>
+
+  
+
+</div>
+
+<div layout="row" layout-align="center center">
+<h1 id="projectheader">Currently viewing: {{pc.clickedProject.name}}</h1>
+</div>
+
+<div layout="row" id="projects">
+
+<div flex="70">
+<!-- <div flex="60" layout="row" layout-align="center center"> -->
+    <table id="footprintsTable">
+        <h2>UPLOADED PERIODS</h2>
+        <tr>
+            <!-- will add footprint in a moment -->
+            <th>PERIOD</th>
+            <th>EDIT</th>
+            <th>DELETE</th>
+            
+        </tr>
+        <tr ng-repeat="projectFootprint in pc.projectFootprints">
+            <td>{{projectFootprint.period | date: "MMM yyyy"}}</td>
+            <td><md-button class="md-raised md-primary" ng-click="pc.editModal($event, $index)">Edit</md-button></td>
+            <td>
+                <md-button class="md-raised md-warn" ng-click="pc.deleteModal($event, $index)">Delete</md-button>
+            </td>
+           
+        </tr>
+    </table>
+</div>
+<div flex="30">
+    <h2>YOUR PROJECTS</h2>
+
+    <md-card id="recent">
+        <p>View project uploads</p>
+        <h3 ng-repeat="userProject in pc.userProjects">
+
+            <md-button  ng-click="pc.showAnotherProject($event, $index)" layout-align="left">{{userProject.name}}</md-button>
+
+        </h3>
+        <!-- {{pc.projectFootprints}} -->
+    </md-card>
+</div>
+<!-- </div> -->
+
+</div>
+

@@ -1,0 +1,27 @@
+
+
+<md-nav-bar md-selected-nav-item="currentNavItem">
+
+
+    <span flex></span>
+
+    <h2 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
+    <form ng-submit="lc.login()">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" ng-model="lc.user.username" />
+        <!-- </div>
+        <div> -->
+            <label for="password">Password:</label>
+            <input type="password" ng-model="lc.user.password" />
+        <!-- </div>
+        <div> -->
+            <md-button class="md-raised md-primary" type="submit" name="submit" value="Log In">Log In</md-button>
+        
+            <md-button class="md-raised md-primary" href="#register">Register</a></md-button>
+        
+    </form>
+
+
+
+</md-nav-bar>
