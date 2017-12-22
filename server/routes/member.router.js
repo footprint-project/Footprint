@@ -12,6 +12,52 @@ var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "S
 var months = ['January', "February", 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
+router.delete('/delete/:id', function(req, res) {
+  console.log(req.params.id);
+
+  pool.connect(function(err, db, done) {
+    if(err) {
+      console.log('Error connecting', err);
+      res.sendStatus(500);
+    } else {
+      var queryText = 'DELETE FROM "shipping" WHERE "footprint_id" = $1;';
+
+      db.query(queryText, [req.params.id], function (errorMakingQuery, result) {
+        if (errorMakingQuery) {
+          console.log('Error with country GET', errorMakingQuery);
+        } else {
+          // console.log(result.rows[0]);
+          queryText = 'DELETE FROM "living" WHERE "footprint_id" = $1;';
+          db.query(queryText, [req.params.id], function (err, result) {
+            done();
+            if (err) {
+              console.log(err);
+            } else {
+
+              queryText = 'DELETE FROM "travel" WHERE "footprint_id" = $1;';
+              db.query(queryText, [req.params.id], function (err, result) {
+                if (err) {
+                  console.log(err);
+                  res.sendStatus(500);
+                } else {
+                  queryText = 'DELETE FROM "footprints" WHERE "id" = $1;';
+                  db.query(queryText, [req.params.id], function(err, result) {
+                    done();
+                    res.sendStatus(201);
+
+                  });
+
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+
+});
+
 router.get('/countries', function (req, res) {
   console.log('Get Countries');
   pool.connect(function (err, db, done) {

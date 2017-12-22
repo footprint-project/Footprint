@@ -4,8 +4,6 @@
 <div layout="row" layout-align="start start">
 <md-button href="/#/user">BACK TO DASHBOARD</md-button><span flex></span>
 
-  
-
 </div>
 
 <div layout="row" layout-align="center center">
@@ -23,15 +21,15 @@
             <th>PERIOD</th>
             <th>EDIT</th>
             <th>DELETE</th>
-            
+
         </tr>
         <tr ng-repeat="projectFootprint in pc.projectFootprints">
             <td>{{projectFootprint.period | date: "yyyy-MM"}}</td>
             <td><md-button class="md-raised md-primary">Edit</md-button> </td>
             <td>
-                <md-button class="md-raised md-warn">Delete</md-button>
+                <md-button class="md-raised md-warn ng-click=" ng-click="pc.deleteThis($event, projectFootprint.id)">Delete</md-button>
             </td>
-           
+
         </tr>
     </table>
 </div>
@@ -52,4 +50,3 @@
 <!-- </div> -->
 
 </div>
-

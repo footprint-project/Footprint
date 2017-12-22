@@ -61,28 +61,52 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
         });
     };//End edit dialog box function.
 
-    vm.deleteModal = function (event, index) {
-        vm.userService.userObj.selectedIndex = index;
-        console.log('Delete controller open');
-
-        $mdDialog.show({
-            controller: 'ProjectController as pc',
-            templateUrl: '/views/templates/deleteconfirmdialog.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            clickOutsideToClose: true
-        });
-    };
+    // vm.deleteModal = function (event, index) {
+    //     vm.userService.userObj.selectedIndex = index;
+    //     console.log('Delete controller open');
+    //
+    //     $mdDialog.show({
+    //         controller: 'ProjectController as pc',
+    //         templateUrl: '/views/templates/deleteconfirmdialog.html',
+    //         parent: angular.element(document.body),
+    //         targetEvent: event,
+    //         clickOutsideToClose: true
+    //     });
+    // };
 
     vm.hide = function(){
         $mdDialog.hide();
     };
 
-    vm.deleteFootprint = function () {
-        var index = vm.userObj.selectedIndex;
-        console.log(index);
-        var fp = UserService.selectedProjectFootprints[index];
-        console.log(fp);
+    // vm.deleteFootprint = function () {
+    //     var index = vm.userObj.selectedIndex;
+    //     console.log(index);
+    //     var fp = UserService.selectedProjectFootprints[index];
+    //     console.log(fp);
+    //
+    // };
+
+
+    vm.deleteThis = function(ev, x) {
+      console.log(x);
+
+      var confirm = $mdDialog.confirm()
+      .clickOutsideToClose(true)
+      .title("Are you sure?")
+      .targetEvent(ev)
+      .ok('Delete it!')
+      .cancel("No, go back!");
+
+      $mdDialog.show(confirm).then(function() {
+        console.log('whatup');
+        $http.delete('/member/delete/' + x).then(function(response) {
+          console.log(response);
+        }).catch(function(err) {
+          console.log(err);
+        });
+      }, function() {
+        console.log('hi there');
+      });
 
     };
 
