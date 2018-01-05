@@ -78,8 +78,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
       console.log('metric', csv.organization)
     }
 
-    // csv.project = csvService.projectName.name;
-
+    
     vm.valuesToArray(csv);
 
     vm.trialData = UserService.computeTrialFootprint(csv);
