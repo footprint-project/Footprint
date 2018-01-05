@@ -353,10 +353,10 @@ INSERT INTO "countries" ("name") VALUES ('Wallis and Futuna');
 -- The following is dummy data, please use in order to demo the application. 
 -- All User passwords are what is in the following quotes, "1"
 
-INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('admin@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Footprint', 'Will Heegaard', 'CEO and Founder');
-INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('user2@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Caring People', 'Carla Carlson', 'Field Supervisor');
-INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('user3@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'House Builders', 'Mike Michealson', 'Coordinator');
-INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('user4@helpful.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Making Waves', 'Sam Samuelson', 'Accountant');
+INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('will@footprintproject.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Footprint', 'Will Heegaard', 'CEO and Founder');
+INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('mark@arc.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'American Refugee Committee', 'Mark Johnson', 'Monitoring Evaluation Coordinator');
+INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('mara@housebuilders.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'House Builders', 'Mara Michealson', 'Coordinator');
+INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('sally@makingwaves.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Making Waves', 'Sally Samuelson', 'Accountant');
 
 INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Pure Water', 2, 1);
 INSERT INTO "projects" ("name", "country_id", "user_id") VALUES ('Healthy People', 21,4);
