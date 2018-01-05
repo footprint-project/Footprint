@@ -249,10 +249,5 @@
       csvService.dataType = data;
       vm.hide = true;
     };
-    // vm.ngHideFunction = function(){
-    //   console.log('NG HIDE');
-    //   return true;
-    // }
-
 
 }); //End login controller
