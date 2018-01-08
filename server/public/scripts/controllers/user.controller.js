@@ -13,6 +13,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
 
 
 
+
 // // Bar chart
 //   new Chart(document.getElementById("bar-chart"), {
 //     type: 'bar',
@@ -174,6 +175,8 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       console.log(response);
       var computedFp = UserService.computeFootprint(response.data[0]);
       var bars = [];
+
+      //Great ex of a time when u would epect there to be a built-ni fix:
       bars.push(computedFp.air);
       bars.push(computedFp.truck);
       bars.push(computedFp.sea);
