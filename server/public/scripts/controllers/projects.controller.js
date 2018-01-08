@@ -28,14 +28,14 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
     // click function for selecting project to view
     vm.changeSelected = function(){
         vm.clickedProject = UserService.clickedProject;
-    }
+    };
 
     //function for displaying selected project
     vm.showSelected = function() {
         console.log('show selected', vm.selectedIndex);
         vm.changeSelected();
         vm.getProjectFootprints(vm.clickedProject.id);
-    }
+    };
     vm.showSelected();
 
     //this is for when the project is selected from projects page instead of from dashboard
@@ -58,8 +58,8 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
             parent: angular.element(document.body),
             targetEvent: event,
             clickOutsideToClose: true
-        })
-    }//End edit dialog box function.
+        });
+    };//End edit dialog box function.
 
     vm.deleteModal = function (event, index) {
         vm.userService.userObj.selectedIndex = index;
@@ -71,16 +71,51 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
             parent: angular.element(document.body),
             targetEvent: event,
             clickOutsideToClose: true
-        })
-    }
+        });
+    };
 
     vm.hide = function(){
         $mdDialog.hide();
-    }
+    };
 
-    vm.deleteFootprint = function () {
-        var index = vm.userObj.selectedIndex;
-        
-    }
+    // vm.deleteFootprint = function () {
+    //     var index = vm.userObj.selectedIndex;
+    //     console.log(index);
+    //     var fp = UserService.selectedProjectFootprints[index];
+    //     console.log(fp);
+    //
+    // };
+
+
+    vm.deleteThis = function(ev, x) {
+      console.log(x);
+
+      var confirm = $mdDialog.confirm()
+      .clickOutsideToClose(true)
+      .title("Are you sure?")
+      .targetEvent(ev)
+      .ok('Delete it!')
+      .cancel("No, go back!");
+
+      $mdDialog.show(confirm).then(function() {
+        console.log('whatup');
+        console.log(vm.projectFootprints);
+        $http.delete('/member/delete/' + x).then(function(response) {
+          console.log(response);
+          for (var i=0; i<vm.projectFootprints.length; i++) {
+            var fp = vm.projectFootprints[i];
+            if (fp.id == x) {
+              vm.projectFootprints.splice(i, 1);
+            }
+          }
+          console.log(vm.projectFootprints);
+        }).catch(function(err) {
+          console.log(err);
+        });
+      }, function() {
+        console.log('hi there');
+      });
+
+    };
 
 });

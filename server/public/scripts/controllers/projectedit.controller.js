@@ -32,5 +32,5 @@ myApp.controller('projecteditdcontroller', function ($http, UserService, csvServ
     vm.hide = function() {
         $mdDialog.hide();
     }
-    
+
 });//This is the end of the project edit controller

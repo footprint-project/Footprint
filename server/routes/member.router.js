@@ -12,6 +12,52 @@ var types = ['Health', "Food/Nutrition", "Education", 'Non-Food Items (NFI)', "S
 var months = ['January', "February", 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
+router.delete('/delete/:id', function(req, res) {
+  console.log(req.params.id);
+
+  pool.connect(function(err, db, done) {
+    if(err) {
+      console.log('Error connecting', err);
+      res.sendStatus(500);
+    } else {
+      var queryText = 'DELETE FROM "shipping" WHERE "footprint_id" = $1;';
+
+      db.query(queryText, [req.params.id], function (errorMakingQuery, result) {
+        if (errorMakingQuery) {
+          console.log('Error with country GET', errorMakingQuery);
+        } else {
+          // console.log(result.rows[0]);
+          queryText = 'DELETE FROM "living" WHERE "footprint_id" = $1;';
+          db.query(queryText, [req.params.id], function (err, result) {
+            done();
+            if (err) {
+              console.log(err);
+            } else {
+
+              queryText = 'DELETE FROM "travel" WHERE "footprint_id" = $1;';
+              db.query(queryText, [req.params.id], function (err, result) {
+                if (err) {
+                  console.log(err);
+                  res.sendStatus(500);
+                } else {
+                  queryText = 'DELETE FROM "footprints" WHERE "id" = $1;';
+                  db.query(queryText, [req.params.id], function(err, result) {
+                    done();
+                    res.sendStatus(201);
+
+                  });
+
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+
+});
+
 router.get('/countries', function (req, res) {
   console.log('Get Countries');
   pool.connect(function (err, db, done) {
@@ -365,7 +411,7 @@ router.post('/donut', function(req, res) {
       console.log('Error connecting', err);
       res.sendStatus(500);
     } else {
-      var view, particular, slice, queryText, array;
+      var view, particular, slice, queryText, array, blingArray;
 
       if (req.body.view == 'type') {
         view = '"types"';
@@ -386,7 +432,6 @@ router.post('/donut', function(req, res) {
       }
 
       particular = req.body.particular;
-      blingArray = [req.user.id, particular];
 
       queryText = 'SELECT "period", "countries"."id" as country_id, "projects"."name", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
       ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE "users"."id" = $1 AND ' + view + '."name" = $2;';
@@ -406,6 +451,13 @@ router.post('/donut', function(req, res) {
         blingArray = [req.user.id, 10000];
         queryText = 'SELECT "period", "countries"."id" as country_id, "projects"."name", "project_type"."type_id", SUM("hotel") OVER (PARTITION BY ' + slice + ') as hotel, SUM("fuel") OVER (PARTITION BY ' + slice + ') as fuel, SUM("propane") OVER (PARTITION BY ' + slice +') as propane, SUM("grid") OVER (PARTITION BY ' + slice + ') as grid, SUM("air") OVER (PARTITION BY ' + slice + ') as air, SUM("sea") OVER (PARTITION BY ' + slice + ') as sea, SUM("truck") OVER (PARTITION BY ' + slice + ') as truck, SUM("freight_train") OVER (PARTITION BY ' + slice + ') as freight_train, SUM("car") OVER (PARTITION BY ' + slice + ') as car, SUM("plane") OVER (PARTITION BY ' + slice + ') as plane, SUM("train") OVER (PARTITION BY ' + slice +
         ') as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE (("users"."id" = $1) OR ("users"."id" = $2)) AND "period" =' + particularPeriod + ';' ;
+      }
+
+      if (req.body.view == 'period' && req.body.slice == 'Category') {
+        var particularPeriod2 = '\'' + req.body.particular + '\'';
+        blingArray= [req.user.id, 10000];
+        queryText = 'SELECT SUM("hotel") as hotel, SUM("fuel") as fuel, SUM("grid") as grid, SUM("propane") as propane, SUM("air") as air, SUM("sea") as sea, SUM("truck") as truck, SUM("freight_train") as freight_train, SUM("car") as car, SUM("plane") as plane, SUM("train") as train FROM "countries" JOIN "projects" ON "countries"."id" = "projects"."country_id" JOIN "project_type" ON "projects"."id" = "project_type"."project_id" JOIN "types" ON "types"."id" = "project_type"."type_id" JOIN "users" ON "users"."id" = "projects"."user_id" JOIN "footprints" ON "projects"."id" = "footprints"."project_id" JOIN "living" ON "footprints"."id" = "living"."footprint_id" JOIN "shipping" ON "footprints"."id" = "shipping"."footprint_id" JOIN "travel" ON "footprints"."id"= "travel"."footprint_id" WHERE (("users"."id" = $1) OR ("users"."id" = $2)) AND "period" =' + particularPeriod2 + ';' ;
+
       }
 
       db.query(queryText, blingArray, function(err, result){
