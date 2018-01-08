@@ -29,4 +29,8 @@ myApp.controller('projecteditdcontroller', function ($http, UserService, csvServ
         console.log(result);
     };  //End CSV upload
 
+    vm.hide = function() {
+        $mdDialog.hide();
+    }
+
 });//This is the end of the project edit controller

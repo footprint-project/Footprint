@@ -61,18 +61,18 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
         });
     };//End edit dialog box function.
 
-    // vm.deleteModal = function (event, index) {
-    //     vm.userService.userObj.selectedIndex = index;
-    //     console.log('Delete controller open');
-    //
-    //     $mdDialog.show({
-    //         controller: 'ProjectController as pc',
-    //         templateUrl: '/views/templates/deleteconfirmdialog.html',
-    //         parent: angular.element(document.body),
-    //         targetEvent: event,
-    //         clickOutsideToClose: true
-    //     });
-    // };
+    vm.deleteModal = function (event, index) {
+        vm.userService.userObj.selectedIndex = index;
+        console.log('Delete controller open');
+
+        $mdDialog.show({
+            controller: 'ProjectController as pc',
+            templateUrl: '/views/templates/deleteconfirmdialog.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true
+        });
+    };
 
     vm.hide = function(){
         $mdDialog.hide();

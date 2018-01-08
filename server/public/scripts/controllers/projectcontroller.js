@@ -32,4 +32,8 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
         
     };
 
+    vm.hide = function() {
+        $mdDialog.hide();
+    }
+
 });//End Project Dialog Controller

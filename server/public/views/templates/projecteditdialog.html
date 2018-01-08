@@ -1,0 +1,27 @@
+<md-dialog aria-label="Upload CSV">
+    <md-toolbar>
+            <div class="md-toolbar-tools">
+        <h1>Upload CSV</h1>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="pec.hide()">
+            <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+    </div>
+    </md-toolbar>
+    <h2>Upload a new CSV for the month of {{pec.projects.period | date: "yyyy-MM"}}</h2>
+    <div class="upload-btn-wrapper">
+        <md-button class="md-raised" cursor:pointer>Upload CSV
+            <md-icon class="material-icons">attach_file</md-icon>
+        </md-button>
+        <input type="file" id="file" name="myfile">
+
+    </div>
+    <div>
+        <a href="./assets/footprint_template_real.csv" download>Download Metric CSV</a>
+        <a href="./assets/footprint_template_real_nonmetric.csv" download>Download Non-Metric CSV</a>
+    </div>
+    <div id="homeSubmit">
+        <md-button class="md-primary md-raised" ng-click="pec.submitData(); pec.hide()">Submit Data</md-button>
+    </div>
+
+</md-dialog>

@@ -270,7 +270,7 @@ router.get('/project_footprints/:projectId', function (req, res) {
       res.sendStatus(500);
     }
     else {
-      var queryText = 'SELECT * FROM "footprints" WHERE project_id = $1';
+      var queryText = 'SELECT * FROM "footprints" WHERE project_id = $1 ORDER BY period';
       db.query(queryText,[projectId], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
@@ -573,7 +573,49 @@ router.get('/userprojects/:userId', function (req, res) {
   });
 });
 
-
-
+router.put('/project_edit', function (req, res) {
+  // console.log(req.body);
+  var footprint = req.body;
+  var project_id = req.body.projectInfo.project_id;
+  var date = req.body.projectInfo.period;
+  var updatedDate = date.slice(0, 10);
+  console.log(updatedDate);
+  // console.log('Footprint data:', footprint, 'ProjectID:', project_id);
+  pool.connect(function (err, db, done) {
+    var queryText = 'SELECT "id" FROM "footprints" WHERE "project_id" = $1 AND "period" = $2;';
+    db.query(queryText, [project_id, updatedDate], function (err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        var footprintid = result.rows[0].id;
+        queryText = 'UPDATE "shipping" SET "air" = $1, "truck"= $2 , "sea" = $3, "freight_train" = $4 WHERE "footprint_id" = $5;';
+        db.query(queryText, [footprint.air, footprint.sea, footprint.truck, footprint.train_shipping, footprintid], function (err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            queryText = 'UPDATE "travel" SET "plane" = $1, "car"= $2, "train" = $3 WHERE "footprint_id" = $4;';
+            db.query(queryText, [footprint.plane, footprint.car, footprint.train_travel, footprintid], function (err, result) {
+              if (err) {
+                console.log(err);
+              } else {
+                queryText = 'UPDATE "living" SET "hotel" = $1, "fuel" = $2, "grid" = $3, "propane" = $4 WHERE "footprint_id" = $5;';
+                db.query(queryText, [footprint.hotel, footprint.grid, footprint.fuel, footprint.propane, footprintid], function (err, result) {
+                  done();
+                  if (err) {
+                    console.log(err);
+                    res.sendStatus(501);
+                  } else {
+                    res.sendStatus(201);
+                  }
+                });
+              }
+            });
+          }
+        });
+        // res.sendStatus(201);
+      }
+    });
+  });
+});
 
 module.exports = router;
