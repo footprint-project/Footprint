@@ -48,7 +48,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(Math.round(sum, 1));
         //console.log(sumsArray);
-        month = $filter('date')(vm.lineData[i].period, 'MMM yy');
+        month = $filter('date')(vm.lineData[i].period, 'MMM yyyy');
         //console.log(month);
         periodArray.push(month);
         // console.log(periodArray);
@@ -341,7 +341,7 @@ function sanitizeByPeriod(resp) {
   for (var k=0; k<periods.length; k++) {
     var p = periods[k]; 
     var total = p.air + p.car + p.freight_train + p.fuel + p.grid + p.hotel + p.plane + p.propane + p.sea + p.train + p.truck;
-    totals_period.push($filter('date')(p.period, 'MMM yy'));
+    totals_period.push($filter('date')(p.period, 'MMM yyyy'));
     totals.push(Math.round(total, 1));
   }
   console.log(totals);
