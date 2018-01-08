@@ -17,6 +17,7 @@
     vm.selected = [];
     vm.userFootprint = csvService.userFootprint;
     vm.lineData = [];
+    vm.hide = false;
 
     //This function monitors the checkboxes on the DOM.
   //   vm.change = function (item, active) {
@@ -58,7 +59,7 @@
           }
         }
       });
-
+   
    };
 
 //This function carries out the CSV upload.
@@ -246,8 +247,7 @@
     vm.dataType = function(data) {
       console.log(data);
       csvService.dataType = data;
+      vm.hide = true;
     };
-
-
 
 }); //End login controller
