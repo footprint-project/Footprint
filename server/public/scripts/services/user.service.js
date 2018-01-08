@@ -14,7 +14,7 @@ myApp.service('UserService', function ($http, $location){
   self.users = [];
   self.userObj = { selectedIndex: 0 };
   self.selectedProjectFootprints = [];
-  
+
 
 
 
@@ -228,6 +228,7 @@ self.adminGetUsers = function () {
    console.log(project);
    $http.post('/member/newproject', project).then(function(response) {
      console.log(response);
+     self.getProjects();
    }).catch(function(error) {
      console.log(error);
    });
