@@ -10,6 +10,8 @@
 <h1 id="projectheader">Currently viewing: {{pc.clickedProject.name}}</h1>
 </div>
 
+{{pc.clickedProject}}
+
 <div layout="row" id="projects">
 
 <div flex="70">
@@ -29,7 +31,7 @@
             <td>
 
                 <md-button class="md-raised md-warn ng-click=" ng-click="pc.deleteThis($event, projectFootprint.id)">Delete</md-button>
-//              <md-button class="md-raised md-warn" ng-click="pc.deleteModal($event, $index)">Delete</md-button>
+<!-- //              <md-button class="md-raised md-warn" ng-click="pc.deleteModal($event, $index)">Delete</md-button> -->
 
             </td>
 
