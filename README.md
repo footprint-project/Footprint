@@ -25,8 +25,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Link to software that is required to install the app (e.g. node).
-
 - [Node.js](https://nodejs.org/en/)
 
 ### Installing
@@ -36,15 +34,20 @@ Create database called "project-footprint":
 ![footprint_database](https://user-images.githubusercontent.com/29472568/33998428-0db2bf72-e0ad-11e7-850d-934cda2397df.png)
 
 Create SQL database tables:
-see file datasetup.sql for queries.
+See file datasetup.sql for queries.
+This file also contains sample data.
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+Home Page Preview
+![home_page](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/publis/images/homepage.png)
+
+Sample Modal Preview
+![sample_modal](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/publis/images/sample_modal.png)
 
 ## Documentation
 
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
+[user_orientation_document](https://docs.google.com/document/d/1Nf_hs8h83gzrjxEluDcDgb5RvnCmyt_C-7dLo2MXqXY/edit?usp=sharing)
 
 ### Completed Features
 
@@ -52,16 +55,6 @@ High level list of items completed.
 
 - [ ] CSV Upload
 - [ ] Charts for user data
-
-### Next Steps
-
-Features that you would like to add at some point in the future.
-
-- [ ] Feature c
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Authors
 
