@@ -347,13 +347,11 @@ INSERT INTO "countries" ("name") VALUES ('U.S. Minor Outlying Islands');
 INSERT INTO "countries" ("name") VALUES ('Vanuatu');
 INSERT INTO "countries" ("name") VALUES ('Wallis and Futuna');
 
-
-
+INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('will@footprintproject.org','$2a$10$rIu3wsOUycXc9Jn1Jp8ZfeZsJhYvQ4XcsUKL5n/xhw6GUSOI/betC', 'Footprint', 'Will Heegaard', 'CEO and Founder');
 
 -- The following is dummy data, please use in order to demo the application. 
 -- All User passwords are what is in the following quotes, "1"
 
-INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('will@footprintproject.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Footprint', 'Will Heegaard', 'CEO and Founder');
 INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('mark@arc.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'American Refugee Committee', 'Mark Johnson', 'Monitoring Evaluation Coordinator');
 INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('mara@housebuilders.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'House Builders', 'Mara Michealson', 'Coordinator');
 INSERT INTO "users" ("username", "password", "organization", "name", "position") VALUES ('sally@makingwaves.org','$2a$10$ZbLZG3j66euD1LQY2dRx0ef/lBG/z8OgJa.EVKu.fuZDJOvKbZeje', 'Making Waves', 'Sally Samuelson', 'Accountant');
