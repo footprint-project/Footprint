@@ -183,11 +183,12 @@ float: center;
 
 #recent {
   min-height: 400px;
-  max-height: 600px;
+  height: auto;
   max-width: 600px;
   background-color: lightgray;
   text-transform: uppercase;
-  padding-left: 20px
+  padding-left: 20px;
+  background-color: #80cbc4;
   
 }
 
@@ -273,10 +274,7 @@ h2, h3 {
   color: #37474f;
 }
 
-#recent {
-  background-color: #80cbc4;
-  
-}
+
 
 md-nav-bar {
   color: #90a4ae;
@@ -321,3 +319,5 @@ color: #80cbc4;
 
   padding: 10px;
 }
+
+
