@@ -15,19 +15,20 @@ The Footprint Project describes itself as a new startup that “combines sustain
 * PostgreSQL
 * Heroku
 * Chart.js
-* Moment.js
-* js-xls (Excel-uploading library)
 * Passport.js
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+1. Create your SQL database using an application such as Postico, you will find more detailed instructions about that under "installing".
+2. Install the prerequisites listed below.
+3. In your terminal, type and run "npm install"
+4. Once install is complete, type and run "npm start" in your terminal.
+5. In your browser navigate to "http://localhost:5000/"
 
 ### Prerequisites
 
-Link to software that is required to install the app (e.g. node).
-
 - [Node.js](https://nodejs.org/en/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ### Installing
 
@@ -36,32 +37,28 @@ Create database called "project-footprint":
 ![footprint_database](https://user-images.githubusercontent.com/29472568/33998428-0db2bf72-e0ad-11e7-850d-934cda2397df.png)
 
 Create SQL database tables:
-see file datasetup.sql for queries.
+See file datasetup.sql for queries.
+This file also contains sample data that you may use to run a application test.
 
 ## Screen Shot
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+Home Page Preview
+![home_page](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/public/images/homepage.png)
+
+Sample Modal Preview
+![sample_modal](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/public/images/sample_modal.png)
 
 ## Documentation
 
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
+[user_orientation_document](https://docs.google.com/document/d/1Nf_hs8h83gzrjxEluDcDgb5RvnCmyt_C-7dLo2MXqXY/edit?usp=sharing)
 
 ### Completed Features
 
-High level list of items completed.
-
-- [ ] CSV Upload
-- [ ] Charts for user data
-
-### Next Steps
-
-Features that you would like to add at some point in the future.
-
-- [ ] Feature c
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+- [x] Secure registration and log-in
+- [x] CSV Upload
+- [x] Storing User data after parsing the csv
+- [x] Multiple custom charts displaying user data
+- [x] Admin feature displaying all user contact information
 
 ## Authors
 
@@ -73,4 +70,4 @@ Add additional notes about how to deploy this on a live system
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+* Thank you to Prime Digital Academy for Passport local strategy base code.
