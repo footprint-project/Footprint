@@ -62,7 +62,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: sumsArray,
-            label: "Kgs of CO2",
+            label: "Kgs of CO₂",
             borderColor: "#3e95cd",
             fill: false
           }
@@ -206,7 +206,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
           datasets: [{
             //make an array with the sum of all categories
             data: bars,
-            label: "Kgs of CO2",
+            label: "Kgs of CO₂",
             borderColor: "#3e95cd",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#5F61D6", "#D6EDFF", "#D6D659", "#D7BDF2", "#89896B", "#C8931E"],
             fill: false
@@ -373,7 +373,7 @@ function sanitizeByPeriod(resp) {
       datasets: [{
         //make an array with the sum of all categories
         data: totals,
-        label: "Kgs of CO2",
+        label: "Kgs of CO₂",
         borderColor: "#3e95cd",
         fill: false
       }
