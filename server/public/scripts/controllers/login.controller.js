@@ -31,7 +31,7 @@
   //      vm.selected.splice(vm.selected.indexOf(item), 1);
   //    }
   //  };
-  
+
 
     //this is called in the lineChart function, not sure why it's called here...
    //donutService.getFpDividedByPeriod(1);
@@ -46,7 +46,7 @@
           labels: ["Living", "Travel", "Shipping"],
           datasets: [
             {
-              label: "Kgs of CO2",
+              label: "Kgs of CO₂",
               backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
               data: [Math.round(vm.donutResult.living, 1), Math.round(vm.donutResult.travel, 1), Math.round(vm.donutResult.shipping,1)]
             }
@@ -59,7 +59,7 @@
           }
         }
       });
-   
+
    };
 
 //This function carries out the CSV upload.
@@ -94,7 +94,7 @@
         labels: ["Living", "Travel", "Shipping"],
         datasets: [
           {
-            label: "Kgs of CO2",
+            label: "Kgs of CO₂",
             backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
             data: [Math.round(vm.donutResult.living, 1), Math.round(vm.donutResult.travel, 1), Math.round(vm.donutResult.shipping, 1)]
           }
@@ -103,7 +103,7 @@
       options: {
         title: {
           display: true,
-          text: 'Total Kgs of CO2 by Category'
+          text: 'Total Kgs of CO₂ by Category'
         }
       }
     });
@@ -139,7 +139,7 @@
           datasets: [{
             //make an array with the sum of all categories
             data: sumsArray,
-            label: "Kgs of CO2",
+            label: "Kgs of CO₂",
             borderColor: "#3e95cd",
             fill: false
           }
