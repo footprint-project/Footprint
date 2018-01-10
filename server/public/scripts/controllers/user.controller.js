@@ -1,4 +1,4 @@
-myApp.controller('UserController', function (UserService, $mdDialog, $http, $filter, donutService) {
+myApp.controller('UserController', function (UserService, $mdDialog, $http, $filter, donutService, $location) {
   console.log('UserController created');
   var vm = this;
   vm.userService = UserService;
@@ -10,6 +10,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   vm.sliceBy = 'abc';
   //this is for the list of user projects
   console.log(vm.userObject);
+  vm.showButton=false;
 
 
 
@@ -709,6 +710,19 @@ function viewByCategory(resp) {
 
 
   vm.lineChart();
+
+
+  vm.checkAdmin = function(){
+    if(vm.userObject.id === 1){
+      vm.showButton = true;
+    }
+  }
+
+vm.checkAdmin();
+
+  vm.navigate = function(){
+    $location.path('/admin');
+  }
 
 
 });
