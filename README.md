@@ -40,10 +40,10 @@ This file also contains sample data.
 ## Screen Shot
 
 Home Page Preview
-![home_page](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/publis/images/homepage.png)
+![home_page](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/public/images/homepage.png)
 
 Sample Modal Preview
-![sample_modal](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/publis/images/sample_modal.png)
+![sample_modal](https://raw.githubusercontent.com/footprint-project/Footprint/master/server/public/images/sample_modal.png)
 
 ## Documentation
 
