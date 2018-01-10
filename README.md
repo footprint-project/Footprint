@@ -15,17 +15,20 @@ The Footprint Project describes itself as a new startup that “combines sustain
 * PostgreSQL
 * Heroku
 * Chart.js
-* Moment.js
-* js-xls (Excel-uploading library)
 * Passport.js
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+1. Create your SQL database using an application such as Postico, you will find more detailed instructions about that under "installing".
+2. Install the prerequisites listed below.
+3. In your terminal, type and run "npm install"
+4. Once install is complete, type and run "npm start" in your terminal.
+5. In your browser navigate to "http://localhost:5000/"
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ### Installing
 
@@ -35,7 +38,7 @@ Create database called "project-footprint":
 
 Create SQL database tables:
 See file datasetup.sql for queries.
-This file also contains sample data.
+This file also contains sample data that you may use to run a application test.
 
 ## Screen Shot
 
@@ -51,10 +54,11 @@ Sample Modal Preview
 
 ### Completed Features
 
-High level list of items completed.
-
-- [ ] CSV Upload
-- [ ] Charts for user data
+- [x] Secure registration and log-in
+- [x] CSV Upload
+- [x] Storing User data after parsing the csv
+- [x] Multiple custom charts displaying user data
+- [x] Admin feature displaying all user contact information
 
 ## Authors
 
@@ -66,4 +70,4 @@ High level list of items completed.
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+* Thank you to Prime Digital Academy for Passport local strategy base code.
