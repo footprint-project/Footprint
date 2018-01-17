@@ -23,13 +23,13 @@ myApp.service('csvService', function ($http, $location, UserService) {
 
   //This function parses the data from uploaded CSVs.
   vm.parseData = function (data) {
-    console.log(data);
+
 
     var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
-    //  console.log(dataNums);
+
 
     var arrayOfNums = dataNums.split(',');
-    console.log(arrayOfNums);
+
 
     //a switch statement would be cleaner here....if anyone is feeling motivated:
     for (var i = 0; i < arrayOfNums.length; i++) {
@@ -60,8 +60,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
 
     }
 
-    console.log(csv);
-    console.log(vm.dataType.type);
+
     if (vm.dataType.type === 'English') {
       // for (var i=0; i<csv.length; i++){
       csv.plane = Math.round((csv.plane * 1.609344));
@@ -72,10 +71,10 @@ myApp.service('csvService', function ($http, $location, UserService) {
       csv.truck = Math.round((csv.truck * 1.460));
       csv.sea = Math.round((csv.sea * 1.460));
       csv.organization = (vm.userFootprint.userInfo[0].selectedOrganization);
-      console.log('Post English conversion,' + csv.organization);
+
     } else {
       csv.organization = (vm.userFootprint.userInfo[0].selectedOrganization);
-      console.log('metric', csv.organization)
+
     }
 
     
@@ -84,7 +83,7 @@ myApp.service('csvService', function ($http, $location, UserService) {
     vm.trialData = UserService.computeTrialFootprint(csv);
 
     return $http.post('/admin', csv).then(function (response) {
-      console.log('here you go!', csv);
+
       csv = {
         plane: 0,
         car: 0,
@@ -116,13 +115,13 @@ myApp.service('csvService', function ($http, $location, UserService) {
         result.push(obj[key]);
       }
     }
-    console.log(result);
+
     vm.calculations(result);
   };
 
   //  This function will calculate carbon footprint data
   vm.calculations = function (result) {
-    // console.log('Test:', result[0]);
+
     for (var i = 0; i < result.length; i++) {
       result.plane = (result[0] * 0.18026);
       result.car = (result[1] * 0.18568);
@@ -140,18 +139,18 @@ myApp.service('csvService', function ($http, $location, UserService) {
     var footprintIn = vm.userFootprint.dataIn;
     footprintIn.push({ plane: result.plane }, { car: result.car }, { train_travel: result.train_travel }, { air: result.air }, { train_shipping: result.train_shipping }, { truck: result.truck }, { sea: result.sea }, { hotel: result.hotel }, { fuel: result.fuel }, { grid: result.grid }, { propane: result.propane }, { total: result.totals });
     // vm.userFootprint.dataIn.push(result.plane);
-    console.log(result);
+
   }
 //Pushes user data to an array.
   vm.userData = function (user) {
-    console.log(user);
+
     vm.userFootprint.userInfo.push({ selectedOrganization: user.selectedOrganization });
-    console.log(vm.userFootprint.userInfo);
+
   }
 //Send data to the userfootprint object.
   vm.typeData = function (sendData) {
     vm.userFootprint.userType = sendData;
-    console.log(vm.userFootprint.userType);
+
   }
 
   var csvIn = {
@@ -172,13 +171,13 @@ myApp.service('csvService', function ($http, $location, UserService) {
   vm.projectOut = { userInfo: [], userType: [], dataIn: [] };
 
   vm.parseFootprint = function (data) {
-    console.log(data);
+
 
     var dataNums = data.slice(data.lastIndexOf('kWh'), data.indexOf(',,,,,,,,,,'));
-    //  console.log(dataNums);
+
 
     var arrayOfNums = dataNums.split(',');
-    console.log(arrayOfNums);
+
 
 
     for (var i = 0; i < arrayOfNums.length; i++) {
@@ -221,31 +220,30 @@ myApp.service('csvService', function ($http, $location, UserService) {
     } else {
       console.log('metric');
     }
-    // console.log(csv);
-    // vm.valuesToArray(csv);
+
     var footprintIn = vm.projectOut.dataIn;
     footprintIn.push(csvIn);
-    console.log(vm.projectOut.dataIn);
+
 
     vm.postProjects();
 
   }
 //Push info to object.
   vm.sendUser = function (user) {
-    console.log(user);
+
     vm.projectOut.userInfo.push({ selectedMonth: user.selectedMonth }, { selectedYear: user.selectedYear }, { project: user.project });
   }
 //Project function.
   vm.projectChecks = function (sendData) {
     vm.projectOut.userType = sendData;
-    console.log(vm.projectOut.userType);
+
   } //End project function
 //Post route to send projects to the router.
 
   vm.postProjects = function () {
-    console.log(vm.projectOut);
+
     $http.post('/member/project_submit', vm.projectOut).then(function(response) {
-      console.log('project sent', response)
+
       csvIn = {
         plane: 0,
         car: 0,
@@ -262,9 +260,9 @@ myApp.service('csvService', function ($http, $location, UserService) {
       vm.projectOut.userInfo = [];
       vm.projectOut.userType = [];
       vm.projectOut.dataIn = [];
-      console.log(vm.projectOut)
+
     }).catch(function (error) {
-      console.log('error adding projects', error);
+      ('error adding projects', error);
     })
   }
 

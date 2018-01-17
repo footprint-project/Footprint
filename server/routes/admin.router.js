@@ -7,7 +7,7 @@ var pool = require('../modules/pool.js');
 
 
 router.post('/', function(req, res) {
-  console.log("BODY: ", req.body);
+  // console.log("BODY: ", req.body);
   var csv = req.body;
 
   pool.connect(function (err, db, done) {
@@ -31,7 +31,7 @@ router.post('/', function(req, res) {
 });
 
 router.get('/users', function (req, res) {
-  console.log('Get users');
+  // console.log('Get users');
   pool.connect(function (err, db, done) {
     if (err) {
       console.log("Error connecting: ", err);

@@ -39,14 +39,14 @@ myApp.service('UserService', function ($http, $location){
     $http.get('/user').then(function(response) {
       if(response.data.username) {
         // user has a current session on the server
-        console.log(response.data);
+
         self.userObject.userName = response.data.username;
         self.userObject.organization = response.data.organization;
         self.userObject.name = response.data.name;
         self.userObject.position = response.data.position;
         self.userObject.id = response.data.id;
         return self.userObject;
-        console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
+        // console.log('UserService -- getuser -- User Data: ', self.userObject.userName, self.userObject.organization, self.userObject.id);
       } else {
         console.log('UserService -- getuser -- failure');
         // user has no session, bounce them back to the login page
@@ -69,32 +69,24 @@ myApp.service('UserService', function ($http, $location){
   } //End of Logout Function
 
   self.getCountries = function() {
-    console.log('Getting countries');
+
     $http.get('/member/countries').then(function(response) {
       var countries = response.data.rows;
-      // console.log(countries);
+
       self.countries.data = countries;
-      console.log(self.countries.data);
+
     })
   }
   self.getCountries();
-  // console.log(self.countries.data);
-
-//this will be for getting user data for a line graph...?
-//  self.getLineGraphData = function (){
-//     console.log('Getting Line graph Data');
-//     return $http.get('member/linegraph').then(function(response){
-//       return self.lineGraphData = response.data.rows;
-//     });
-//   }
+ 
 
   //gets the users projects for the projects view
   self.getProjects = function (id) {
-    console.log('Getting user projects', id);
+
     return $http.get('member/userprojects/' + id).then(function (response) {
       return self.userProjects = response.data;
       self.selectedProjectFootprints = response.data;
-      console.log('user projects', self.userProjects);
+
     }).catch(function (err) {
       console.log('problem getting projects', err);
     });
@@ -103,7 +95,7 @@ myApp.service('UserService', function ($http, $location){
   //gets the footprints for selected project
   self.getProjectFootprints = function (id){
     return $http.get('/member/project_footprints/'+ id).then(function (response) {
-      console.log(response.data.rows);
+
       return self.selectedProjectFootprints = response.data.rows;
     }).catch(function (err) {
       console.log('problem getting project footprints', err);
@@ -112,9 +104,9 @@ myApp.service('UserService', function ($http, $location){
 
   //gets all the users for admin page
 self.adminGetUsers = function () {
-  console.log('Getting users for admin');
+  // console.log('Getting users for admin');
   return $http.get('admin/users').then(function(response) {
-    console.log(response.data);
+    // console.log(response.data);
     self.users = response.data;
     return self.users;
     // console.log('users for admin', self.users);
@@ -124,7 +116,7 @@ self.adminGetUsers = function () {
 };
 
   self.computeFootprint = function(footprint) {
-    console.log(footprint[0]);
+
     var result = {};
     result.plane = PLANE_CONVERSION * parseInt(footprint[0].plane);
     result.car = CAR_CONVERSION * parseInt(footprint[0].car);
@@ -137,7 +129,7 @@ self.adminGetUsers = function () {
     result.fuel = FUEL_CONVERSION * parseInt(footprint[0].fuel);
     result.grid = GRID_CONVERSION * parseInt(footprint[0].grid);
     result.propane = PROPANE_CONVERSION * parseInt(footprint[0].propane);
-    console.log(result);
+
     return result;
   };
 
@@ -208,26 +200,24 @@ self.adminGetUsers = function () {
 
 
   self.computeTrialFootprint = function(footprint) {
-    // console.log(footprint);
+
     footprint.train = footprint.train_travel;
     footprint.freight_train = footprint.train_shipping;
-    // console.log(self.computeFootprint(footprint));
+
     var data = self.computeFootprint(footprint);
     return self.groupByCategory(data);
 
   };
 
-    // self.countryIn;
 
-  // self.getFpDividedByPeriod();
 
 //This uploads the data for a new project:
  self.sendProject = function(user){
    var project = user;
    project.project = self.countryIn;
-   console.log(project);
+
    $http.post('/member/newproject', project).then(function(response) {
-     console.log(response);
+
      self.getProjects();
    }).catch(function(error) {
      console.log(error);
@@ -238,7 +228,7 @@ self.adminGetUsers = function () {
  self.sendEdits = function (dataIn) {
  var data = dataIn.data;
  var footprintInfo = dataIn.project;
- console.log(data, footprintInfo);
+
    var csvSend = {
      plane: 0,
      car: 0,
@@ -257,7 +247,7 @@ self.adminGetUsers = function () {
    //  console.log(dataNums);
 
    var arrayOfNums = dataNums.split(',');
-   console.log(arrayOfNums);
+
 
    for (var i = 0; i < arrayOfNums.length; i++) {
      var num = arrayOfNums[i];
@@ -295,11 +285,11 @@ self.adminGetUsers = function () {
      csvSend.truck = Math.round((csvSend.truck * 1.460));
      csvSend.sea = Math.round((csvSend.sea * 1.460));
      csvSend.projectInfo = footprintInfo;
-     console.log('Post English conversion,' + csvSend);
+
 
    } else {
      csvSend.projectInfo = footprintInfo;
-     console.log('add variable,' + csvSend.projectInfo);
+
    }
    self.sendEditsOut(csvSend);
 
@@ -321,7 +311,7 @@ self.adminGetUsers = function () {
 
  self.sendEditsOut = function (csvSend) {
    $http.put('/member/project_edit', csvSend).then(function (response) {
-     console.log('send footprint', response);
+
    }).catch(function (error) {
      console.log('error sending footprint', error)
    })

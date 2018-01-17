@@ -10,23 +10,23 @@ myApp.controller('projecteditdcontroller', function ($http, UserService, csvServ
         var index = vm.userObj.selectedIndex;
         vm.projects = UserService.selectedProjectFootprints[index];
         // vm.projects = UserService.projectFootprints[index];
-        console.log(vm.projects);
+
     }
     vm.populateProjects();
 
     //Submit the CSV data.
     vm.submitData = function () {
-        console.log('clicked upload');
+
         var file = document.getElementById('file').files[0];
         var result = new FileReader();
         result.onloadend = function (e) {
             var data = {data: e.target.result};
             data.project = vm.projects;
-            console.log(data);
+
             UserService.sendEdits(data);
         };
         result.readAsBinaryString(file);
-        console.log(result);
+
     };  //End CSV upload
 
     vm.hide = function() {

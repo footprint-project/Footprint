@@ -9,51 +9,30 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   vm.lineData = [];
   vm.sliceBy = 'abc';
   //this is for the list of user projects
-  console.log(vm.userObject);
+
   vm.showButton=false;
 
 
 
 
-// // Bar chart
-//   new Chart(document.getElementById("bar-chart"), {
-//     type: 'bar',
-//     data: {
-//       labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-//       datasets: [
-//         {
-//           label: "Population (millions)",
-//           backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-//           data: [2478, 5267, 734, 784, 433]
-//         }
-//       ]
-//     },
-//     options: {
-//       legend: { display: false },
-//       title: {
-//         display: true,
-//         text: 'Predicted world population (millions) in 2050'
-//       }
-//     }
-//   });
   // gets the data for the DASHBOARD lineChart displaying org's carbon impact
   vm.lineChart = function () {
     donutService.getUserFpDividedByPeriod().then(function (response) {
       vm.lineData = response;
       var month = '';
       var sum = 0;
-      console.log(vm.lineData);
+
       var periodArray = [];
       var sumsArray = [];
       for (var i = 0; i < vm.lineData.length; i += 1) {
         lineData = vm.lineData[i];
         sum = lineData.air + lineData.car + lineData.freight_train + lineData.fuel + lineData.grid + lineData.hotel + lineData.plane + lineData.propane + lineData.sea + lineData.train + lineData.truck;
         sumsArray.push(Math.round(sum, 1));
-        //console.log(sumsArray);
+
         month = $filter('date')(vm.lineData[i].period, 'MMM yyyy');
-        //console.log(month);
+
         periodArray.push(month);
-        // console.log(periodArray);
+
       }
 
       new Chart(document.getElementById("linechart"), {
@@ -87,7 +66,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   //dashboard dialog
   vm.upload = function (ev, i) {
     // userService.getProjects.selectedIndex = i;
-    console.log('Clicked showMore', i);
+
 
 
     $mdDialog.show({
@@ -102,7 +81,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
 
   //Add new project modal.
   vm.newProject = function (ev, i) {
-    console.log('clicked create project modal');
+
     $mdDialog.show({
       controller: 'ProjectDialogController as pdc',
       templateUrl: 'views/templates/projectdialog.html',
@@ -122,13 +101,13 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   };
 
   vm.answer = function (answer) {
-    console.log(answer);
+
     $mdDialog.hide(answer);
   };
 
   vm.showProject = function (ev, i) {
     UserService.userProjects.selectedIndex = i;
-    console.log('clicked showProject', i);
+
     UserService.clickedProject = UserService.userProjects[i];
     window.location.href = '/#/projects';
   };
@@ -157,7 +136,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   vm.changeBarView = function() {
     var data = {view: vm.barBy};
     $http.post('/member/bars', data).then(function(response) {
-      console.log(response);
+
       vm.barResults = response.data;
 
       //ty Chrisco:
@@ -170,10 +149,10 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
   };
 
   vm.submitBarQuery = function(view, particular) {
-    console.log(view, particular);
+
     var data = {view: view, particular: particular};
     $http.post('/member/bars_numbers', data).then(function(response) {
-      console.log(response);
+
       var computedFp = UserService.computeFootprint(response.data[0]);
       var bars = [];
       bars.push(Math.round(computedFp.air,1));
@@ -189,17 +168,7 @@ myApp.controller('UserController', function (UserService, $mdDialog, $http, $fil
       bars.push(Math.round(computedFp.propane, 1));
       var canvas = document.getElementById("barChart");
 
-      // if (chart1) {
-      //   chart1.destroy();
-      // } else if (chart2) {
-      //   chart2.destroy();
-      // } else if (chart3) {
-      //   chart3.destroy();
-      // } else if (chart4) {
-      //   chart4.destroy();
-      // } else if (chart5) {
-      //   chart5.destroy();
-      // }
+
       new Chart(document.getElementById("barChart"), {
         type: 'bar',
         data: {
@@ -241,7 +210,7 @@ vm.donutParticular = {};
 
 //aww jeez but we're also going to have to populate the Particulars select element ....with a GET route.
 vm.changeView = function() {
-  console.log(vm.viewBy);
+
   if (vm.viewBy == 'period') {
     vm.choseProj = false;
     vm.viewByObject.one = 'Project';
@@ -281,7 +250,7 @@ vm.changeView = function() {
   var data = {view: vm.viewBy};
   if (vm.activeSelectorDonut != 'category') {
   $http.post('member/bars', data).then(function(response) {
-    console.log(response);
+
     vm.donutResults = response.data;
   }).catch(function(err) {
     console.log(err);
@@ -292,7 +261,7 @@ vm.changeView = function() {
 
 vm.submitQuery = function(view, particular, slice) {
   donutService.getDonut(view, particular, slice).then(function(response) {
-    console.log("response: ", response, "vm.viewBy: ", vm.viewBy, "vm.sliceBy: ", vm.sliceBy, "vm.particular: ", vm.donutParticular);
+    // console.log("response: ", response, "vm.viewBy: ", vm.viewBy, "vm.sliceBy: ", vm.sliceBy, "vm.particular: ", vm.donutParticular);
 
     if (vm.viewBy == 'category') {
       viewByCategory(response.data);
@@ -336,7 +305,7 @@ function sanitizeByPeriod(resp) {
   for (var j=0; j<cleanedThings.length; j++) {
     periods.push(UserService.computeFootprint(cleanedThings[j]));
   }
-  console.log(periods);
+
 
   //finally, sum up the columns to find total impact for each period:
   var totals = [], totals_period = [];
@@ -346,7 +315,7 @@ function sanitizeByPeriod(resp) {
     totals_period.push($filter('date')(p.period, 'MMM yyyy'));
     totals.push(Math.round(total, 1));
   }
-  console.log(totals);
+
 
 
   //well we don't need the following 2 declarations, and we get a weird error, but it does fix the hover bug!:
@@ -393,7 +362,7 @@ function sanitizeByPeriod(resp) {
 //call if they slice by PROJECT:
 function sanitizeByProject(resp) {
   var allThings = resp;
-  console.log(resp);
+
 
   //sanitize the data, collapsing all rows corresponding to a project into one row:
   var cleanedThings = [];
@@ -405,14 +374,14 @@ function sanitizeByProject(resp) {
       cleanedThings.push(current);
     }
   }
-  console.log(cleanedThings);
+
 
   //run the carbon impact calculator on each project's data:
   var projects = [];
   for (var j=0; j<cleanedThings.length; j++) {
     projects.push(UserService.computeFootprint(cleanedThings[j]));
   }
-  console.log(projects);
+
 
   //finally, sum up all the columns to find total footprint of each project:
   var totals = [], totals_name = [];
@@ -422,8 +391,6 @@ function sanitizeByProject(resp) {
     totals_name.push(p.name);
     totals.push(Math.round(total,1));
   }
-  console.log(totals);
-
   //the issue here is their array of projects will be indefinitely long: how do we set data equal to the proper array? Oh i guess we can split "totals" into two arrays for data and for labels.
 
   if (chart1) {
@@ -477,13 +444,11 @@ function sanitizeByType(resp) {
       cleanedThings.push(current);
     }
   }
-  console.log(cleanedThings);
   //calculate carbon impact for each element of cleaned array:
   var types = [];
   for (var j=0; j<cleanedThings.length; j++) {
     types.push(UserService.computeFootprint(cleanedThings[j]));
   }
-  console.log(types);
 
   //finally, add up all columns to find total footprint for each type:
   var totals = [], totals_type = [];
@@ -493,7 +458,7 @@ function sanitizeByType(resp) {
     totals.push(Math.round(total,1));
     totals_type.push(t.type_id);
   }
-  console.log(totals);
+
 
   if (chart1) {
     chart1.destroy();
@@ -551,7 +516,7 @@ function sanitizeByCountry(resp) {
   for (var j=0; j<cleanedThings.length; j++) {
     countries.push(UserService.computeFootprint(cleanedThings[j]));
   }
-  console.log(countries);
+
 
   //finally, sum up all the columns to find each country's total impact:
   var totals = [], totals_country = [];
@@ -561,7 +526,7 @@ function sanitizeByCountry(resp) {
     totals.push(Math.round(total,1));
     totals_country.push(t.country_id);
   }
-  console.log(totals);
+
 
   if (chart1) {
     chart1.destroy();
@@ -603,11 +568,11 @@ function sanitizeByCountry(resp) {
 
 //call if they slice by CATEGORY:
 function sanitizeByCategory(resp) {
-  console.log(resp);
-  // console.log("viewBy: ", vm.viewBy, "object: ", vm.viewByObject);
+
+
 
   var fp = UserService.computeFootprint(resp[0]);
-  console.log(fp);
+
 
   //calculate totals:
   var totals = [];
@@ -618,7 +583,7 @@ function sanitizeByCategory(resp) {
   totals.push(Math.round(living, 1));
   totals.push(Math.round(shipping, 1));
   totals.push(Math.round(travel, 1));
-  console.log("totals: ", totals);
+
 
   if (chart1) {
     chart1.destroy();
@@ -661,7 +626,7 @@ function sanitizeByCategory(resp) {
 //call if they view by CATEGORY:
 //no there has to be a better way to do this....it's just ALL their footprints.
 function viewByCategory(resp) {
-  console.log(resp);
+
 
   var x = 'shipping';
 
