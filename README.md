@@ -57,11 +57,24 @@ Sample Modal Preview
 
 ### Completed Features
 
+#### User Permissions
 - [x] Secure registration and log-in
-- [x] CSV Upload
-- [x] Storing User data after parsing the csv
-- [x] Multiple custom charts displaying user data
+- [x] Three user types: admin, registered user, and non-registered user
 - [x] Admin feature displaying all user contact information
+- [x] Admin or registered user can create or delete projects, and edit the monthly reports attached to a given project
+
+#### CSV Upload
+- [x] CSV Upload, either for non-registered user (testing the app) or for a registered user
+- [x] CSV may contain any number of rows; the parsing function with sum them up by column
+- [x] CSV upload is saved to database, either keyed to a registered user, or inserted into the test-csv table available for admin analytics
+- [x] CSV templates available for both metric and non-metric measuring systems; calculator will account for this difference
+
+#### Data Visualization
+- [x] Calculate the carbon footprint for each monthly report using the [U.K.'s Conversion Factors]('https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting')
+- [x] Line chart displaying user's total footprint (aggregated across all projects) over time
+- [x] Line or donut chart displaying the user's desired input (e.g. a particular category, or country) sliced in a certain way (e.g. by project, or by month)
+- [x] Landing page displays visualizations of Footprint's own carbon footprint (sliced by category and by month)
+
 
 ## Authors
 
