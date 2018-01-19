@@ -27,7 +27,7 @@ myApp.service('donutService', function($http, $location, UserService) {
       for (var j=0; j<cleanedStuff.length; j++) {
         projects.push(UserService.computeFootprint(cleanedStuff[j]));
       }
-      console.log(projects);
+
     }).catch(function(err) {
       console.log('uh oh', err);
     });
@@ -41,7 +41,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
-      // console.log(response.data);
+
 
       var allTheStuff = response.data;
       var cleanedStuff = [];
@@ -64,9 +64,6 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
 
-      // console.log(cleanedStuff);
-
-      // console.log(periods);
       return periods;
     }).catch(function(err) {
       console.log('uh oh', err);
@@ -78,7 +75,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
       //because the sql query gives us rows with repeated info, we have to sanitize it:
 
-      console.log(response.data);
+
 
       var allTheStuff = response.data;
       var cleanedStuff = [];
@@ -101,9 +98,6 @@ myApp.service('donutService', function($http, $location, UserService) {
       }
 
 
-      console.log(cleanedStuff);
-
-      console.log(periods);
       return periods;
     }).catch(function (err) {
       console.log('uh oh', err);
@@ -122,7 +116,7 @@ myApp.service('donutService', function($http, $location, UserService) {
 
 
     return $http.post('/member/donut/', instructions).then(function(response) {
-      // console.log(response);
+
 
       return response;
 

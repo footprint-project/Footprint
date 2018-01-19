@@ -12,10 +12,10 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
 
     //gets the footprints for selected project
     vm.getProjectFootprints = function (id) {
-        console.log('in pc getProFoo', id);
+
         UserService.getProjectFootprints(id).then(function(response){
             vm.projectFootprints = UserService.selectedProjectFootprints;
-            console.log('footprints:', vm.projectFootprints);
+
             //add alert for catch
         }).catch(function (error) {
             console.log(error, 'error getting footprints for selected project');
@@ -32,7 +32,7 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
 
     //function for displaying selected project
     vm.showSelected = function() {
-        console.log('show selected', vm.selectedIndex);
+
         vm.changeSelected();
         vm.getProjectFootprints(vm.clickedProject.id);
     };
@@ -41,16 +41,15 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
     //this is for when the project is selected from projects page instead of from dashboard
     vm.showAnotherProject = function (ev, i) {
         UserService.userProjects.selectedIndex = i;
-        console.log('clicked showAnotherProject', i);
+
         vm.clickedProject = UserService.userProjects[i];
         vm.getProjectFootprints(vm.clickedProject.id);
-        //window.location.reload(i);
+
     };
 
     //Opens edit dialog box.
     vm.editModal = function(event, index) {
         vm.userService.userObj.selectedIndex = index;
-        console.log('open dialog', index);
 
         $mdDialog.show({
             controller: 'projecteditdcontroller as pec',
@@ -63,7 +62,6 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
 
     vm.deleteModal = function (event, index) {
         vm.userService.userObj.selectedIndex = index;
-        console.log('Delete controller open');
 
         $mdDialog.show({
             controller: 'ProjectController as pc',
@@ -78,17 +76,10 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
         $mdDialog.hide();
     };
 
-    // vm.deleteFootprint = function () {
-    //     var index = vm.userObj.selectedIndex;
-    //     console.log(index);
-    //     var fp = UserService.selectedProjectFootprints[index];
-    //     console.log(fp);
-    //
-    // };
 
 
     vm.deleteThis = function(ev, x) {
-      console.log(x);
+
 
       var confirm = $mdDialog.confirm()
       .clickOutsideToClose(true)
@@ -98,17 +89,17 @@ myApp.controller('ProjectController', function ($http, UserService, csvService, 
       .cancel("No, go back!");
 
       $mdDialog.show(confirm).then(function() {
-        console.log('whatup');
-        console.log(vm.projectFootprints);
+
+
         $http.delete('/member/delete/' + x).then(function(response) {
-          console.log(response);
+
           for (var i=0; i<vm.projectFootprints.length; i++) {
             var fp = vm.projectFootprints[i];
             if (fp.id == x) {
               vm.projectFootprints.splice(i, 1);
             }
           }
-          console.log(vm.projectFootprints);
+
         }).catch(function(err) {
           console.log(err);
         });

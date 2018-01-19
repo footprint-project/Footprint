@@ -14,7 +14,7 @@ myApp.controller('DashboardDialogController', function ($http, UserService, csvS
 
     vm.getUserProjects = function() {
       $http.get('/member/allprojects').then(function(response) {
-        console.log(response);
+
         vm.userProjects = response.data;
       }).catch(function(err) {
         console.log(err);
@@ -31,27 +31,27 @@ myApp.controller('DashboardDialogController', function ($http, UserService, csvS
    //This function carries out the CSV upload.
      vm.uploadFile = function () {
 
-       console.log('clicked upload');
+
        var f = document.getElementById('file').files[0];
        var r = new FileReader();
        r.onloadend = function (e) {
          var data = e.target.result;
-         // console.log(data);
+
          csvService.parseFootprint(data);
        };
        r.readAsBinaryString(f);
-       console.log(r);
+
      };  //End CSV upload
 
 //This function will get the user Data from the DOM
     vm.getUserData = function(user) {
-     console.log(user);
+
      csvService.sendUser(user);
    };
 
     //This function gets either metric or english
     vm.dataType = function (data) {
-      console.log(data);
+
       csvService.dataType = data;
     };
 

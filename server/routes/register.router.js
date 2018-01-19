@@ -6,7 +6,7 @@ var encryptLib = require('../modules/encryption');
 
 // Handles request for HTML file
 router.get('/', function(req, res, next) {
-  console.log('get /register route');
+
   res.sendFile(path.resolve(__dirname, '../public/views/templates/register.html'));
 });
 
@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
     name: req.body.name,
     position: req.body.position
   };
-  console.log('new user:', saveUser);
+  // console.log('new user:', saveUser);
 
   pool.connect(function(err, client, done) {
     if(err) {

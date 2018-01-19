@@ -7,15 +7,7 @@ myApp.controller('AdminController', function (UserService, $http) {
     vm.userProjects = UserService.userProjects;
     vm.allUsers = UserService.users;
 
-    // this gets all the registered users
-    // gettingUsers = function(){
-    //     UserService.adminGetUsers().then(function(response){
-    //         vm.allUsers = response;
-    //         console.log(response);
-    //     }).catch(function (error) {
-    //         console.log(error, 'error getting all users');
-    //     });
-    // }
+
 
 
     vm.computedFps = [];
@@ -44,9 +36,9 @@ myApp.controller('AdminController', function (UserService, $http) {
             }
           }
         }
-        console.log(vm.computedFps);
+        // console.log(vm.computedFps);
       }).catch(function(err) {
-        console.log(err);
+        // console.log(err);
       });
     }
 

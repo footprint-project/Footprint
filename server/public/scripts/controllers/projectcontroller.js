@@ -12,7 +12,7 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
         if (active) {
             vm.selected.push(item);
             var data = item;
-            console.log(item);
+
         } else {
             vm.selected.splice(vm.selected.indexOf(item), 1);
         }
@@ -27,8 +27,7 @@ myApp.controller('ProjectDialogController', function (UserService, csvService, $
 //This function sends user data to the service.
     vm.getUserData = function(user){
         vm.userService.sendProject(user);
-        console.log('what up');
-        // $location.path('/user')
+
         
     };
 
